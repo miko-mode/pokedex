@@ -1,16 +1,22 @@
 package com.models;
 
 public class Attack {
-    public Attack(String name, int baseDamage, int accuracy) {
+
+    private String name;
+    private Type type;
+    private int baseDamage;
+    private int accuracy;
+
+    public Attack(String name, Type type, int baseDamage, int accuracy) {
         this.name = name;
+        this.type = type;
         this.baseDamage = baseDamage;
         this.accuracy = accuracy;
     }
 
-    private String name;
-    enum Type {Fire, Water, Grass, Electric, Normal}
-    private int baseDamage;
-    private int accuracy;
+    public Attack() {
+
+    }
 
     public String getName() {
         return name;
@@ -18,6 +24,14 @@ public class Attack {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Type getType() {
+        return type;
+    }
+
+    public void setType(Type type) {
+        this.type = type;
     }
 
     public int getBaseDamage() {
@@ -34,5 +48,15 @@ public class Attack {
 
     public void setAccuracy(int accuracy) {
         this.accuracy = accuracy;
+    }
+
+    @Override
+    public String toString() {
+        return "Attack{" +
+                "name='" + name + '\'' +
+                ", type=" + type +
+                ", baseDamage=" + baseDamage +
+                ", accuracy=" + accuracy +
+                '}';
     }
 }

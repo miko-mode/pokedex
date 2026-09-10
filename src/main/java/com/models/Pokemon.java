@@ -3,18 +3,24 @@ package com.models;
 import java.util.List;
 
 public class Pokemon {
-    public Pokemon(String name, int maxHp, int currentHp, List<Attack> attacks) {
+
+    private String name;
+    private Type type;
+    private int maxHp;
+    private int currentHp;
+    private List<Attack> attacks;
+
+    public Pokemon(String name, Type type, int maxHp, int currentHp, List<Attack> attacks) {
         this.name = name;
+        this.type = type;
         this.maxHp = maxHp;
         this.currentHp = currentHp;
         this.attacks = attacks;
     }
 
-    private String name;
-    enum Type {Fire, Water, Grass, Electric, Normal}
-    private int maxHp;
-    private int currentHp;
-    private List<Attack> attacks;
+    public Pokemon() {
+
+    }
 
     public String getName() {
         return name;
@@ -22,6 +28,14 @@ public class Pokemon {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Type getType() {
+        return type;
+    }
+
+    public void setType(Type type) {
+        this.type = type;
     }
 
     public int getMaxHp() {
@@ -46,5 +60,16 @@ public class Pokemon {
 
     public void setAttacks(List<Attack> attacks) {
         this.attacks = attacks;
+    }
+
+    @Override
+    public String toString() {
+        return "Pokemon{" +
+                "name='" + name + '\'' +
+                ", type=" + type +
+                ", maxHp=" + maxHp +
+                ", currentHp=" + currentHp +
+                ", attacks=" + attacks +
+                '}';
     }
 }

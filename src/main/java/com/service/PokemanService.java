@@ -130,7 +130,11 @@ public class PokemanService {
                         attack.setType(Type.Fire);
                     if(attackType.equalsIgnoreCase("n"))
                         attack.setType(Type.Normal);
-
+                    if(!attackType.equalsIgnoreCase("g")||!attackType.equalsIgnoreCase("e")||!attackType.equalsIgnoreCase("f")||!attackType.equalsIgnoreCase("n"))
+                    {
+                        System.out.println("Invalid pokemon type, try again!");
+                        consoleMenu();
+                    }
                     System.out.println("Ange Attack base damage");
                     int baseDamage=scan.nextInt();
                     attack.setBaseDamage(baseDamage);

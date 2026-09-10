@@ -15,13 +15,13 @@ public class PokemanService {
     Scanner scan=new Scanner(System.in);
 
     public void consoleMenu(){
-        System.out.println("\nConsole Menu");
+        System.out.println("\nKonsoll Menu");
         System.out.println("======= ====");
-        System.out.println("0. Display Predifined Pokemon");
-        System.out.println("1. Add New Pokemon");
-        System.out.println("2. Remove Pokemon");
-        System.out.println("9. Exit program");
-        System.out.println("Select your choice ...");
+        System.out.println("0. Visa Predifinerad Pokemoner");
+        System.out.println("1. Lägg till ny Pokemon");
+        System.out.println("2. Ta bort Pokemon");
+        System.out.println("9. Avsluta program");
+        System.out.println("Ange din väl ...");
         Scanner scan =new Scanner(System.in);
         String choice=scan.nextLine();
         switch (choice) {
@@ -86,19 +86,26 @@ public class PokemanService {
 
                 System.out.println("Ange Type:[Ange 'g' för Grass,'e' för Electric, 'f' för Fire, 'n' för Normal]");
                 String pokemanType=scan.nextLine();
-                if(pokemanType.equalsIgnoreCase("g"))
-                    newPokemon.setType(Type.Grass);
-                if(pokemanType.equalsIgnoreCase("e"))
-                    newPokemon.setType(Type.Electric);
-                if(pokemanType.equalsIgnoreCase("f"))
-                    newPokemon.setType(Type.Fire);
-                if(pokemanType.equalsIgnoreCase("n"))
-                    newPokemon.setType(Type.Normal);
-                if(!pokemanType.equalsIgnoreCase("g")||!pokemanType.equalsIgnoreCase("e")||!pokemanType.equalsIgnoreCase("f")||!pokemanType.equalsIgnoreCase("n"))
-                {
-                    System.out.println("Invalid pokemon type, try again!");
-                    consoleMenu();
+
+                switch(pokemanType.toLowerCase()){
+                    case "g":
+                        newPokemon.setType(Type.Grass);
+                        break;
+                    case "e":
+                        newPokemon.setType(Type.Electric);
+                        break;
+                    case "f":
+                        newPokemon.setType(Type.Fire);
+                        break;
+                    case "n":
+                        newPokemon.setType(Type.Normal);
+                        break;
+                    default:
+                        System.out.println("Invalid Pokemon Type, Try again!");
+                        consoleMenu();
                 }
+
+
 
                 System.out.println("Ange maxHP");
                 int maxHp= scan.nextInt();
@@ -122,18 +129,26 @@ public class PokemanService {
 
                     System.out.println("Ange Attack Type:[Ange 'g' för Grass,'e' för Electric, 'f' för Fire, 'n' för Normal]");
                     String attackType=scan.nextLine();
-                    if(attackType.equalsIgnoreCase("g"))
-                        attack.setType(Type.Grass);
-                    if(attackType.equalsIgnoreCase("e"))
-                        attack.setType(Type.Electric);
-                    if(attackType.equalsIgnoreCase("f"))
-                        attack.setType(Type.Fire);
-                    if(attackType.equalsIgnoreCase("n"))
-                        attack.setType(Type.Normal);
-                    if(!attackType.equalsIgnoreCase("g")||!attackType.equalsIgnoreCase("e")||!attackType.equalsIgnoreCase("f")||!attackType.equalsIgnoreCase("n"))
-                    {
-                        System.out.println("Invalid pokemon type, try again!");
-                        consoleMenu();
+                    while (attackType!=null){
+                    switch(attackType.toLowerCase()) {
+                        case "g":
+                            attack.setType(Type.Grass);
+                            break;
+                        case "e":
+                            attack.setType(Type.Electric);
+                            break;
+                        case "f":
+                            attack.setType(Type.Fire);
+                            break;
+                        case "n":
+                            attack.setType(Type.Normal);
+                            break;
+                        default:
+                            System.out.println("Ogiltigt Attack Typ, Ange igen!");
+                            attackType= scan.nextLine();
+                            continue;
+                    }
+                    break;
                     }
                     System.out.println("Ange Attack base damage");
                     int baseDamage=scan.nextInt();

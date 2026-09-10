@@ -94,6 +94,11 @@ public class PokemanService {
                     newPokemon.setType(Type.Fire);
                 if(pokemanType.equalsIgnoreCase("n"))
                     newPokemon.setType(Type.Normal);
+                if(!pokemanType.equalsIgnoreCase("g")||!pokemanType.equalsIgnoreCase("e")||!pokemanType.equalsIgnoreCase("f")||!pokemanType.equalsIgnoreCase("n"))
+                {
+                    System.out.println("Invalid pokemon type, try again!");
+                    consoleMenu();
+                }
 
                 System.out.println("Ange maxHP");
                 int maxHp= scan.nextInt();

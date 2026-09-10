@@ -64,12 +64,13 @@ public class Pokemon {
 
     @Override
     public String toString() {
-        return "Pokemon{" +
+        return "\n---------------------------------------------------------------------------"+
+                "\nPokemon{" +
                 "name='" + name + '\'' +
                 ", type=" + type +
                 ", maxHp=" + maxHp +
-                ", currentHp=" + currentHp +
-                ", attacks=" + attacks +
-                '}';
+                ", currentHp=" + currentHp +"\n"+
+                " attacks=" + attacks +
+                '}'+"\n";
     }
 }

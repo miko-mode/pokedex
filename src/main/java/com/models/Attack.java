@@ -52,7 +52,7 @@ public class Attack {
 
     @Override
     public String toString() {
-        return "Attack{" +
+        return "\n\tAttack{" +
                 "name='" + name + '\'' +
                 ", type=" + type +
                 ", baseDamage=" + baseDamage +

@@ -17,7 +17,7 @@ public class PokemanService {
     public void consoleMenu(){
         System.out.println("\nKonsoll Menu");
         System.out.println("======= ====");
-        System.out.println("0. Visa Predifinerad Pokemoner");
+        System.out.println("0. Visa Pokemoner (Båda Predefinierad och Nya)");
         System.out.println("1. Lägg till ny Pokemon");
         System.out.println("2. Ta bort Pokemon");
         System.out.println("9. Avsluta program");
@@ -65,10 +65,7 @@ public class PokemanService {
         pokemanList.addAll(Arrays.asList(pokemon_one, pokemon_two, pokemon_three, pokemon_four, pokemon_five, pokemon_six));
     }
     public void showPredifined(){
-       // for(Pokemon pokemon: pokemanList){
-         //   System.out.println(pokemon.getName());
-        //}
-        System.out.println(pokemanList.toString());
+               System.out.println(pokemanList.toString());
     }
     public void createPokemon(){
         ArrayList<Attack> attackList=new ArrayList<>();
@@ -77,7 +74,7 @@ public class PokemanService {
         String name=scan.nextLine();
         for(Pokemon pokemon: pokemanList){
             if(pokemon.getName().equals(name)){
-                System.out.println("Pokemon namn redan finns");
+                System.out.println("** Pokemon namn redan finns! **");
                 consoleMenu();
             }
             else {
@@ -101,7 +98,7 @@ public class PokemanService {
                         newPokemon.setType(Type.Normal);
                         break;
                     default:
-                        System.out.println("Invalid Pokemon Type, Try again!");
+                        System.out.println("** Invalid Pokemon Type, Try again! **");
                         consoleMenu();
                 }
 
@@ -144,7 +141,7 @@ public class PokemanService {
                             attack.setType(Type.Normal);
                             break;
                         default:
-                            System.out.println("Ogiltigt Attack Typ, Ange igen!");
+                            System.out.println("** Ogiltigt Attack Typ, Ange igen! **");
                             attackType= scan.nextLine();
                             continue;
                     }
@@ -164,7 +161,7 @@ public class PokemanService {
                 }
                 newPokemon.setAttacks(attackList);
                 pokemanList.add(newPokemon);
-                System.out.println(antalAttacker+" Pokemon/s created and added successfully.");
+                System.out.println("** "+antalAttacker+" Pokemon/s created and added successfully! **");
                 consoleMenu();
             }
         }
@@ -174,6 +171,18 @@ public class PokemanService {
 
     }
     public void removePokemon(){
+        System.out.println("Ange pokemon namn att ta bort");
+        String pokemonNamn=scan.nextLine();
+        for (Pokemon pokemon:pokemanList){
+            if(pokemon.getName().equalsIgnoreCase(pokemonNamn)){
+                pokemanList.remove(pokemon);
+                System.out.println("** Pokemon " + pokemonNamn + " har tagits bort från listan! **");
+                consoleMenu();
+            }
+
+        }
+        System.out.println("Pokemonen finns inte i listan");
+        consoleMenu();
 
     }
     public void saveToFile(){

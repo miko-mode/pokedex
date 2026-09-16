@@ -1,5 +1,7 @@
 package com.models;
 
+import com.enums.Type;
+
 import java.util.List;
 
 public class Pokemon {

@@ -1,5 +1,7 @@
 package com.models;
 
+import com.enums.Type;
+
 public class Attack {
 
     private String name;

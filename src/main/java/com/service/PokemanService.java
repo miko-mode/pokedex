@@ -2,7 +2,7 @@ package com.service;
 
 import com.models.Attack;
 import com.models.Pokemon;
-import com.models.Type;
+import com.enums.Type;
 
 import java.util.ArrayList;
 import java.util.Arrays;

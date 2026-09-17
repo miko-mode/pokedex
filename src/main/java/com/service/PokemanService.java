@@ -187,7 +187,7 @@ public class PokemanService {
                         System.out.println("Ange ny namn");
                         String namn = scan.nextLine();
                         pokemon.setName(namn);
-                        System.out.println("Success! Pokemon namn är ändrat");
+                        System.out.println("Success! Pokemon namn är ändrat till "+namn);
                         consoleMenu();
                     } else if (val.equalsIgnoreCase("t")) {
                         System.out.println("Ange Attack Type:[Ange 'g' för Grass,'e' för Electric, 'f' för Fire, 'n' för Normal]");
@@ -196,19 +196,19 @@ public class PokemanService {
                             switch (attackType.toLowerCase()) {
                                 case "g":
                                     pokemon.setType(Type.Grass);
-                                    System.out.println("Success! Pokemon Typ är ändrat");
+                                    System.out.println("Success! Pokemon Typ är ändrat till Grass");
                                     break;
                                 case "e":
                                     pokemon.setType(Type.Electric);
-                                    System.out.println("Success! Pokemon Typ är ändrat");
+                                    System.out.println("Success! Pokemon Typ är ändrat till Electric");
                                     break;
                                 case "f":
                                     pokemon.setType(Type.Fire);
-                                    System.out.println("Success! Pokemon Typ är ändrat");
+                                    System.out.println("Success! Pokemon Typ är ändrat till Fire");
                                     break;
                                 case "n":
                                     pokemon.setType(Type.Normal);
-                                    System.out.println("Success! Pokemon Typ är ändrat");
+                                    System.out.println("Success! Pokemon Typ är ändrat till Normal");
                                     break;
                                 default:
                                     System.out.println("** Ogiltigt Attack Typ, Ange valid val igen! ['g' ,'e' ,'f' ,'n']]");
@@ -222,13 +222,13 @@ public class PokemanService {
                         System.out.println("Ange ny maximalt HP");
                         int max = scan.nextInt();
                         pokemon.setMaxHp(max);
-                        System.out.println("Success! Pokemon maximalt HP är ändrat");
+                        System.out.println("Success! Pokemon maximalt HP är ändrat till "+max);
                         consoleMenu();
                     } else if (val.equalsIgnoreCase("c")) {
                         System.out.println("Ange ny current HP");
                         int current = scan.nextInt();
                         pokemon.setCurrentHp(current);
-                        System.out.println("Success! Pokemon current HP är ändrat");
+                        System.out.println("Success! Pokemon current HP är ändrat till "+current);
                         consoleMenu();
                     } else {
                         System.out.println("Ogilitigt val, ange valid val igen! ['n' , 't', 'm', 'c', 'l' , 'b']");
@@ -246,6 +246,7 @@ public class PokemanService {
         String pokemonNamn = scan.nextLine();
         for (Pokemon pokemon : pokemanList) {
             if (pokemon.getName().equalsIgnoreCase(pokemonNamn)) {
+                System.out.println("Pokemon info:\n" + pokemon);
                 pokemanList.remove(pokemon);
                 System.out.println("** Pokemon " + pokemonNamn + " har tagits bort från listan! **");
                 consoleMenu();

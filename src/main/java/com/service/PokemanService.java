@@ -99,6 +99,7 @@ public class PokemanService {
 
 
                     pokemon.getAttacks().add(attack);
+                    scan.nextLine();
                     System.out.println("Ny Attack har lägt till!");
                     consoleMenu();
                     break;
@@ -107,7 +108,7 @@ public class PokemanService {
                     System.out.println("Pokemon info:\n"+pokemon);
                     List<Attack> pokemanAttacks = pokemon.getAttacks();
                     if(pokemanAttacks!=null) {
-                        System.out.println("Vill du ta bort hela Attack List eller en stycken?'h' för hela och 'e' för en stycken");
+                        System.out.println("Vill du ta bort hela Attack List eller en stycken?välj 'h' för hela listan och 'e' för en stycken");
                         String choice=scan.nextLine();
                         if(choice.equalsIgnoreCase("h")){
                             pokemon.getAttacks().clear();

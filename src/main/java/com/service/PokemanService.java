@@ -20,7 +20,8 @@ public class PokemanService {
         System.out.println("0. Visa Pokemoner (Båda Predefinierad och Nya)");
         System.out.println("1. Lägg till ny Pokemon");
         System.out.println("2. Ta bort Pokemon");
-        System.out.println("3. Radera Pokemon");
+        System.out.println("3. Radera ett Pokemon");
+        System.out.println("4. Radera attacker från ett Pokemon");
         System.out.println("9. Avsluta program");
         System.out.println("Ange din väl ...");
         Scanner scan = new Scanner(System.in);
@@ -42,24 +43,112 @@ public class PokemanService {
                 editPokemon();
                 consoleMenu();
             }
+            case "4" -> {
+                editAttack();
+                consoleMenu();
+            }
             case "9" -> System.exit(0);
         }
 
 
     }
 
+    public void editAttack() {
+        System.out.println("Ange Pokeman namn som attacken tillhör till");
+        String name = scan.nextLine();
+        for (Pokemon pokemon : pokemanList) {
+            if (pokemon.getName().equals(name)) {
+                System.out.println("Välja 'l' om du vill lägga attack eller 'b' för att ta bort ett attack från Pokemon");
+                String val = scan.nextLine();
+                if (val.equalsIgnoreCase("l")) {
+                    Attack attack = new Attack();
+                    System.out.println("Ange Attack namn");
+                    String attackName = scan.nextLine();
+                    attack.setName(attackName);
+
+                    System.out.println("Ange Attack Type:[Ange 'g' för Grass,'e' för Electric, 'f' för Fire, 'n' för Normal]");
+                    String attackType = scan.nextLine();
+                    while (attackType != null) {
+                        switch (attackType.toLowerCase()) {
+                            case "g":
+                                attack.setType(Type.Grass);
+                                break;
+                            case "e":
+                                attack.setType(Type.Electric);
+                                break;
+                            case "f":
+                                attack.setType(Type.Fire);
+                                break;
+                            case "n":
+                                attack.setType(Type.Normal);
+                                break;
+                            default:
+                                System.out.println("** Ogiltigt Attack Typ, Ange igen! **");
+                                attackType = scan.nextLine();
+                                continue;
+                        }
+                        break;
+                    }
+                    System.out.println("Ange Attack base damage");
+                    int baseDamage = scan.nextInt();
+                    attack.setBaseDamage(baseDamage);
+
+                    System.out.println("Ange Attack accuracy");
+                    int accuracy = scan.nextInt();
+                    attack.setAccuracy(accuracy);
+
+
+                    pokemon.getAttacks().add(attack);
+                    System.out.println("Ny Attack har lägt till!");
+                    consoleMenu();
+                    break;
+
+                } if (val.equalsIgnoreCase("b")) {
+                    System.out.println("Pokemon info:\n"+pokemon);
+                    List<Attack> pokemanAttacks = pokemon.getAttacks();
+                    if(pokemanAttacks!=null) {
+                        System.out.println("Vill du ta bort hela Attack List eller en stycken?'h' för hela och 'e' för en stycken");
+                        String choice=scan.nextLine();
+                        if(choice.equalsIgnoreCase("h")){
+                            pokemon.getAttacks().clear();
+                            System.out.println("Alla attacker har tagits bort!");
+                            consoleMenu();
+                            break;
+                        }
+                        if(choice.equalsIgnoreCase("e")){
+                        System.out.println("Vilken attack vill du ta bort från Pokemon?, ange namnet");
+                        String attackNamn = scan.nextLine();
+                        for (Attack attack : pokemanAttacks) {
+                            if (attack.getName().equalsIgnoreCase(attackNamn)) {
+                                pokemanAttacks.remove(attack);
+                                System.out.println("Attack " + attackNamn + " har tagits bort från Pokemon!");
+                                consoleMenu();
+                                break;
+                            }
+                        }
+                    }
+                        }
+
+                }
+            }
+
+        }
+
+    }
+
     public void predefinedPokemon() {
         Attack attack_one = new Attack("attack_one", Type.Electric, 85, 30);
         Attack attack_two = new Attack("attack_two", Type.Fire, 75, 40);
-        List<Attack> list_one = List.of(attack_one, attack_two);
+        List<Attack> list_one = new ArrayList<>(List.of(attack_one, attack_two));
+
 
         Attack attack_three = new Attack("attack_three", Type.Grass, 65, 50);
         Attack attack_four = new Attack("attack_four", Type.Normal, 55, 60);
-        List<Attack> list_two = List.of(attack_three, attack_four);
+        List<Attack> list_two = new ArrayList<>(List.of(attack_three, attack_four));
 
         Attack attack_five = new Attack("attack_five", Type.Electric, 45, 70);
         Attack attack_six = new Attack("attack_six", Type.Fire, 35, 80);
-        List<Attack> list_three = List.of(attack_five, attack_six);
+        List<Attack> list_three = new ArrayList<>(List.of(attack_five, attack_six));
 
         Pokemon pokemon_one = new Pokemon("pokemon_one", Type.Electric, 1000, 500, list_one);
         Pokemon pokemon_two = new Pokemon("pokemon_two", Type.Fire, 2000, 600, list_two);
@@ -180,14 +269,14 @@ public class PokemanService {
         for (Pokemon pokemon : pokemanList) {
             if (pokemon.getName().equalsIgnoreCase(pokemonNamn)) {
                 System.out.println("Pokemon info:\n" + pokemon);
-                System.out.println("Vilken fält vill du ändra? Ange 'n' för namn, 't' för Type, 'm' för maximalt HP, 'c' för current HP, 'l' för att lägg till attacker och 'b' för att ta bort attacker");
+                System.out.println("Vilken fält vill du ändra? Ange 'n' för namn, 't' för Type, 'm' för maximalt HP, 'c' för current HP");
                 String val = scan.nextLine();
                 while (val != null) {
                     if (val.equalsIgnoreCase("n")) {
                         System.out.println("Ange ny namn");
                         String namn = scan.nextLine();
                         pokemon.setName(namn);
-                        System.out.println("Success! Pokemon namn är ändrat till "+namn);
+                        System.out.println("Success! Pokemon namn är ändrat till " + namn);
                         consoleMenu();
                     } else if (val.equalsIgnoreCase("t")) {
                         System.out.println("Ange Attack Type:[Ange 'g' för Grass,'e' för Electric, 'f' för Fire, 'n' för Normal]");
@@ -222,13 +311,13 @@ public class PokemanService {
                         System.out.println("Ange ny maximalt HP");
                         int max = scan.nextInt();
                         pokemon.setMaxHp(max);
-                        System.out.println("Success! Pokemon maximalt HP är ändrat till "+max);
+                        System.out.println("Success! Pokemon maximalt HP är ändrat till " + max);
                         consoleMenu();
                     } else if (val.equalsIgnoreCase("c")) {
                         System.out.println("Ange ny current HP");
                         int current = scan.nextInt();
                         pokemon.setCurrentHp(current);
-                        System.out.println("Success! Pokemon current HP är ändrat till "+current);
+                        System.out.println("Success! Pokemon current HP är ändrat till " + current);
                         consoleMenu();
                     } else {
                         System.out.println("Ogilitigt val, ange valid val igen! ['n' , 't', 'm', 'c', 'l' , 'b']");

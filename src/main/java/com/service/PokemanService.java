@@ -4,6 +4,9 @@ import com.models.Attack;
 import com.models.Pokemon;
 import com.enums.Type;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -22,6 +25,7 @@ public class PokemanService {
         System.out.println("2. Ta bort Pokemon");
         System.out.println("3. Radera ett Pokemon");
         System.out.println("4. Radera attacker från ett Pokemon");
+        System.out.println("5. Spara pokemon listan till fil");
         System.out.println("9. Avsluta program");
         System.out.println("Ange din väl ...");
         Scanner scan = new Scanner(System.in);
@@ -47,17 +51,36 @@ public class PokemanService {
                 editAttack();
                 consoleMenu();
             }
+            case "5" -> {
+                sparaTillFil();
+                consoleMenu();
+            }
             case "9" -> System.exit(0);
         }
 
 
     }
 
+    public void sparaTillFil() {
+        String pathToFile="src/main/resources/pokemon_data.txt";
+        try(BufferedWriter bufferedWriter=new BufferedWriter(new FileWriter(pathToFile))){
+            for(Pokemon pokemon: pokemanList) {
+                bufferedWriter.write(String.valueOf(pokemon));
+                bufferedWriter.newLine();
+            }
+            System.out.println("Success! Pokeman data skrivs till fil.");
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public void editAttack() {
-        System.out.println("Ange Pokeman namn som attacken tillhör till");
+        System.out.println("Ange Pokeman namn som attacken finns i");
         String name = scan.nextLine();
         for (Pokemon pokemon : pokemanList) {
             if (pokemon.getName().equals(name)) {
+                System.out.println("Pokemon hittas!\n" + pokemon);
                 System.out.println("Välja 'l' om du vill lägga attack eller 'b' för att ta bort ett attack från Pokemon");
                 String val = scan.nextLine();
                 if (val.equalsIgnoreCase("l")) {
@@ -83,7 +106,7 @@ public class PokemanService {
                                 attack.setType(Type.Normal);
                                 break;
                             default:
-                                System.out.println("** Ogiltigt Attack Typ, Ange igen! **");
+                                System.out.println("Error! Ogiltigt Attack Typ, Ange igen!");
                                 attackType = scan.nextLine();
                                 continue;
                         }
@@ -100,35 +123,35 @@ public class PokemanService {
 
                     pokemon.getAttacks().add(attack);
                     scan.nextLine();
-                    System.out.println("Ny Attack har lägt till!");
+                    System.out.println("Success! Ny Attacken " + attack + " har lägt till " + pokemon.getName());
                     consoleMenu();
                     break;
 
-                } if (val.equalsIgnoreCase("b")) {
-                    System.out.println("Pokemon info:\n"+pokemon);
+                }
+                if (val.equalsIgnoreCase("b")) {
                     List<Attack> pokemanAttacks = pokemon.getAttacks();
-                    if(pokemanAttacks!=null) {
-                        System.out.println("Vill du ta bort hela Attack List eller en stycken?välj 'h' för hela listan och 'e' för en stycken");
-                        String choice=scan.nextLine();
-                        if(choice.equalsIgnoreCase("h")){
+                    if (pokemanAttacks != null) {
+                        System.out.println("Vill du ta bort hela Attack List eller en stycken? välj 'h' för hela listan och 'e' för en stycken");
+                        String choice = scan.nextLine();
+                        if (choice.equalsIgnoreCase("h")) {
                             pokemon.getAttacks().clear();
-                            System.out.println("Alla attacker har tagits bort!");
+                            System.out.println("Success! Alla attacker för " + pokemon.getName() + " har tagits bort!");
                             consoleMenu();
                             break;
                         }
-                        if(choice.equalsIgnoreCase("e")){
-                        System.out.println("Vilken attack vill du ta bort från Pokemon?, ange namnet");
-                        String attackNamn = scan.nextLine();
-                        for (Attack attack : pokemanAttacks) {
-                            if (attack.getName().equalsIgnoreCase(attackNamn)) {
-                                pokemanAttacks.remove(attack);
-                                System.out.println("Attack " + attackNamn + " har tagits bort från Pokemon!");
-                                consoleMenu();
-                                break;
+                        if (choice.equalsIgnoreCase("e")) {
+                            System.out.println("Vilken attack vill du ta bort från " + pokemon.getName() + " ?, ange attack namnet");
+                            String attackNamn = scan.nextLine();
+                            for (Attack attack : pokemanAttacks) {
+                                if (attack.getName().equalsIgnoreCase(attackNamn)) {
+                                    pokemanAttacks.remove(attack);
+                                    System.out.println("Attack " + attackNamn + " har tagits bort från Pokemon!");
+                                    consoleMenu();
+                                    break;
+                                }
                             }
                         }
                     }
-                        }
 
                 }
             }
@@ -162,7 +185,7 @@ public class PokemanService {
     }
 
     public void showPredifined() {
-        System.out.println(pokemanList.toString());
+        System.out.println("Pokemon Data:\n"+pokemanList.toString());
     }
 
     public void createPokemon() {
@@ -172,7 +195,7 @@ public class PokemanService {
         String name = scan.nextLine();
         for (Pokemon pokemon : pokemanList) {
             if (pokemon.getName().equals(name)) {
-                System.out.println("** Pokemon namn redan finns! **");
+                System.out.println("Info! Pokemon data redan finns!");
                 consoleMenu();
             } else {
                 Pokemon newPokemon = new Pokemon();

@@ -1,0 +1,48 @@
+
+---------------------------------------------------------------------------
+Pokemon{name='pokemon_one', type=Electric, maxHp=1000, currentHp=500
+ attacks=[
+	Attack{name='attack_one', type=Electric, baseDamage=85, accuracy=30}, 
+	Attack{name='attack_two', type=Fire, baseDamage=75, accuracy=40}]}
+
+
+---------------------------------------------------------------------------
+Pokemon{name='pokemon_two', type=Fire, maxHp=2000, currentHp=600
+ attacks=[
+	Attack{name='attack_three', type=Grass, baseDamage=65, accuracy=50}, 
+	Attack{name='attack_four', type=Normal, baseDamage=55, accuracy=60}]}
+
+
+---------------------------------------------------------------------------
+Pokemon{name='pokemon_three', type=Grass, maxHp=3000, currentHp=700
+ attacks=[
+	Attack{name='attack_five', type=Electric, baseDamage=45, accuracy=70}, 
+	Attack{name='attack_six', type=Fire, baseDamage=35, accuracy=80}]}
+
+
+---------------------------------------------------------------------------
+Pokemon{name='pokemon_four', type=Normal, maxHp=4000, currentHp=800
+ attacks=[
+	Attack{name='attack_one', type=Electric, baseDamage=85, accuracy=30}, 
+	Attack{name='attack_two', type=Fire, baseDamage=75, accuracy=40}]}
+
+
+---------------------------------------------------------------------------
+Pokemon{name='pokemon_five', type=Grass, maxHp=5000, currentHp=900
+ attacks=[
+	Attack{name='attack_three', type=Grass, baseDamage=65, accuracy=50}, 
+	Attack{name='attack_four', type=Normal, baseDamage=55, accuracy=60}]}
+
+
+---------------------------------------------------------------------------
+Pokemon{name='pokemon_six', type=Electric, maxHp=6000, currentHp=1000
+ attacks=[
+	Attack{name='attack_five', type=Electric, baseDamage=45, accuracy=70}, 
+	Attack{name='attack_six', type=Fire, baseDamage=35, accuracy=80}]}
+
+
+---------------------------------------------------------------------------
+Pokemon{name='re_1', type=Grass, maxHp=33, currentHp=22
+ attacks=[
+	Attack{name='ar_2', type=Electric, baseDamage=233, accuracy=232}]}
+

@@ -4,13 +4,12 @@ import com.models.Attack;
 import com.models.Pokemon;
 import com.enums.Type;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 public class PokemanService {
 
@@ -26,6 +25,7 @@ public class PokemanService {
         System.out.println("3. Radera ett Pokemon");
         System.out.println("4. Radera attacker från ett Pokemon");
         System.out.println("5. Spara pokemon listan till fil");
+        System.out.println("6. Ladda Pokemoner från fil");
         System.out.println("9. Avsluta program");
         System.out.println("Ange din väl ...");
         Scanner scan = new Scanner(System.in);
@@ -52,7 +52,11 @@ public class PokemanService {
                 consoleMenu();
             }
             case "5" -> {
-                sparaTillFil();
+                saveToFil();
+                consoleMenu();
+            }
+            case "6" -> {
+                loadFromFil();
                 consoleMenu();
             }
             case "9" -> System.exit(0);
@@ -61,11 +65,56 @@ public class PokemanService {
 
     }
 
-    public void sparaTillFil() {
+    public void loadFromFil() {
+        String pathToFile="src/main/resources/pokemon_data.txt";
+        try(BufferedReader bufferedReader=new BufferedReader(new FileReader(pathToFile))){
+            String line;
+            List<Pokemon> pokemonListFromFile=new ArrayList<>();
+
+            while((line=bufferedReader.readLine())!=null){
+                Pokemon pokemon=new Pokemon();
+                List<Attack> attackListFromFile=new ArrayList<>();
+                String[] data=line.split(",");
+                if(data.length<5){
+                    continue;
+                }
+
+                pokemon.setName(data[0].trim());
+                pokemon.setType(Type.valueOf(data[1].trim()));
+                pokemon.setMaxHp(Integer.parseInt(data[2].trim()));
+                pokemon.setCurrentHp(Integer.parseInt(data[3].trim()));
+                //loop through attack and add to attackList
+
+                if(!data[4].isEmpty()){
+                    for(String attackArray:data[4].split("--")){
+                        String[] attacksData=attackArray.split(":");
+                        Attack pokeAttack=new Attack();
+                        pokeAttack.setName(attacksData[0].trim());
+                        pokeAttack.setType(Type.valueOf(attacksData[1].trim()));
+                        pokeAttack.setBaseDamage(Integer.parseInt(attacksData[2].trim()));
+                        pokeAttack.setAccuracy(Integer.parseInt(attacksData[3]));
+
+                        attackListFromFile.add(pokeAttack);
+                    }
+                }
+
+                pokemon.setAttacks(attackListFromFile);
+                pokemonListFromFile.add(pokemon);
+
+            }
+            //reset for next loop
+            pokemanList=pokemonListFromFile;
+            pokemanList.forEach(System.out::println);
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public void saveToFil() {
         String pathToFile="src/main/resources/pokemon_data.txt";
         try(BufferedWriter bufferedWriter=new BufferedWriter(new FileWriter(pathToFile))){
             for(Pokemon pokemon: pokemanList) {
-                bufferedWriter.write(String.valueOf(pokemon));
+                bufferedWriter.write(pokemon.getName()+","+pokemon.getType()+","+pokemon.getMaxHp()+","+pokemon.getCurrentHp()+","+pokemon.getAttacks().stream().map(Attack::toString).collect(Collectors.joining("--")));
                 bufferedWriter.newLine();
             }
             System.out.println("Success! Pokeman data skrivs till fil.");

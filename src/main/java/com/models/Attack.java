@@ -54,11 +54,6 @@ public class Attack {
 
     @Override
     public String toString() {
-        return "\n\tAttack{" +
-                "name='" + name + '\'' +
-                ", type=" + type +
-                ", baseDamage=" + baseDamage +
-                ", accuracy=" + accuracy +
-                '}';
+        return name + ":" + type + ":" + baseDamage + ":" + accuracy;
     }
 }

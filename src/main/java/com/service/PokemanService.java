@@ -26,6 +26,7 @@ public class PokemanService {
         System.out.println("4. Radera attacker från ett Pokemon");
         System.out.println("5. Spara pokemon listan till fil");
         System.out.println("6. Ladda Pokemoner från fil");
+        System.out.println("7. Återställ till predifinierad/seed data");
         System.out.println("9. Avsluta program");
         System.out.println("Ange din väl ...");
         Scanner scan = new Scanner(System.in);
@@ -59,6 +60,10 @@ public class PokemanService {
                 loadFromFil();
                 consoleMenu();
             }
+            case "7" -> {
+                resetToSeededData();
+                consoleMenu();
+            }
             case "9" -> System.exit(0);
         }
 
@@ -66,29 +71,27 @@ public class PokemanService {
     }
 
     public void loadFromFil() {
-        String pathToFile="src/main/resources/pokemon_data.txt";
-        try(BufferedReader bufferedReader=new BufferedReader(new FileReader(pathToFile))){
+        String pathToFile = "src/main/resources/pokemon_data.txt";
+        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(pathToFile))) {
             String line;
-            List<Pokemon> pokemonListFromFile=new ArrayList<>();
+            List<Pokemon> pokemonListFromFile = new ArrayList<>();
 
-            while((line=bufferedReader.readLine())!=null){
-                Pokemon pokemon=new Pokemon();
-                List<Attack> attackListFromFile=new ArrayList<>();
-                String[] data=line.split(",");
-                if(data.length<5){
-                    continue;
-                }
+            while ((line = bufferedReader.readLine()) != null) {
+                if (line.isBlank()) continue;
+                Pokemon pokemon = new Pokemon();
+                List<Attack> attackListFromFile = new ArrayList<>();
 
+                String[] data = line.split(",");
                 pokemon.setName(data[0].trim());
                 pokemon.setType(Type.valueOf(data[1].trim()));
                 pokemon.setMaxHp(Integer.parseInt(data[2].trim()));
                 pokemon.setCurrentHp(Integer.parseInt(data[3].trim()));
                 //loop through attack and add to attackList
 
-                if(!data[4].isEmpty()){
-                    for(String attackArray:data[4].split("--")){
-                        String[] attacksData=attackArray.split(":");
-                        Attack pokeAttack=new Attack();
+                if (!data[4].isEmpty()) {
+                    for (String attackArray : data[4].split("#")) {
+                        String[] attacksData = attackArray.split(":");
+                        Attack pokeAttack = new Attack();
                         pokeAttack.setName(attacksData[0].trim());
                         pokeAttack.setType(Type.valueOf(attacksData[1].trim()));
                         pokeAttack.setBaseDamage(Integer.parseInt(attacksData[2].trim()));
@@ -97,30 +100,29 @@ public class PokemanService {
                         attackListFromFile.add(pokeAttack);
                     }
                 }
-
                 pokemon.setAttacks(attackListFromFile);
                 pokemonListFromFile.add(pokemon);
 
             }
-            //reset for next loop
-            pokemanList=pokemonListFromFile;
+            pokemanList = pokemonListFromFile;
             pokemanList.forEach(System.out::println);
 
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            System.out.println("Lyckades inte att spara till fil: "+e.getMessage());
         }
     }
+
     public void saveToFil() {
-        String pathToFile="src/main/resources/pokemon_data.txt";
-        try(BufferedWriter bufferedWriter=new BufferedWriter(new FileWriter(pathToFile))){
-            for(Pokemon pokemon: pokemanList) {
-                bufferedWriter.write(pokemon.getName()+","+pokemon.getType()+","+pokemon.getMaxHp()+","+pokemon.getCurrentHp()+","+pokemon.getAttacks().stream().map(Attack::toString).collect(Collectors.joining("--")));
+        String pathToFile = "src/main/resources/pokemon_data.txt";
+        try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(pathToFile))) {
+            for (Pokemon pokemon : pokemanList) {
+                bufferedWriter.write(pokemon.getName() + "," + pokemon.getType() + "," + pokemon.getMaxHp() + "," + pokemon.getCurrentHp() + "," + pokemon.getAttacks().stream().map(Attack::toString).collect(Collectors.joining("#")));
                 bufferedWriter.newLine();
             }
             System.out.println("Success! Pokeman data skrivs till fil.");
 
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            System.out.println("Lyckades inte att spara till fil: "+e.getMessage());
         }
     }
 
@@ -231,10 +233,11 @@ public class PokemanService {
         Pokemon pokemon_six = new Pokemon("pokemon_six", Type.Electric, 6000, 1000, list_three);
 
         pokemanList.addAll(Arrays.asList(pokemon_one, pokemon_two, pokemon_three, pokemon_four, pokemon_five, pokemon_six));
+
     }
 
     public void showPredifined() {
-        System.out.println("Pokemon Data:\n"+pokemanList.toString());
+        System.out.println("Pokemon Data:\n" + pokemanList.toString());
     }
 
     public void createPokemon() {
@@ -329,7 +332,7 @@ public class PokemanService {
                 }
                 newPokemon.setAttacks(attackList);
                 pokemanList.add(newPokemon);
-                System.out.println("** " + antalAttacker + " Pokemon/s created and added successfully! **");
+                System.out.println("** " + antalAttacker + " Pokemon/er har läggts till Predifinierad pokemoner! Om du vill spara den till fil, använd väl #5 från meny. **");
                 consoleMenu();
             }
         }
@@ -420,19 +423,9 @@ public class PokemanService {
 
     }
 
-    public void saveToFile() {
-
-    }
-
-    public void loadToFile() {
-
-    }
-
     public void resetToSeededData() {
-
+        predefinedPokemon();
+        System.out.println("Info!: Pokemon data har återställt till seed data");
     }
 
-    public void finish() {
-
-    }
 }

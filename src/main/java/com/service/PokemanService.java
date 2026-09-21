@@ -134,6 +134,13 @@ public class PokemanService {
                 System.out.println("Pokemon hittas!\n" + pokemon);
                 System.out.println("Välja 'l' om du vill lägga attack eller 'b' för att ta bort ett attack från Pokemon");
                 String val = scan.nextLine();
+                //Check for valid väl
+                if (!val.equalsIgnoreCase("l")) {
+                    if (!val.equalsIgnoreCase("b")) {
+                        System.out.println("Du har angett ogiltigt väl. Ange giltig väl: ['l' eller 'b']");
+                        val=scan.nextLine();
+                    }
+                }
                 if (val.equalsIgnoreCase("l")) {
                     Attack attack = new Attack();
                     System.out.println("Ange Attack namn");
@@ -165,10 +172,18 @@ public class PokemanService {
                     }
                     System.out.println("Ange Attack base damage");
                     int baseDamage = scan.nextInt();
+                    while(baseDamage<0||baseDamage>10000) {
+                        System.out.println("Error: Ogiltigt värde för Base Damage, Ange mellan 1 och 10,000");
+                        baseDamage= scan.nextInt();
+                    }
                     attack.setBaseDamage(baseDamage);
 
                     System.out.println("Ange Attack accuracy");
                     int accuracy = scan.nextInt();
+                    while(accuracy<0||accuracy>10000) {
+                        System.out.println("Error: Ogiltigt värde för Accuracy, Ange mellan 1 och 10,000");
+                        accuracy= scan.nextInt();
+                    }
                     attack.setAccuracy(accuracy);
 
 
@@ -205,6 +220,7 @@ public class PokemanService {
                     }
 
                 }
+
             }
 
         }
@@ -246,7 +262,8 @@ public class PokemanService {
         System.out.println("Ange Pokeman namn");
         String name = scan.nextLine();
         for (Pokemon pokemon : pokemanList) {
-            if (pokemon.getName().equals(name)) {
+            //Validera om pokeman med samma namn redan finns
+            if (!name.isEmpty()&&pokemon.getName().equals(name)) {
                 System.out.println("Info! Pokemon data redan finns!");
                 consoleMenu();
             } else {
@@ -270,17 +287,25 @@ public class PokemanService {
                         newPokemon.setType(Type.Normal);
                         break;
                     default:
-                        System.out.println("** Invalid Pokemon Type, Try again! **");
+                        System.out.println("Error: Ogiltigt Pokemon Type, Try again!");
                         consoleMenu();
                 }
 
 
                 System.out.println("Ange maxHP");
                 int maxHp = scan.nextInt();
+                while(maxHp<0||maxHp>10000) {
+                    System.out.println("Error: Ogiltigt värde för Max HP, Ange mellan 1 och 10,000");
+                    maxHp= scan.nextInt();
+                }
                 newPokemon.setMaxHp(maxHp);
 
                 System.out.println("Ange currentHP");
                 int currentHp = scan.nextInt();
+                while(currentHp<0||currentHp>10000) {
+                    System.out.println("Error: Ogiltigt värde för Current HP, Ange mellan 1 och 10,000");
+                    currentHp= scan.nextInt();
+                }
                 newPokemon.setCurrentHp(currentHp);
 
                 System.out.println("Hur många attacker har den ny Pokemonen?");
@@ -312,7 +337,7 @@ public class PokemanService {
                                 attack.setType(Type.Normal);
                                 break;
                             default:
-                                System.out.println("** Ogiltigt Attack Typ, Ange igen! **");
+                                System.out.println("Error: Ogiltigt Attack Typ, Ange igen!");
                                 attackType = scan.nextLine();
                                 continue;
                         }
@@ -320,10 +345,18 @@ public class PokemanService {
                     }
                     System.out.println("Ange Attack base damage");
                     int baseDamage = scan.nextInt();
+                    while(baseDamage<0||baseDamage>10000) {
+                        System.out.println("Error: ogiltigt värde för Base Damage, Ange mellan 1 och 10,000");
+                        baseDamage= scan.nextInt();
+                    }
                     attack.setBaseDamage(baseDamage);
 
                     System.out.println("Ange Attack accuracy");
                     int accuracy = scan.nextInt();
+                    while(accuracy<0||accuracy>10000) {
+                        System.out.println("Error: Ogiltigt värde för Accuracy, Ange mellan 1 och 10,000");
+                        accuracy= scan.nextInt();
+                    }
                     attack.setAccuracy(accuracy);
 
                     attackList.add(attack);
@@ -376,7 +409,7 @@ public class PokemanService {
                                     System.out.println("Success! Pokemon Typ är ändrat till Normal");
                                     break;
                                 default:
-                                    System.out.println("** Ogiltigt Attack Typ, Ange valid val igen! ['g' ,'e' ,'f' ,'n']]");
+                                    System.out.println("Error: Ogiltigt Attack Typ, Ange valid val igen! ['g' ,'e' ,'f' ,'n']]");
                                     attackType = scan.nextLine();
                                     continue;
                             }
@@ -386,17 +419,25 @@ public class PokemanService {
                     } else if (val.equalsIgnoreCase("m")) {
                         System.out.println("Ange ny maximalt HP");
                         int max = scan.nextInt();
+                        while(max<0||max>10000) {
+                            System.out.println("Error: Ogiltigt värde för Max HP, Ange mellan 1 och 10,000");
+                            max= scan.nextInt();
+                        }
                         pokemon.setMaxHp(max);
                         System.out.println("Success! Pokemon maximalt HP är ändrat till " + max);
                         consoleMenu();
                     } else if (val.equalsIgnoreCase("c")) {
                         System.out.println("Ange ny current HP");
                         int current = scan.nextInt();
+                        while(current<0||current>10000) {
+                            System.out.println("Error: Ogiltigt värde för Current HP, Ange mellan 1 och 10,000");
+                            current= scan.nextInt();
+                        }
                         pokemon.setCurrentHp(current);
                         System.out.println("Success! Pokemon current HP är ändrat till " + current);
                         consoleMenu();
                     } else {
-                        System.out.println("Ogilitigt val, ange valid val igen! ['n' , 't', 'm', 'c', 'l' , 'b']");
+                        System.out.println("Error: Ogilitigt val ändring av Pokemon, ange valid val igen! ['n' för namn , 't' för Type, 'm' för Max HP, 'c' för Current HP]");
                         val = scan.nextLine();
                     }
                 }
@@ -418,7 +459,7 @@ public class PokemanService {
             }
 
         }
-        System.out.println("Pokemonen finns inte i listan");
+        System.out.println("Error: Pokemonen finns inte i listan");
         consoleMenu();
 
     }

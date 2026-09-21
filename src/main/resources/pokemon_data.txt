@@ -4,3 +4,4 @@ pokemon_three,Grass,3000,700,attack_five:Electric:45:70#attack_six:Fire:35:80
 pokemon_four,Normal,4000,800,attack_one:Electric:85:30#attack_two:Fire:75:40
 pokemon_five,Grass,5000,900,attack_three:Grass:65:50#attack_four:Normal:55:60
 pokemon_six,Electric,6000,1000,attack_five:Electric:45:70#attack_six:Fire:35:80
+poker_faace,Grass,33,45,att_11:Fire:45:121

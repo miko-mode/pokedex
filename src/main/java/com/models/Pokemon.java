@@ -2,6 +2,7 @@ package com.models;
 
 import com.enums.Type;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Pokemon {
@@ -10,7 +11,7 @@ public class Pokemon {
     private Type type;
     private int maxHp;
     private int currentHp;
-    private List<Attack> attacks;
+    private List<Attack> attacks=new ArrayList<>();
 
     public Pokemon(String name, Type type, int maxHp, int currentHp, List<Attack> attacks) {
         this.name = name;

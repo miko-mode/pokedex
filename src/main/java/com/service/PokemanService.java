@@ -1,12 +1,9 @@
 package com.service;
 
-import com.exceptions.AttackNotFoundException;
-import com.exceptions.DuplicatePokemonException;
-import com.exceptions.InvalidPokemonNameFormat;
+import com.exceptions.*;
 import com.models.Attack;
 import com.enums.Type;
 import com.models.Pokemon;
-import com.exceptions.NumberNotInIntervalException;
 
 import java.io.*;
 import java.util.*;
@@ -18,7 +15,7 @@ public class PokemanService {
     Scanner scan = new Scanner(System.in);
 
     public void consoleMenu() {
-        System.out.println("\nKonsoll Menu");
+        System.out.println("\nKonsoll Meny");
         System.out.println("======= ====");
         System.out.println("0. Visa Pokemoner (Båda Predefinierad och Nya)");
         System.out.println("1. Lägg till ny Pokemon");
@@ -105,8 +102,8 @@ public class PokemanService {
             pokemonList.forEach(System.out::println);
 
         } catch (FileNotFoundException e) {
-            System.out.println("Error: Lyckades inte att hitta filen" );
-        }catch (IOException e) {
+            System.out.println("Error: Lyckades inte att hitta filen");
+        } catch (IOException e) {
             System.out.println("Error: Lyckades inte att spara till fil");
         }
     }
@@ -146,7 +143,7 @@ public class PokemanService {
                     attack.setName(attackName);
                     System.out.println("Ange Attack Type:[Ange 'g' för Grass,'e' för Electric, 'f' för Fire, 'n' för Normal]");
                     String attackType = scan.nextLine();
-                    attackTypeValidation(attackType,attack);                    
+                    attackTypeValidation(attackType, attack);
                     System.out.println("Ange Base Damage värde för " + attackName);
                     while (!isValidBaseDamage) {
                         try {
@@ -288,6 +285,7 @@ public class PokemanService {
         boolean isValidBaseDamage = false;
         boolean isValidAttackAccuracy = false;
 
+
         ArrayList<Attack> attackList = new ArrayList<>();
         //validera pokemon namn
         Pokemon pokemon = new Pokemon();
@@ -319,7 +317,7 @@ public class PokemanService {
 
         System.out.println("Ange Type:[Ange 'g' för Grass,'e' för Electric, 'f' för Fire, 'n' för Normal]");
         String pokemanAttackType = scan.nextLine();
-        pokemanAttackTypeValidation(pokemanAttackType,pokemon);
+        pokemanAttackTypeValidation(pokemanAttackType, pokemon);
         System.out.println("Ange Maximalt HP för Pokemonen");
         while (!isValidMaxHp) {
             try {
@@ -380,19 +378,36 @@ public class PokemanService {
 
         for (int i = 1; i <= Integer.parseInt(numberOfAttacks); i++) {
             System.out.println("Skapa attack nummer: " + i);
-            //validera Attack namn
-            do {
-                System.out.println("Ange Attack Namn! Attack namn kan inte vara töm eller längre än 20 chars. Dessutom, Följ gärna 'atk_nummer' attack namn format ");
-                attackName = scan.nextLine();
-            }
-            while (attackName.isEmpty() || attackName.length() > 20 || !attackName.matches("atk_\\d+"));
+            //skapa och validera Attack namn
+            boolean isValidAttackEntry = false;
             Attack attack = new Attack();
-            attack.setName(attackName);
+            System.out.println("Ange Attack Namn! Följ gärna formatten 'atk_nummer'");
+            while (!isValidAttackEntry) {
+                try {
+                    attackName = scan.nextLine();
+                    String finalAttackName = attackName;
+                    if (attackName.isBlank() || attackName.length() < 4 || attackName.length() > 20 || !attackName.matches("atk_\\d+")) {
+                        throw new InvalidAttackEntryException("Attack namnet är ogiltig.");
+                    }
+                    if (pokemon.getAttacks().stream().anyMatch(a -> a.getName().equalsIgnoreCase(finalAttackName))) {
+                        throw new DuplicateAttackEntryException("Attack namnet redan finns.");
+                    }
+                    attack.setName(attackName);
+                    isValidAttackEntry = true;
+
+                } catch (InvalidAttackEntryException | NullPointerException e) {
+                    System.out.println("Attack namnet är ogiltig! Försök igen: " + e.getMessage());
+                } catch (DuplicateAttackEntryException e) {
+                    System.out.println("Attack namnet redan finns! Ange nytt namn");
+                }
+
+            }
+
             System.out.println("Ange Attack Type:[Ange 'g' för Grass,'e' för Electric, 'f' för Fire, 'n' för Normal]");
             String attackType = scan.nextLine();
-            attackTypeValidation(attackType,attack);
+            attackTypeValidation(attackType, attack);
 
-            System.out.println("Ange Base Damage värde för " + attackName);
+            System.out.println("Ange Base Damage värde för " + attack.getName());
             while (!isValidBaseDamage) {
                 try {
                     baseDamage = scan.nextLine().trim();
@@ -412,7 +427,7 @@ public class PokemanService {
                 }
             }
 
-            System.out.println("Ange Accuracy värde för " + attackName);
+            System.out.println("Ange Accuracy värde för " + attack.getName());
             while (!isValidAttackAccuracy) {
                 try {
                     attackAccuracy = scan.nextLine().trim();
@@ -432,6 +447,9 @@ public class PokemanService {
                 }
             }
             attackList.add(attack);
+            //reset för ny base damage och attack accuracy
+            isValidAttackAccuracy = false;
+            isValidBaseDamage = false;
         }
         pokemon.setAttacks(attackList);
         pokemonList.add(pokemon);
@@ -589,9 +607,8 @@ public class PokemanService {
             }
 
         }
-        System.out.println("Error: Pokemonen finns inte i listan");
+        System.out.println("Error: Pokemonen finns inte i listan! Ange giltig pokemon namn som finns.");
         consoleMenu();
-
     }
 
     public void resetToSeededData() {
@@ -599,7 +616,7 @@ public class PokemanService {
         System.out.println("Info!: Pokemon data har återställt till seed data");
     }
 
-    private void attackTypeValidation(String attackType,Attack attack){
+    private void attackTypeValidation(String attackType, Attack attack) {
         while (attackType != null) {
             switch (attackType.toLowerCase()) {
                 case "g":
@@ -622,6 +639,7 @@ public class PokemanService {
             break;
         }
     }
+
     private void pokemanAttackTypeValidation(String pokemanAttackType, Pokemon pokemon) {
         while (pokemanAttackType != null) {
             switch (pokemanAttackType.toLowerCase()) {

@@ -1,5 +1,6 @@
 package com.service;
 
+import com.exceptions.AttackNotFoundException;
 import com.exceptions.DuplicatePokemonException;
 import com.exceptions.InvalidPokemonNameFormat;
 import com.models.Attack;
@@ -214,7 +215,10 @@ public class PokemanService {
                             while (!attackFound) {
                                 try {
                                     String attackToDelete = scan.nextLine().trim();
-                                    pokemonAttacks.remove(pokemonAttacks.stream().filter(a -> a.getName().equalsIgnoreCase(attackToDelete)).findFirst().get());
+                                    pokemonAttacks.remove(pokemonAttacks.stream()
+                                            .filter(a -> a.getName().equalsIgnoreCase(attackToDelete))
+                                            .findFirst()
+                                            .orElseThrow(() -> new AttackNotFoundException("Attack hitta ej.")));
                                     System.out.println("Success: Attack " + attackToDelete + " har tagits bort från Pokemon " + pokemon.getName());
                                     attackFound = true;
                                     consoleMenu();
@@ -222,7 +226,7 @@ public class PokemanService {
                                 } catch (NullPointerException e) {
                                     System.out.println("Error: Lyckades inte att ta bort attacken! Försök igen");
 
-                                } catch (NoSuchElementException e) {
+                                } catch (AttackNotFoundException e) {
                                     System.out.println("Error: Lyckades inte att hitta Attacken! Försök igen");
                                 }
                             }

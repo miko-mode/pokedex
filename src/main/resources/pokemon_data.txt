@@ -1,7 +1,7 @@
-pokemon_one,Electric,1000,500,attack_one:Electric:85:30#attack_two:Fire:75:40
-pokemon_two,Fire,2000,600,attack_three:Grass:65:50#attack_four:Normal:55:60
-pokemon_three,Grass,3000,700,attack_five:Electric:45:70#attack_six:Fire:35:80
-pokemon_four,Normal,4000,800,attack_one:Electric:85:30#attack_two:Fire:75:40
-pokemon_five,Grass,5000,900,attack_three:Grass:65:50#attack_four:Normal:55:60
-pokemon_six,Electric,6000,1000,attack_five:Electric:45:70#attack_six:Fire:35:80
-poker_faace,Grass,33,45,att_11:Fire:45:121
+poke_1,Electric,100,950,atk_1:Electric:85:30#atk_2:Fire:75:40
+poke_2,Fire,900,450,atk_3:Grass:65:50#atk_4:Normal:55:60
+poke_3,Grass,600,200,atk_5:Electric:45:70#atk_6:Fire:35:80
+poke_4,Normal,850,750,atk_1:Electric:85:30#atk_2:Fire:75:40
+poke_5,Grass,500,550,atk_3:Grass:65:50#atk_4:Normal:55:60
+poke_6,Electric,790,750,atk_5:Electric:45:70#atk_6:Fire:35:80
+poke_7,Grass,55,34,atk_3:Electric:33:12#atk_22:Electric:22:33

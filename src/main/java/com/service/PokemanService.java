@@ -145,29 +145,8 @@ public class PokemanService {
                     attack.setName(attackName);
                     System.out.println("Ange Attack Type:[Ange 'g' för Grass,'e' för Electric, 'f' för Fire, 'n' för Normal]");
                     String attackType = scan.nextLine();
-                    while (attackType != null) {
-                        switch (attackType.toLowerCase()) {
-                            case "g":
-                                attack.setType(Type.Grass);
-                                break;
-                            case "e":
-                                attack.setType(Type.Electric);
-                                break;
-                            case "f":
-                                attack.setType(Type.Fire);
-                                break;
-                            case "n":
-                                attack.setType(Type.Normal);
-                                break;
-                            default:
-                                System.out.println("Error! Ogiltigt Attack Typ, Ange igen!");
-                                attackType = scan.nextLine();
-                                continue;
-                        }
-                        break;
-                    }
+                    attackTypeValidation(attackType,attack);                    
                     System.out.println("Ange Base Damage värde för " + attackName);
-
                     while (!isValidBaseDamage) {
                         try {
                             String baseDamage = scan.nextLine().trim();
@@ -188,7 +167,6 @@ public class PokemanService {
                     }
 
                     System.out.println("Ange Accuracy värde för " + attackName);
-
                     while (!isValidAttackAccuracy) {
                         try {
                             String attackAccuracy = scan.nextLine().trim();
@@ -308,7 +286,7 @@ public class PokemanService {
 
         ArrayList<Attack> attackList = new ArrayList<>();
         //validera pokemon namn
-        Pokemon newPokemon = new Pokemon();
+        Pokemon pokemon = new Pokemon();
 
         System.out.println("Ange Pokemon namn");
         while (!isValidPokemonName) {
@@ -323,7 +301,7 @@ public class PokemanService {
                     throw new DuplicatePokemonException("Pokemon redan finns");
                 }
                 if (!pokemonName.isBlank() && (pokemonName.length() >= 6 && pokemonName.length() <= 20)) {
-                    newPokemon.setName(pokemonName);
+                    pokemon.setName(pokemonName);
                     isValidPokemonName = true;
                 }
 
@@ -336,34 +314,14 @@ public class PokemanService {
         }
 
         System.out.println("Ange Type:[Ange 'g' för Grass,'e' för Electric, 'f' för Fire, 'n' för Normal]");
-        String pokeType = scan.nextLine();
-        while (pokeType != null) {
-            switch (pokeType.toLowerCase()) {
-                case "g":
-                    newPokemon.setType(Type.Grass);
-                    break;
-                case "e":
-                    newPokemon.setType(Type.Electric);
-                    break;
-                case "f":
-                    newPokemon.setType(Type.Fire);
-                    break;
-                case "n":
-                    newPokemon.setType(Type.Normal);
-                    break;
-                default:
-                    System.out.println("Error: Ogiltigt Attack Typ, Ange igen!");
-                    pokeType = scan.nextLine();
-                    continue;
-            }
-            break;
-        }
+        String pokemanAttackType = scan.nextLine();
+        pokemanAttackTypeValidation(pokemanAttackType,pokemon);
         System.out.println("Ange Maximalt HP för Pokemonen");
         while (!isValidMaxHp) {
             try {
                 maxHp = scan.nextLine().trim();
                 if (Integer.parseInt(maxHp) >= 1 && Integer.parseInt(maxHp) <= 1000) {
-                    newPokemon.setMaxHp(Integer.parseInt(maxHp));
+                    pokemon.setMaxHp(Integer.parseInt(maxHp));
                     isValidMaxHp = true;
                 } else if (Integer.parseInt(maxHp) < 1 || Integer.parseInt(maxHp) > 1000) {
                     throw new NumberNotInIntervalException("Ogiltigt värde för Max HP");
@@ -383,7 +341,7 @@ public class PokemanService {
             try {
                 currentHp = scan.nextLine().trim();
                 if (Integer.parseInt(currentHp) >= 1 && Integer.parseInt(currentHp) <= 1000) {
-                    newPokemon.setCurrentHp(Integer.parseInt(currentHp));
+                    pokemon.setCurrentHp(Integer.parseInt(currentHp));
                     isValidCurrentHp = true;
                 } else if (Integer.parseInt(currentHp) < 1 || Integer.parseInt(currentHp) > 1000) {
                     throw new NumberNotInIntervalException("Ogiltigt värde för Current HP");
@@ -397,7 +355,7 @@ public class PokemanService {
                 System.out.println("Error: Ogiltigt värde för Current HP, Ange mellan 1 och 1000");
             }
         }
-        System.out.println("Hur många attacker vill du skaffa för Pokemon " + newPokemon.getName() + " ?");
+        System.out.println("Hur många attacker vill du skaffa för Pokemon " + pokemon.getName() + " ?");
         while (!isValidNumberOfAttacks) {
             try {
                 numberOfAttacks = scan.nextLine().trim();
@@ -428,27 +386,7 @@ public class PokemanService {
             attack.setName(attackName);
             System.out.println("Ange Attack Type:[Ange 'g' för Grass,'e' för Electric, 'f' för Fire, 'n' för Normal]");
             String attackType = scan.nextLine();
-            while (attackType != null) {
-                switch (attackType.toLowerCase()) {
-                    case "g":
-                        attack.setType(Type.Grass);
-                        break;
-                    case "e":
-                        attack.setType(Type.Electric);
-                        break;
-                    case "f":
-                        attack.setType(Type.Fire);
-                        break;
-                    case "n":
-                        attack.setType(Type.Normal);
-                        break;
-                    default:
-                        System.out.println("Error: Ogiltigt Attack Typ, Ange igen!");
-                        attackType = scan.nextLine();
-                        continue;
-                }
-                break;
-            }
+            attackTypeValidation(attackType,attack);
 
             System.out.println("Ange Base Damage värde för " + attackName);
             while (!isValidBaseDamage) {
@@ -491,9 +429,9 @@ public class PokemanService {
             }
             attackList.add(attack);
         }
-        newPokemon.setAttacks(attackList);
-        pokemonList.add(newPokemon);
-        System.out.println("Success! Pokemon " + newPokemon.getName() + " skapades och lagt till Predifinierad pokemoner! Om du vill spara den till fil, använd väl #4 från meny.");
+        pokemon.setAttacks(attackList);
+        pokemonList.add(pokemon);
+        System.out.println("Success! Pokemon " + pokemon.getName() + " skapades och lagt till Predifinierad pokemoner! Om du vill spara den till fil, använd väl #4 från meny.");
         consoleMenu();
     }
 
@@ -513,7 +451,6 @@ public class PokemanService {
                 while (val != null) {
                     if (val.equalsIgnoreCase("n")) {
                         System.out.println("Ange ny pokemon namn");
-
 
                         while (!isValidPokemonName) {
                             try {
@@ -658,4 +595,50 @@ public class PokemanService {
         System.out.println("Info!: Pokemon data har återställt till seed data");
     }
 
+    private void attackTypeValidation(String attackType,Attack attack){
+        while (attackType != null) {
+            switch (attackType.toLowerCase()) {
+                case "g":
+                    attack.setType(Type.Grass);
+                    break;
+                case "e":
+                    attack.setType(Type.Electric);
+                    break;
+                case "f":
+                    attack.setType(Type.Fire);
+                    break;
+                case "n":
+                    attack.setType(Type.Normal);
+                    break;
+                default:
+                    System.out.println("Error: Ogiltigt Attack Typ, Ange igen!");
+                    attackType = scan.nextLine();
+                    continue;
+            }
+            break;
+        }
+    }
+    private void pokemanAttackTypeValidation(String pokemanAttackType, Pokemon pokemon) {
+        while (pokemanAttackType != null) {
+            switch (pokemanAttackType.toLowerCase()) {
+                case "g":
+                    pokemon.setType(Type.Grass);
+                    break;
+                case "e":
+                    pokemon.setType(Type.Electric);
+                    break;
+                case "f":
+                    pokemon.setType(Type.Fire);
+                    break;
+                case "n":
+                    pokemon.setType(Type.Normal);
+                    break;
+                default:
+                    System.out.println("Error: Ogiltigt Attack Typ, Ange igen!");
+                    pokemanAttackType = scan.nextLine();
+                    continue;
+            }
+            break;
+        }
+    }
 }

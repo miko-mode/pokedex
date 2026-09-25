@@ -21,7 +21,11 @@ Följ dessa steg för att klona, bygga och köra projektet.
 git clone https://github.com/miko-mode/pokemons.git
 cd projekt mapp
 ```
+#### Credentials for repo:
 
+Generera Personal Access Token(PAT) för att klona repon om det begärs.
+
+token:
 ### 2. Bygg projektet
 Kör Maven kommandon:Säkerställ att Maven är redan installerat med
 
@@ -32,7 +36,8 @@ Sen kör:
 ```bash
 mvn clean install
 ```
-**kör Main klassen direkt för att börja Applikationen**
+### 3. kör Applikationen
+kör Main klassen direkt för att börja Applikationen
 ```bash
 mvn exec:java -Dexec.mainClass="com.app.Main"
 ```

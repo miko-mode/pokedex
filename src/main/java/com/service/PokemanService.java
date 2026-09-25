@@ -392,22 +392,12 @@ public class PokemanService {
                     if (pokemon.getAttacks().stream().anyMatch(a -> a.getName().equalsIgnoreCase(finalAttackName))) {
                         throw new DuplicateAttackEntryException("Attack namnet redan finns.");
                     }
-                    attack.setName(attackName);
-                    isValidAttackEntry = true;
-
-                } catch (InvalidAttackEntryException | NullPointerException e) {
-                    System.out.println("Attack namnet är ogiltig! Försök igen: " + e.getMessage());
-                } catch (DuplicateAttackEntryException e) {
-                    System.out.println("Attack namnet redan finns! Ange nytt namn");
-                }
-
-            }
 
             System.out.println("Ange Attack Type:[Ange 'g' för Grass,'e' för Electric, 'f' för Fire, 'n' för Normal]");
             String attackType = scan.nextLine();
             attackTypeValidation(attackType, attack);
 
-            System.out.println("Ange Base Damage värde för " + attack.getName());
+            System.out.println("Ange Base Damage värde för " + attackName);
             while (!isValidBaseDamage) {
                 try {
                     baseDamage = scan.nextLine().trim();
@@ -427,7 +417,7 @@ public class PokemanService {
                 }
             }
 
-            System.out.println("Ange Accuracy värde för " + attack.getName());
+            System.out.println("Ange Accuracy värde för " + attackName);
             while (!isValidAttackAccuracy) {
                 try {
                     attackAccuracy = scan.nextLine().trim();
@@ -446,12 +436,22 @@ public class PokemanService {
                     System.out.println("Error: Ogiltigt värde för Accuracy, Ange mellan 1 och 100");
                 }
             }
+                    attack.setName(attackName);
+                    isValidAttackEntry = true;
+
+                } catch (InvalidAttackEntryException | NullPointerException e) {
+                    System.out.println("Attack namnet är ogiltig! Försök igen:" );
+                } catch (DuplicateAttackEntryException e) {
+                    System.out.println("Attack namnet redan finns! Ange nytt namn");
+                }
+
+            }
             attackList.add(attack);
+            pokemon.setAttacks(attackList);
             //reset för ny base damage och attack accuracy
             isValidAttackAccuracy = false;
             isValidBaseDamage = false;
         }
-        pokemon.setAttacks(attackList);
         pokemonList.add(pokemon);
         System.out.println("Success! Pokemon " + pokemon.getName() + " skapades och lagt till Predifinierad pokemoner! Om du vill spara den till fil, använd väl #4 från meny.");
         consoleMenu();

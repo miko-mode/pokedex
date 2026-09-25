@@ -4,4 +4,3 @@ poke_3,Grass,600,200,atk_5:Electric:45:70#atk_6:Fire:35:80
 poke_4,Normal,850,750,atk_1:Electric:85:30#atk_2:Fire:75:40
 poke_5,Grass,500,550,atk_3:Grass:65:50#atk_4:Normal:55:60
 poke_6,Electric,790,750,atk_5:Electric:45:70#atk_6:Fire:35:80
-poke_7,Grass,55,34,atk_3:Electric:33:12#atk_22:Electric:22:33

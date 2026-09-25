@@ -16,7 +16,7 @@ Pokemons.
 
 Följ dessa steg för att klona, bygga och köra projektet.
 
-### 1. Klona arkivet till en mapp
+### 1. Klona projektet till en mapp
 ```bash
 git clone https://github.com/miko-mode/pokemons.git
 cd projekt mapp

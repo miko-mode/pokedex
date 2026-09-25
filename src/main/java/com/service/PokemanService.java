@@ -628,7 +628,7 @@ public class PokemanService {
             }
 
         }
-        System.out.println("Error: Pokemonen finns inte i listan! Ange giltig pokemon namn som finns.");
+        System.out.println("Error: Ange giltig pokemon namn som finns redan. Tom värde är inte tillåten. ");
         consoleMenu();
     }
 

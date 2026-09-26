@@ -11,6 +11,7 @@ import com.models.Pokemon;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.util.*;
 
 public class PokemanService {
@@ -631,6 +632,7 @@ public class PokemanService {
 
     //återställ till seed data
     public void resetToSeededData() {
+        pokemonList=new ArrayList<>();
         predefinedPokemon();
         System.out.println("Info!: Pokemon data har återställt till seed data");
     }

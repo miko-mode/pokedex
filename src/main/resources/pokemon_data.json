@@ -1,0 +1,97 @@
+[ {
+  "name" : "poke_1",
+  "type" : "Electric",
+  "maxHp" : 100,
+  "currentHp" : 950,
+  "attacks" : [ {
+    "name" : "atk_1",
+    "type" : "Electric",
+    "baseDamage" : 85,
+    "accuracy" : 30
+  }, {
+    "name" : "atk_2",
+    "type" : "Fire",
+    "baseDamage" : 75,
+    "accuracy" : 40
+  } ]
+}, {
+  "name" : "poke_2",
+  "type" : "Fire",
+  "maxHp" : 900,
+  "currentHp" : 450,
+  "attacks" : [ {
+    "name" : "atk_3",
+    "type" : "Grass",
+    "baseDamage" : 65,
+    "accuracy" : 50
+  }, {
+    "name" : "atk_4",
+    "type" : "Normal",
+    "baseDamage" : 55,
+    "accuracy" : 60
+  } ]
+}, {
+  "name" : "poke_3",
+  "type" : "Grass",
+  "maxHp" : 600,
+  "currentHp" : 200,
+  "attacks" : [ {
+    "name" : "atk_5",
+    "type" : "Electric",
+    "baseDamage" : 45,
+    "accuracy" : 70
+  }, {
+    "name" : "atk_6",
+    "type" : "Fire",
+    "baseDamage" : 35,
+    "accuracy" : 80
+  } ]
+}, {
+  "name" : "poke_4",
+  "type" : "Normal",
+  "maxHp" : 850,
+  "currentHp" : 750,
+  "attacks" : [ {
+    "name" : "atk_1",
+    "type" : "Electric",
+    "baseDamage" : 85,
+    "accuracy" : 30
+  }, {
+    "name" : "atk_2",
+    "type" : "Fire",
+    "baseDamage" : 75,
+    "accuracy" : 40
+  } ]
+}, {
+  "name" : "poke_5",
+  "type" : "Grass",
+  "maxHp" : 500,
+  "currentHp" : 550,
+  "attacks" : [ {
+    "name" : "atk_3",
+    "type" : "Grass",
+    "baseDamage" : 65,
+    "accuracy" : 50
+  }, {
+    "name" : "atk_4",
+    "type" : "Normal",
+    "baseDamage" : 55,
+    "accuracy" : 60
+  } ]
+}, {
+  "name" : "poke_6",
+  "type" : "Electric",
+  "maxHp" : 790,
+  "currentHp" : 750,
+  "attacks" : [ {
+    "name" : "atk_5",
+    "type" : "Electric",
+    "baseDamage" : 45,
+    "accuracy" : 70
+  }, {
+    "name" : "atk_6",
+    "type" : "Fire",
+    "baseDamage" : 35,
+    "accuracy" : 80
+  } ]
+} ]

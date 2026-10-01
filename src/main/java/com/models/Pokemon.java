@@ -14,6 +14,12 @@ public class Pokemon {
     private List<Attack> attacks=new ArrayList<>();
 
     public Pokemon(String name, Type type, int maxHp, int currentHp, List<Attack> attacks) {
+        if (name == null || name.trim().isEmpty()) {
+            throw new IllegalArgumentException("namn får inte vara tomt");
+        }
+        if (maxHp <= 0) {
+            throw new IllegalArgumentException("max-HP måste vara > 0");
+        }
         this.name = name;
         this.type = type;
         this.maxHp = maxHp;

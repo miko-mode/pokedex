@@ -10,6 +10,15 @@ public class Attack {
     private int accuracy;
 
     public Attack(String name, Type type, int baseDamage, int accuracy) {
+        if (name == null || name.trim().isEmpty()) {
+            throw new IllegalArgumentException("namn får inte vara tomt");
+        }
+        if (baseDamage <= 0) {
+            throw new IllegalArgumentException("basskada måste vara > 0");
+        }
+        if (accuracy < 0 || accuracy > 100) {
+            throw new IllegalArgumentException("träffsäkerhet måste vara 0-100");
+        }
         this.name = name;
         this.type = type;
         this.baseDamage = baseDamage;

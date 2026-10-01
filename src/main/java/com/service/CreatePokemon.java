@@ -1,0 +1,198 @@
+package com.service;
+
+import com.exceptions.*;
+import com.models.Attack;
+import com.models.Pokemon;
+import com.utility.ValidationInputHelper;
+
+import java.util.ArrayList;
+
+import static com.app.Main.consoleMenu;
+
+public class CreatePokemon extends PokemonOperations {
+    String maxHp;
+    String currentHp;
+    String numberOfAttacks = null;
+    String baseDamage;
+    String attackAccuracy;
+    String pokemonName;
+    String attackName;
+    boolean isValidPokemonName = false;
+    boolean isValidMaxHp = false;
+    boolean isValidCurrentHp = false;
+    boolean isValidNumberOfAttacks = false;
+    boolean isValidBaseDamage = false;
+    boolean isValidAttackAccuracy = false;
+
+    public void createPokemon() throws InvalidPokemonNameFormat, DuplicatePokemonException {
+        ArrayList<Attack> attackList = new ArrayList<>();
+        //validera pokemon namn
+        Pokemon pokemon = new Pokemon();
+
+        System.out.println("Ange Pokemon namn");
+        while (!isValidPokemonName) {
+            try {
+                pokemonName = scan.nextLine().trim();
+                String finalPokemonName = pokemonName;
+
+                if (!pokemonName.matches("poke_\\d+")) {
+                    throw new InvalidPokemonNameFormat("Invalid pokemon namn format");
+                }
+                if (pokemonList.stream().anyMatch(p -> p.getName().equalsIgnoreCase(finalPokemonName))) {
+                    throw new DuplicatePokemonException("Pokemon redan finns");
+                }
+                if (!pokemonName.isBlank() && (pokemonName.length() >= 6 && pokemonName.length() <= 20)) {
+                    pokemon.setName(pokemonName);
+                    isValidPokemonName = true;
+                }
+
+            } catch (InvalidPokemonNameFormat e) {
+                System.out.println("Error: Följ gärna 'poke_nummer' namning format! Ange ett ny namn");
+
+            } catch (DuplicatePokemonException e) {
+                System.out.println("Error: Pokemonen redan finns! Ange ett ny namn");
+            }
+        }
+
+        System.out.println("Ange Type:[Ange 'g' för Grass,'e' för Electric, 'f' för Fire, 'n' för Normal]");
+        String pokemanAttackType = scan.nextLine();
+        ValidationInputHelper.pokemanAttackTypeValidation(pokemanAttackType, pokemon);
+        System.out.println("Ange Maximalt HP för Pokemonen");
+        while (!isValidMaxHp) {
+            try {
+                maxHp = scan.nextLine().trim();
+                if (Integer.parseInt(maxHp) >= 1 && Integer.parseInt(maxHp) <= 1000) {
+                    pokemon.setMaxHp(Integer.parseInt(maxHp));
+                    isValidMaxHp = true;
+                } else if (Integer.parseInt(maxHp) < 1 || Integer.parseInt(maxHp) > 1000) {
+                    throw new NumberNotInIntervalException("Ogiltigt värde för Max HP");
+                } else if (Integer.parseInt(maxHp) > Integer.MAX_VALUE || Integer.parseInt(maxHp) < Integer.MIN_VALUE) {
+                    throw new NumberFormatException();
+                }
+
+            } catch (NumberFormatException e) {
+                System.out.println("Error: Ogiltigt värde för Max HP, Vänliga ange bara giltig Integer värde");
+            } catch (NumberNotInIntervalException e) {
+                System.out.println("Error: Ogiltigt värde för Max HP, Ange mellan 1 och 1000");
+            }
+        }
+
+        System.out.println("Ange Current HP för Pokemonen");
+        while (!isValidCurrentHp) {
+            try {
+                currentHp = scan.nextLine().trim();
+                if (Integer.parseInt(currentHp) >= 1 && Integer.parseInt(currentHp) <= 1000) {
+                    pokemon.setCurrentHp(Integer.parseInt(currentHp));
+                    isValidCurrentHp = true;
+                } else if (Integer.parseInt(currentHp) < 1 || Integer.parseInt(currentHp) > 1000) {
+                    throw new NumberNotInIntervalException("Ogiltigt värde för Current HP");
+                } else if (Integer.parseInt(currentHp) > Integer.MAX_VALUE || Integer.parseInt(currentHp) < Integer.MIN_VALUE) {
+                    throw new NumberFormatException();
+                }
+
+            } catch (NumberFormatException e) {
+                System.out.println("Error: Ogiltigt värde för Current HP, Vänliga ange bara giltig Integer värde");
+            } catch (NumberNotInIntervalException e) {
+                System.out.println("Error: Ogiltigt värde för Current HP, Ange mellan 1 och 1000");
+            }
+        }
+        System.out.println("Hur många attacker vill du skaffa för Pokemon " + pokemon.getName() + " ?");
+        while (!isValidNumberOfAttacks) {
+            try {
+                numberOfAttacks = scan.nextLine().trim();
+                if (Integer.parseInt(numberOfAttacks) >= 1 && Integer.parseInt(numberOfAttacks) <= 4) {
+                    isValidNumberOfAttacks = true;
+                } else if (Integer.parseInt(numberOfAttacks) < 1 || Integer.parseInt(numberOfAttacks) > 4) {
+                    throw new NumberNotInIntervalException("Ogiltigt värde för Antalet Attacker");
+                } else if (Integer.parseInt(numberOfAttacks) > Integer.MAX_VALUE || Integer.parseInt(numberOfAttacks) < Integer.MIN_VALUE) {
+                    throw new NumberFormatException();
+                }
+
+            } catch (NumberFormatException e) {
+                System.out.println("Error: Ogiltigt värde för  Antalet Attacker, Vänliga ange bara giltig Integer värde");
+            } catch (NumberNotInIntervalException e) {
+                System.out.println("Error: Ogiltigt värde för  Antalet Attacker, Ange mellan 1 och 4");
+            }
+        }
+
+        for (int i = 1; i <= Integer.parseInt(numberOfAttacks); i++) {
+            System.out.println("Skapa attack nummer: " + i);
+            //skapa och validera Attack namn
+            boolean isValidAttackEntry = false;
+            Attack attack = new Attack();
+            System.out.println("Ange Attack Namn! Följ gärna formatten 'atk_nummer'");
+            while (!isValidAttackEntry) {
+                try {
+                    attackName = scan.nextLine();
+                    String finalAttackName = attackName;
+                    if (attackName.isBlank() || attackName.length() < 4 || attackName.length() > 20 || !attackName.matches("atk_\\d+")) {
+                        throw new InvalidAttackEntryException("Attack namnet är ogiltig.");
+                    }
+                    if (pokemon.getAttacks().stream().anyMatch(a -> a.getName().equalsIgnoreCase(finalAttackName))) {
+                        throw new DuplicateAttackEntryException("Attack namnet redan finns.");
+                    }
+
+                    System.out.println("Ange Attack Type:[Ange 'g' för Grass,'e' för Electric, 'f' för Fire, 'n' för Normal]");
+                    String attackType = scan.nextLine();
+                    ValidationInputHelper.attackTypeValidation(attackType, attack);
+
+                    System.out.println("Ange Base Damage värde för " + attackName);
+                    while (!isValidBaseDamage) {
+                        try {
+                            baseDamage = scan.nextLine().trim();
+                            if (Integer.parseInt(baseDamage) >= 1 && Integer.parseInt(baseDamage) <= 100) {
+                                attack.setBaseDamage(Integer.parseInt(baseDamage));
+                                isValidBaseDamage = true;
+                            } else if (Integer.parseInt(baseDamage) < 1 || Integer.parseInt(baseDamage) > 100) {
+                                throw new NumberNotInIntervalException("Ogiltigt värde för Base Damage");
+                            } else if (Integer.parseInt(baseDamage) > Integer.MAX_VALUE || Integer.parseInt(baseDamage) < Integer.MIN_VALUE) {
+                                throw new NumberFormatException();
+                            }
+
+                        } catch (NumberFormatException e) {
+                            System.out.println("Error: Ogiltigt värde för Base Damage, Vänliga ange bara giltig Integer värde");
+                        } catch (NumberNotInIntervalException e) {
+                            System.out.println("Error: Ogiltigt värde för Base Damage, Ange mellan 1 och 100");
+                        }
+                    }
+
+                    System.out.println("Ange Accuracy värde för " + attackName);
+                    while (!isValidAttackAccuracy) {
+                        try {
+                            attackAccuracy = scan.nextLine().trim();
+                            if (Integer.parseInt(attackAccuracy) >= 1 && Integer.parseInt(attackAccuracy) <= 100) {
+                                attack.setAccuracy(Integer.parseInt(attackAccuracy));
+                                isValidAttackAccuracy = true;
+                            } else if (Integer.parseInt(attackAccuracy) < 1 || Integer.parseInt(attackAccuracy) > 100) {
+                                throw new NumberNotInIntervalException("Ogiltigt värde för Accuracy");
+                            } else if (Integer.parseInt(attackAccuracy) > Integer.MAX_VALUE || Integer.parseInt(attackAccuracy) < Integer.MIN_VALUE) {
+                                throw new NumberFormatException();
+                            }
+
+                        } catch (NumberFormatException e) {
+                            System.out.println("Error: Ogiltigt värde för Accuracy, Vänliga ange bara giltig Integer värde");
+                        } catch (NumberNotInIntervalException e) {
+                            System.out.println("Error: Ogiltigt värde för Accuracy, Ange mellan 1 och 100");
+                        }
+                    }
+                    attack.setName(attackName);
+                    isValidAttackEntry = true;
+
+                } catch (InvalidAttackEntryException | NullPointerException e) {
+                    System.out.println("Attack namnet är ogiltig! Försök igen:");
+                } catch (DuplicateAttackEntryException e) {
+                    System.out.println("Attack namnet redan finns! Ange nytt namn");
+                }
+
+            }
+            attackList.add(attack);
+            pokemon.setAttacks(attackList);
+            //reset för ny base damage och attack accuracy
+            isValidAttackAccuracy = false;
+            isValidBaseDamage = false;
+        }
+        pokemonList.add(pokemon);
+        System.out.println("Success! Pokemon " + pokemon.getName() + " skapades och lagt till Predifinierad pokemoner! Om du vill spara den till fil, använd väl #4 från meny.");
+        consoleMenu();
+    }
+}

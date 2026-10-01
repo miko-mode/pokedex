@@ -89,4 +89,15 @@
     "baseDamage" : 23,
     "accuracy" : 23
   } ]
+}, {
+  "name" : "picachu",
+  "type" : "Electric",
+  "maxHp" : 332,
+  "currentHp" : 22,
+  "attacks" : [ {
+    "name" : "attacky",
+    "type" : "Electric",
+    "baseDamage" : 33,
+    "accuracy" : 22
+  } ]
 } ]

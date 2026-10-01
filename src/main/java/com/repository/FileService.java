@@ -13,11 +13,11 @@ import java.util.ArrayList;
 public class FileService  extends PokemonOperations {
     public void loadFromFile() {
         try {
-            ArrayList<Pokemon> pokemonJson = objectMapper.readValue(jsonFile, new TypeReference<>() {
+            ArrayList<Pokemon> pokemonJSON = objectMapper.readValue(jsonFile, new TypeReference<>() {
             });
-            pokemonList = pokemonJson;
-            String outputJson = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(pokemonJson);
-            System.out.println(outputJson);
+            pokemonList = pokemonJSON;
+            System.out.println("Laddar pokemon data från fil ...");
+            System.out.println(pokemonList.toString());
         } catch (FileNotFoundException e) {
             System.out.println("Error: Lyckades inte att hitta filen");
         } catch (IOException e) {

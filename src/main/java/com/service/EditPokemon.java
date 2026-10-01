@@ -2,7 +2,6 @@ package com.service;
 
 import com.enums.Type;
 import com.exceptions.*;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.models.Attack;
 import com.models.Pokemon;
 

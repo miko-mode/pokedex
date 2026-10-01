@@ -1,6 +1,5 @@
 package com.service;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.models.Pokemon;
 
 import java.util.stream.Collectors;

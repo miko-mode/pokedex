@@ -79,15 +79,22 @@ public class CreatePokemon extends PokemonOperations {
         while (!isValidCurrentHp) {
             try {
                 currentHp = scan.nextLine().trim();
+                if (Integer.parseInt(currentHp) < 1 || Integer.parseInt(currentHp) > 1000) {
+                    throw new NumberNotInIntervalException("Ogiltigt värde för Current HP");
+                }
+                if (Integer.parseInt(currentHp) > Integer.MAX_VALUE || Integer.parseInt(currentHp) < Integer.MIN_VALUE) {
+                    throw new NumberFormatException();
+                }
+                if (Integer.parseInt(currentHp) > Integer.parseInt(maxHp)) {
+                    throw new CurrentHpGreaterThanMaxHpException("Current HP högre än Max HP.");
+                }
                 if (Integer.parseInt(currentHp) >= 1 && Integer.parseInt(currentHp) <= 1000) {
                     pokemon.setCurrentHp(Integer.parseInt(currentHp));
                     isValidCurrentHp = true;
-                } else if (Integer.parseInt(currentHp) < 1 || Integer.parseInt(currentHp) > 1000) {
-                    throw new NumberNotInIntervalException("Ogiltigt värde för Current HP");
-                } else if (Integer.parseInt(currentHp) > Integer.MAX_VALUE || Integer.parseInt(currentHp) < Integer.MIN_VALUE) {
-                    throw new NumberFormatException();
                 }
 
+            } catch (CurrentHpGreaterThanMaxHpException e) {
+                System.out.println("Error: Current HP kan inte vara högre än Max HP. Försök igen");
             } catch (NumberFormatException e) {
                 System.out.println("Error: Ogiltigt värde för Current HP, Vänliga ange bara giltig Integer värde");
             } catch (NumberNotInIntervalException e) {
@@ -190,7 +197,7 @@ public class CreatePokemon extends PokemonOperations {
             isValidBaseDamage = false;
         }
         pokemonList.add(pokemon);
-        System.out.println("Success! Pokemon " + pokemon.getName() + " skapades och lagt till Predifinierad pokemoner! Om du vill spara den till fil, använd väl #4 från meny.");
+        System.out.println("Success! Pokemon " + pokemon.getName() + " skapades och lagt till Predifinierad pokemoner!");
         consoleMenu();
     }
 }

@@ -14,7 +14,7 @@ import static com.utility.ValidationInputHelper.attackTypeValidation;
 public class EditPokemon extends PokemonOperations {
 
     public void editPokemon() {
-        String maxHp;
+        String maxHp = null;
         String currentHp;
         boolean isValidMaxHp = false;
         boolean isValidCurrentHp = false;
@@ -23,126 +23,132 @@ public class EditPokemon extends PokemonOperations {
         String pokemonNamn = scan.nextLine();
         for (Pokemon pokemon : pokemonList) {
             if (pokemon.getName().equalsIgnoreCase(pokemonNamn)) {
-                    System.out.println("Pokemon info:\n" + pokemon);
-                    System.out.println("Vilken fält vill du ändra? Ange 'n' för namn, 't' för Type, 'm' för Max HP, 'c' för Current HP. För att redigera(lägg tiill/ta bort) Attack, Tryck 'a'.");
-                    String val = scan.nextLine();
-                    while (val != null) {
-                        if (val.equalsIgnoreCase("n")) {
-                            System.out.println("Ange ny pokemon namn");
+                System.out.println("Pokemon info:\n" + pokemon);
+                System.out.println("Vilken fält vill du ändra? Ange 'n' för namn, 't' för Type, 'm' för Max HP, 'c' för Current HP. För att redigera(lägg tiill/ta bort) Attack, Tryck 'a'.");
+                String val = scan.nextLine();
+                while (val != null) {
+                    if (val.equalsIgnoreCase("n")) {
+                        System.out.println("Ange ny pokemon namn");
 
-                            while (!isValidPokemonName) {
-                                try {
-                                    String pokemonName = scan.nextLine();
-                                    String finalPokemonName = pokemonName;
+                        while (!isValidPokemonName) {
+                            try {
+                                String pokemonName = scan.nextLine();
+                                String finalPokemonName = pokemonName;
 
-                                    if ((pokemonName.length() < 2 || pokemonName.length() > 20)) {
-                                        throw new InvalidPokemonNameFormat("Pokemon namn storlek är för lite.");
-                                    }
-                                    if (pokemonList.stream().anyMatch(p -> p.getName().equalsIgnoreCase(finalPokemonName))) {
-                                        throw new DuplicatePokemonException("Pokemon redan finns");
-                                    }
-                                    if (!pokemonName.isBlank() && (pokemonName.length() >= 6 && pokemonName.length() <= 20)) {
-                                        pokemon.setName(pokemonName);
-                                        System.out.println("Success! Pokemon namn är ändrat till " + pokemonName);
-
-                                        isValidPokemonName = true;
-                                        consoleMenu();
-                                    }
-
-                                } catch (InvalidPokemonNameFormat e) {
-                                    System.out.println("Error: Pokemonen namn storlek borde vara mellan 2 och 20.");
-                                } catch (DuplicatePokemonException e) {
-                                    System.out.println("Error: Pokemonen redan finns! Ange ett ny namn");
+                                if ((pokemonName.length() < 2 || pokemonName.length() > 20)) {
+                                    throw new InvalidPokemonNameFormat("Pokemon namn storlek är för lite.");
                                 }
-                            }
-
-                        } else if (val.equalsIgnoreCase("t")) {
-                            System.out.println("Ange Attack Type:[Ange 'g' för Grass,'e' för Electric, 'f' för Fire, 'n' för Normal]");
-                            String attackType = scan.nextLine();
-                            while (attackType != null) {
-                                switch (attackType.toLowerCase()) {
-                                    case "g":
-                                        pokemon.setType(Type.Grass);
-                                        System.out.println("Success! Pokemon Typ är ändrat till Grass");
-                                        break;
-                                    case "e":
-                                        pokemon.setType(Type.Electric);
-                                        System.out.println("Success! Pokemon Typ är ändrat till Electric");
-                                        break;
-                                    case "f":
-                                        pokemon.setType(Type.Fire);
-                                        System.out.println("Success! Pokemon Typ är ändrat till Fire");
-                                        break;
-                                    case "n":
-                                        pokemon.setType(Type.Normal);
-                                        System.out.println("Success! Pokemon Typ är ändrat till Normal");
-                                        break;
-                                    default:
-                                        System.out.println("Error: Ogiltigt Attack Typ, Ange valid val igen! ['g' ,'e' ,'f' ,'n']]");
-                                        attackType = scan.nextLine();
-                                        continue;
+                                if (pokemonList.stream().anyMatch(p -> p.getName().equalsIgnoreCase(finalPokemonName))) {
+                                    throw new DuplicatePokemonException("Pokemon redan finns");
                                 }
-                                break;
-                            }
-                            consoleMenu();
-                        } else if (val.equalsIgnoreCase("m")) {
-                            System.out.println("Ange Maximalt HP för Pokemonen");
-                            while (!isValidMaxHp) {
-                                try {
-                                    maxHp = scan.nextLine().trim();
-                                    if (Integer.parseInt(maxHp) < 1 || Integer.parseInt(maxHp) > 1000) {
-                                        throw new NumberNotInIntervalException("Ogiltigt värde för Max HP");
-                                    }
-                                    if (Integer.parseInt(maxHp) > Integer.MAX_VALUE || Integer.parseInt(maxHp) < Integer.MIN_VALUE) {
-                                        throw new NumberFormatException();
-                                    }
-                                    if (Integer.parseInt(maxHp) >= 1 && Integer.parseInt(maxHp) <= 1000) {
-                                        pokemon.setMaxHp(Integer.parseInt(maxHp));
-                                        System.out.println("Success! " + pokemon.getName() + " maximalt HP ändrats till " + maxHp);
-                                        isValidMaxHp = true;
-                                        consoleMenu();
-                                    }
+                                if (!pokemonName.isBlank() && (pokemonName.length() >= 6 && pokemonName.length() <= 20)) {
+                                    pokemon.setName(pokemonName);
+                                    System.out.println("Success! Pokemon namn är ändrat till " + pokemonName);
 
-                                } catch (NumberFormatException e) {
-                                    System.out.println("Error: Ogiltigt värde för Max HP, Vänliga ange bara giltig Integer värde");
-                                } catch (NumberNotInIntervalException e) {
-                                    System.out.println("Error: Ogiltigt värde för Max HP, Ange mellan 1 och 1000");
+                                    isValidPokemonName = true;
+                                    consoleMenu();
                                 }
+
+                            } catch (InvalidPokemonNameFormat e) {
+                                System.out.println("Error: Pokemonen namn storlek borde vara mellan 2 och 20.");
+                            } catch (DuplicatePokemonException e) {
+                                System.out.println("Error: Pokemonen redan finns! Ange ett ny namn");
                             }
-
-
-                        } else if (val.equalsIgnoreCase("c")) {
-                            System.out.println("Ange Current HP för Pokemonen");
-                            while (!isValidCurrentHp) {
-                                try {
-                                    currentHp = scan.nextLine().trim();
-                                    if (Integer.parseInt(currentHp) < 1 || Integer.parseInt(currentHp) > 1000) {
-                                        throw new NumberNotInIntervalException("Ogiltigt värde för Current HP");
-                                    }
-                                    if (Integer.parseInt(currentHp) > Integer.MAX_VALUE || Integer.parseInt(currentHp) < Integer.MIN_VALUE) {
-                                        throw new NumberFormatException();
-                                    }
-                                    if (Integer.parseInt(currentHp) >= 1 && Integer.parseInt(currentHp) <= 1000) {
-                                        pokemon.setCurrentHp(Integer.parseInt(currentHp));
-                                        isValidCurrentHp = true;
-                                        System.out.println("Success! " + pokemon.getName() + " Current HP ändrats till " + currentHp);
-                                        consoleMenu();
-                                    }
-
-                                } catch (NumberFormatException e) {
-                                    System.out.println("Error: Ogiltigt värde för Current HP, Vänliga ange bara giltig Integer värde");
-                                } catch (NumberNotInIntervalException e) {
-                                    System.out.println("Error: Ogiltigt värde för Current HP, Ange mellan 1 och 1000");
-                                }
-                            }
-
-                        } else if (val.equalsIgnoreCase("a")) {
-                            editAttack(pokemon);
-                        } else {
-                            System.out.println("Error: Ogilitigt val ändring av Pokemon, ange valid val igen! ['n' för namn , 't' för Type, 'm' för Max HP, 'c' för Current HP,'a' för Attack]");
-                            val = scan.nextLine();
                         }
+
+                    } else if (val.equalsIgnoreCase("t")) {
+                        System.out.println("Ange Attack Type:[Ange 'g' för Grass,'e' för Electric, 'f' för Fire, 'n' för Normal]");
+                        String attackType = scan.nextLine();
+                        while (attackType != null) {
+                            switch (attackType.toLowerCase()) {
+                                case "g":
+                                    pokemon.setType(Type.Grass);
+                                    System.out.println("Success! Pokemon Typ är ändrat till Grass");
+                                    break;
+                                case "e":
+                                    pokemon.setType(Type.Electric);
+                                    System.out.println("Success! Pokemon Typ är ändrat till Electric");
+                                    break;
+                                case "f":
+                                    pokemon.setType(Type.Fire);
+                                    System.out.println("Success! Pokemon Typ är ändrat till Fire");
+                                    break;
+                                case "n":
+                                    pokemon.setType(Type.Normal);
+                                    System.out.println("Success! Pokemon Typ är ändrat till Normal");
+                                    break;
+                                default:
+                                    System.out.println("Error: Ogiltigt Attack Typ, Ange valid val igen! ['g' ,'e' ,'f' ,'n']]");
+                                    attackType = scan.nextLine();
+                                    continue;
+                            }
+                            break;
+                        }
+                        consoleMenu();
+                    } else if (val.equalsIgnoreCase("m")) {
+                        System.out.println("Ange Maximalt HP för Pokemonen");
+                        while (!isValidMaxHp) {
+                            try {
+                                maxHp = scan.nextLine().trim();
+                                if (Integer.parseInt(maxHp) < 1 || Integer.parseInt(maxHp) > 1000) {
+                                    throw new NumberNotInIntervalException("Ogiltigt värde för Max HP");
+                                }
+                                if (Integer.parseInt(maxHp) > Integer.MAX_VALUE || Integer.parseInt(maxHp) < Integer.MIN_VALUE) {
+                                    throw new NumberFormatException();
+                                }
+                                if (Integer.parseInt(maxHp) >= 1 && Integer.parseInt(maxHp) <= 1000) {
+                                    pokemon.setMaxHp(Integer.parseInt(maxHp));
+                                    System.out.println("Success! " + pokemon.getName() + " maximalt HP ändrats till " + maxHp);
+                                    isValidMaxHp = true;
+                                    consoleMenu();
+                                }
+
+                            } catch (NumberFormatException e) {
+                                System.out.println("Error: Ogiltigt värde för Max HP, Vänliga ange bara giltig Integer värde");
+                            } catch (NumberNotInIntervalException e) {
+                                System.out.println("Error: Ogiltigt värde för Max HP, Ange mellan 1 och 1000");
+                            }
+                        }
+
+
+                    } else if (val.equalsIgnoreCase("c")) {
+                        System.out.println("Ange Current HP för Pokemonen");
+                        while (!isValidCurrentHp) {
+                            try {
+                                currentHp = scan.nextLine().trim();
+                                if (Integer.parseInt(currentHp) < 1 || Integer.parseInt(currentHp) > 1000) {
+                                    throw new NumberNotInIntervalException("Ogiltigt värde för Current HP");
+                                }
+                                if (Integer.parseInt(currentHp) > Integer.MAX_VALUE || Integer.parseInt(currentHp) < Integer.MIN_VALUE) {
+                                    throw new NumberFormatException();
+                                }
+                                assert maxHp != null;
+                                if (Integer.parseInt(currentHp) > pokemon.getMaxHp()) {
+                                    throw new CurrentHpGreaterThanMaxHpException("Högre currentHp an maxHp");
+                                }
+                                if (Integer.parseInt(currentHp) >= 1 && Integer.parseInt(currentHp) <= 1000) {
+                                    pokemon.setCurrentHp(Integer.parseInt(currentHp));
+                                    isValidCurrentHp = true;
+                                    System.out.println("Success! " + pokemon.getName() + " Current HP ändrats till " + currentHp);
+                                    consoleMenu();
+                                }
+
+                            } catch (CurrentHpGreaterThanMaxHpException e) {
+                                System.out.println("Error: Current HP kan inte var högre än Max HP: Försök igen");
+                            } catch (NumberFormatException e) {
+                                System.out.println("Error: Ogiltigt värde för Current HP, Vänliga ange bara giltig Integer värde");
+                            } catch (NumberNotInIntervalException e) {
+                                System.out.println("Error: Ogiltigt värde för Current HP, Ange mellan 1 och 1000");
+                            }
+                        }
+
+                    } else if (val.equalsIgnoreCase("a")) {
+                        editAttack(pokemon);
+                    } else {
+                        System.out.println("Error: Ogilitigt val ändring av Pokemon, ange valid val igen! ['n' för namn , 't' för Type, 'm' för Max HP, 'c' för Current HP,'a' för Attack]");
+                        val = scan.nextLine();
                     }
+                }
             }
         }
         System.out.println("Error: Pokemonen finns inte i listan");

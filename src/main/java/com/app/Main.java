@@ -25,7 +25,7 @@ public class Main {
         System.out.println("2. Ta bort Pokemon");
         System.out.println("3. Redigera/ändra ett Pokemon");
         System.out.println("4. Spara pokemon listan till fil");
-        System.out.println("5. Ladda Pokemoner från fil");
+        System.out.println("5. Ladda och Visa Pokemoner från fil");
         System.out.println("6. Återställ till predifinierad/seed data");
         System.out.println("9. Avsluta program");
         System.out.println("Ange din väl ...");
@@ -53,7 +53,7 @@ public class Main {
                 consoleMenu();
             }
             case "5" -> {
-                new FileService().loadFromFile();
+                new FileService().displayPokemonsFromFile();
                 consoleMenu();
             }
             case "6" -> {

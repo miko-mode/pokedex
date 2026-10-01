@@ -100,4 +100,48 @@
     "baseDamage" : 33,
     "accuracy" : 22
   } ]
+}, {
+  "name" : "poer",
+  "type" : "Electric",
+  "maxHp" : 333,
+  "currentHp" : 222,
+  "attacks" : [ {
+    "name" : "werww",
+    "type" : "Grass",
+    "baseDamage" : 22,
+    "accuracy" : 11
+  } ]
+}, {
+  "name" : "koskdoe",
+  "type" : "Grass",
+  "maxHp" : 222,
+  "currentHp" : 222,
+  "attacks" : [ {
+    "name" : "dsmfkm",
+    "type" : "Grass",
+    "baseDamage" : 33,
+    "accuracy" : 22
+  } ]
+}, {
+  "name" : "pok",
+  "type" : "Electric",
+  "maxHp" : 33,
+  "currentHp" : 22,
+  "attacks" : [ {
+    "name" : "we",
+    "type" : "Grass",
+    "baseDamage" : 33,
+    "accuracy" : 22
+  } ]
+}, {
+  "name" : "pojke",
+  "type" : "Grass",
+  "maxHp" : 44,
+  "currentHp" : 33,
+  "attacks" : [ {
+    "name" : "ter",
+    "type" : "Electric",
+    "baseDamage" : 22,
+    "accuracy" : 11
+  } ]
 } ]

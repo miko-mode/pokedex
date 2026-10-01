@@ -16,8 +16,7 @@ public class FileService  extends PokemonOperations {
             ArrayList<Pokemon> pokemonJSON = objectMapper.readValue(jsonFile, new TypeReference<>() {
             });
             pokemonList = pokemonJSON;
-            System.out.println("Laddar pokemon data från fil ...");
-            System.out.println(pokemonList.toString());
+            System.out.println("Pokemon data från fil har laddats...");
         } catch (FileNotFoundException e) {
             System.out.println("Error: Lyckades inte att hitta filen");
         } catch (IOException e) {
@@ -34,5 +33,9 @@ public class FileService  extends PokemonOperations {
         } catch (IOException e) {
             System.out.println("Error: Lyckades inte att spara till fil: " + e.getMessage());
         }
+    }
+    public void displayPokemonsFromFile(){
+        loadFromFile();
+        System.out.println(pokemonList.toString());
     }
 }

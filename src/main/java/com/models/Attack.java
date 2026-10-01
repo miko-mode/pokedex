@@ -63,6 +63,6 @@ public class Attack {
 
     @Override
     public String toString() {
-        return name + ":" + type + ":" + baseDamage + ":" + accuracy;
+        return "[Namn:"+name + ", "+"Typ:" + type + ", "+"Basskada:" + baseDamage + ", "+"Träffsäkerhet:" + accuracy+ "]\n\t\t";
     }
 }

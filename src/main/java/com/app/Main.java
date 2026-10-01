@@ -19,7 +19,7 @@ public class Main {
             System.out.println("0. Visa Pokemoner (Båda Predefinierad och Nya)");
             System.out.println("1. Lägg till ny Pokemon");
             System.out.println("2. Ta bort Pokemon");
-            System.out.println("3. Editera/ändra ett Pokemon");
+            System.out.println("3. Redigera/ändra ett Pokemon");
             System.out.println("4. Spara pokemon listan till fil");
             System.out.println("5. Ladda Pokemoner från fil");
             System.out.println("6. Återställ till predifinierad/seed data");

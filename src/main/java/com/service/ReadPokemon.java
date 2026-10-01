@@ -1,15 +1,17 @@
 package com.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.models.Pokemon;
+
+import java.util.stream.Collectors;
 
 public class ReadPokemon extends PokemonOperations {
 
     public void showPredifinedPokemones() {
-        try {
-            String predefinedPokemons = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(pokemonList);
-            System.out.println("Predefinierad Pokemon Data:\n\n" + predefinedPokemons);
-        } catch (JsonProcessingException e) {
-            System.out.println("Error: Någonting gick fel med JSON");
+        if (pokemonList != null && !pokemonList.isEmpty()) {
+            System.out.println("Predefinierad Pokemon Data:\n\n" + pokemonList.stream().map(Pokemon::toString).collect(Collectors.joining(" ")));
+        } else {
+            System.out.println("Det finns ingen pokemon att visa");
         }
     }
 }

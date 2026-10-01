@@ -24,10 +24,8 @@ public class EditPokemon extends PokemonOperations {
         String pokemonNamn = scan.nextLine();
         for (Pokemon pokemon : pokemonList) {
             if (pokemon.getName().equalsIgnoreCase(pokemonNamn)) {
-                try {
-                    String pokemonJsonInfo = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(pokemon);
-                    System.out.println("Pokemon info:\n" + pokemonJsonInfo);
-                    System.out.println("Vilken fält vill du ändra? Ange 'n' för namn, 't' för Type, 'm' för Max HP, 'c' för Current HP. För att radera Attack, Tryck 'a'.");
+                    System.out.println("Pokemon info:\n" + pokemon);
+                    System.out.println("Vilken fält vill du ändra? Ange 'n' för namn, 't' för Type, 'm' för Max HP, 'c' för Current HP. För att redigera(lägg tiill/ta bort) Attack, Tryck 'a'.");
                     String val = scan.nextLine();
                     while (val != null) {
                         if (val.equalsIgnoreCase("n")) {
@@ -35,11 +33,11 @@ public class EditPokemon extends PokemonOperations {
 
                             while (!isValidPokemonName) {
                                 try {
-                                    String pokemonName = scan.nextLine().trim();
+                                    String pokemonName = scan.nextLine();
                                     String finalPokemonName = pokemonName;
 
-                                    if (!pokemonName.matches("poke_\\d+")) {
-                                        throw new InvalidPokemonNameFormat("Invalid pokemon namn format");
+                                    if ((pokemonName.length() < 2 || pokemonName.length() > 20)) {
+                                        throw new InvalidPokemonNameFormat("Pokemon namn storlek är för lite.");
                                     }
                                     if (pokemonList.stream().anyMatch(p -> p.getName().equalsIgnoreCase(finalPokemonName))) {
                                         throw new DuplicatePokemonException("Pokemon redan finns");
@@ -53,8 +51,7 @@ public class EditPokemon extends PokemonOperations {
                                     }
 
                                 } catch (InvalidPokemonNameFormat e) {
-                                    System.out.println("Error: Följ gärna 'poke_nummer' namning format! Ange ett ny namn");
-
+                                    System.out.println("Error: Pokemonen namn storlek borde vara mellan 2 och 20.");
                                 } catch (DuplicatePokemonException e) {
                                     System.out.println("Error: Pokemonen redan finns! Ange ett ny namn");
                                 }
@@ -147,15 +144,12 @@ public class EditPokemon extends PokemonOperations {
                             val = scan.nextLine();
                         }
                     }
-                } catch (JsonProcessingException e) {
-                    System.out.println("Någonting gick fel med JSON");
-                }
             }
-
         }
         System.out.println("Error: Pokemonen finns inte i listan");
         consoleMenu();
     }
+
     public void editAttack(Pokemon pokemon) throws NoSuchElementException, NullPointerException {
         String attackName;
         String choice = null;
@@ -175,7 +169,7 @@ public class EditPokemon extends PokemonOperations {
                             System.out.println("Ange ett ny Attacknamn");
                             attackName = scan.nextLine();
                             String finalAttackName = attackName;
-                            if (attackName.isBlank() || attackName.length() < 4 || attackName.length() > 20 || !attackName.matches("atk_\\d+")) {
+                            if (attackName.isBlank() || attackName.length() < 4 || attackName.length() > 20) {
                                 throw new InvalidAttackEntryException("Attack namnet är ogiltig.");
                             }
                             if (pokemon.getAttacks().stream().anyMatch(a -> a.getName().equalsIgnoreCase(finalAttackName))) {
@@ -220,9 +214,9 @@ public class EditPokemon extends PokemonOperations {
                                     }
 
                                 } catch (NumberFormatException e) {
-                                    System.out.println("Error: Ogiltigt värde för Accuracy, Vänliga ange bara giltig Integer värde");
+                                    System.out.println("Error: Ogiltigt värde för Träffsäkerhet, Vänliga ange bara giltig Integer värde");
                                 } catch (NumberNotInIntervalException e) {
-                                    System.out.println("Error: Ogiltigt värde för Accuracy, Ange mellan 1 och 100");
+                                    System.out.println("Error: Ogiltigt värde för Träffsäkerhet, Ange mellan 1 och 100");
                                 }
                             }
 
@@ -232,8 +226,8 @@ public class EditPokemon extends PokemonOperations {
                             System.out.println("Success! Ny Attacken |" + attackName + "| har lägt till " + pokemon.getName());
                             consoleMenu();
 
-                        } catch (InvalidAttackEntryException | NullPointerException e) {
-                            System.out.println("Attack namnet är ogiltig! Försök igen:");
+                        } catch (NullPointerException e) {
+                            System.out.println("Attack namnet kan inte vara töm");
                         } catch (DuplicateAttackEntryException e) {
                             System.out.println("Attack namnet redan finns! Ange nytt namn");
                         }

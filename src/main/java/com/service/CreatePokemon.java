@@ -24,31 +24,29 @@ public class CreatePokemon extends PokemonOperations {
     boolean isValidBaseDamage = false;
     boolean isValidAttackAccuracy = false;
 
-    public void createPokemon() throws InvalidPokemonNameFormat, DuplicatePokemonException {
+    public void createPokemon() throws DuplicatePokemonException {
         ArrayList<Attack> attackList = new ArrayList<>();
-        //validera pokemon namn
         Pokemon pokemon = new Pokemon();
-
         System.out.println("Ange Pokemon namn");
         while (!isValidPokemonName) {
             try {
-                pokemonName = scan.nextLine().trim();
+                pokemonName = scan.nextLine();
                 String finalPokemonName = pokemonName;
 
-                if (!pokemonName.matches("poke_\\d+")) {
-                    throw new InvalidPokemonNameFormat("Invalid pokemon namn format");
+                if ((pokemonName.length() < 2 || pokemonName.length() > 20)) {
+                    throw new InvalidPokemonNameFormat("Pokemon namn storlek för lite.");
                 }
+
                 if (pokemonList.stream().anyMatch(p -> p.getName().equalsIgnoreCase(finalPokemonName))) {
                     throw new DuplicatePokemonException("Pokemon redan finns");
                 }
-                if (!pokemonName.isBlank() && (pokemonName.length() >= 6 && pokemonName.length() <= 20)) {
+                if (!pokemonName.isBlank() && (pokemonName.length() >= 2 && pokemonName.length() <= 20)) {
                     pokemon.setName(pokemonName);
                     isValidPokemonName = true;
                 }
 
             } catch (InvalidPokemonNameFormat e) {
-                System.out.println("Error: Följ gärna 'poke_nummer' namning format! Ange ett ny namn");
-
+                System.out.println("Error: Pokemonen namn storlek borde vara mellan 2 och 20.");
             } catch (DuplicatePokemonException e) {
                 System.out.println("Error: Pokemonen redan finns! Ange ett ny namn");
             }
@@ -120,12 +118,12 @@ public class CreatePokemon extends PokemonOperations {
             //skapa och validera Attack namn
             boolean isValidAttackEntry = false;
             Attack attack = new Attack();
-            System.out.println("Ange Attack Namn! Följ gärna formatten 'atk_nummer'");
+            System.out.println("Ange Attack Namn");
             while (!isValidAttackEntry) {
                 try {
                     attackName = scan.nextLine();
                     String finalAttackName = attackName;
-                    if (attackName.isBlank() || attackName.length() < 4 || attackName.length() > 20 || !attackName.matches("atk_\\d+")) {
+                    if (attackName.isBlank() || attackName.length() < 2 || attackName.length() > 20) {
                         throw new InvalidAttackEntryException("Attack namnet är ogiltig.");
                     }
                     if (pokemon.getAttacks().stream().anyMatch(a -> a.getName().equalsIgnoreCase(finalAttackName))) {
@@ -136,7 +134,7 @@ public class CreatePokemon extends PokemonOperations {
                     String attackType = scan.nextLine();
                     ValidationInputHelper.attackTypeValidation(attackType, attack);
 
-                    System.out.println("Ange Base Damage värde för " + attackName);
+                    System.out.println("Ange Basskada värde för " + attackName);
                     while (!isValidBaseDamage) {
                         try {
                             baseDamage = scan.nextLine().trim();
@@ -156,7 +154,7 @@ public class CreatePokemon extends PokemonOperations {
                         }
                     }
 
-                    System.out.println("Ange Accuracy värde för " + attackName);
+                    System.out.println("Ange Träffsäkerhet värde för " + attackName);
                     while (!isValidAttackAccuracy) {
                         try {
                             attackAccuracy = scan.nextLine().trim();
@@ -179,7 +177,7 @@ public class CreatePokemon extends PokemonOperations {
                     isValidAttackEntry = true;
 
                 } catch (InvalidAttackEntryException | NullPointerException e) {
-                    System.out.println("Attack namnet är ogiltig! Försök igen:");
+                    System.out.println("Attack namnet kan inte vara töm eller mindre än 2 chars och längre än 20 chars.");
                 } catch (DuplicateAttackEntryException e) {
                     System.out.println("Attack namnet redan finns! Ange nytt namn");
                 }

@@ -119,10 +119,15 @@ public class CreatePokemon extends PokemonOperations {
                 System.out.println("Error: Ogiltigt värde för  Antalet Attacker, Ange mellan 1 och 4");
             }
         }
+        validateAndCreateAttack(pokemon,Integer.parseInt(numberOfAttacks),attackList);
+        pokemonList.add(pokemon);
+        System.out.println("Success! Pokemon " + pokemon.getName() + " skapades och lagt till Predifinierad pokemoner!");
+        consoleMenu();
+    }
 
-        for (int i = 1; i <= Integer.parseInt(numberOfAttacks); i++) {
+    public void validateAndCreateAttack(Pokemon pokemon, int numberOfAttacks,ArrayList<Attack> attackList){
+        for (int i = 1; i <= numberOfAttacks; i++) {
             System.out.println("Skapa attack nummer: " + i);
-            //skapa och validera Attack namn
             boolean isValidAttackEntry = false;
             Attack attack = new Attack();
             System.out.println("Ange Attack Namn");
@@ -149,15 +154,15 @@ public class CreatePokemon extends PokemonOperations {
                                 attack.setBaseDamage(Integer.parseInt(baseDamage));
                                 isValidBaseDamage = true;
                             } else if (Integer.parseInt(baseDamage) < 1 || Integer.parseInt(baseDamage) > 100) {
-                                throw new NumberNotInIntervalException("Ogiltigt värde för Base Damage");
+                                throw new NumberNotInIntervalException("Ogiltigt värde för Basskada");
                             } else if (Integer.parseInt(baseDamage) > Integer.MAX_VALUE || Integer.parseInt(baseDamage) < Integer.MIN_VALUE) {
                                 throw new NumberFormatException();
                             }
 
                         } catch (NumberFormatException e) {
-                            System.out.println("Error: Ogiltigt värde för Base Damage, Vänliga ange bara giltig Integer värde");
+                            System.out.println("Error: Ogiltigt värde för Basskada, Vänliga ange bara giltig Integer värde");
                         } catch (NumberNotInIntervalException e) {
-                            System.out.println("Error: Ogiltigt värde för Base Damage, Ange mellan 1 och 100");
+                            System.out.println("Error: Ogiltigt värde för Basskada, Ange mellan 1 och 100");
                         }
                     }
 
@@ -169,15 +174,15 @@ public class CreatePokemon extends PokemonOperations {
                                 attack.setAccuracy(Integer.parseInt(attackAccuracy));
                                 isValidAttackAccuracy = true;
                             } else if (Integer.parseInt(attackAccuracy) < 1 || Integer.parseInt(attackAccuracy) > 100) {
-                                throw new NumberNotInIntervalException("Ogiltigt värde för Accuracy");
+                                throw new NumberNotInIntervalException("Ogiltigt värde för Träffsäkerhet");
                             } else if (Integer.parseInt(attackAccuracy) > Integer.MAX_VALUE || Integer.parseInt(attackAccuracy) < Integer.MIN_VALUE) {
                                 throw new NumberFormatException();
                             }
 
                         } catch (NumberFormatException e) {
-                            System.out.println("Error: Ogiltigt värde för Accuracy, Vänliga ange bara giltig Integer värde");
+                            System.out.println("Error: Ogiltigt värde för Träffsäkerhet, Vänliga ange bara giltig Integer värde");
                         } catch (NumberNotInIntervalException e) {
-                            System.out.println("Error: Ogiltigt värde för Accuracy, Ange mellan 1 och 100");
+                            System.out.println("Error: Ogiltigt värde för Träffsäkerhet, Ange mellan 1 och 100");
                         }
                     }
                     attack.setName(attackName);
@@ -196,8 +201,5 @@ public class CreatePokemon extends PokemonOperations {
             isValidAttackAccuracy = false;
             isValidBaseDamage = false;
         }
-        pokemonList.add(pokemon);
-        System.out.println("Success! Pokemon " + pokemon.getName() + " skapades och lagt till Predifinierad pokemoner!");
-        consoleMenu();
     }
 }

@@ -79,22 +79,6 @@
     "accuracy" : 60
   } ]
 }, {
-  "name" : "poke_6",
-  "type" : "Electric",
-  "maxHp" : 790,
-  "currentHp" : 750,
-  "attacks" : [ {
-    "name" : "atk_5",
-    "type" : "Electric",
-    "baseDamage" : 45,
-    "accuracy" : 70
-  }, {
-    "name" : "atk_6",
-    "type" : "Fire",
-    "baseDamage" : 35,
-    "accuracy" : 80
-  } ]
-}, {
   "name" : "poik",
   "type" : "Electric",
   "maxHp" : 33,

@@ -182,10 +182,10 @@ public class EditPokemon extends PokemonOperations {
                             }
 
 
-                            System.out.println("Ange Attack Type:[Ange 'g' för Grass,'e' för Electric, 'f' för Fire, 'n' för Normal]");
+                            System.out.println("Ange Attack Typ:[Ange 'g' för Grass,'e' för Electric, 'f' för Fire, 'n' för Normal]");
                             String attackType = scan.nextLine();
                             attackTypeValidation(attackType, attack);
-                            System.out.println("Ange Base Damage värde för " + attackName);
+                            System.out.println("Ange Basskada värde för " + attackName);
                             while (!isValidBaseDamage) {
                                 try {
                                     String baseDamage = scan.nextLine().trim();
@@ -193,19 +193,19 @@ public class EditPokemon extends PokemonOperations {
                                         attack.setBaseDamage(Integer.parseInt(baseDamage));
                                         isValidBaseDamage = true;
                                     } else if (Integer.parseInt(baseDamage) < 1 || Integer.parseInt(baseDamage) > 100) {
-                                        throw new NumberNotInIntervalException("Ogiltigt värde för Base Damage");
+                                        throw new NumberNotInIntervalException("Ogiltigt värde för Basskada");
                                     } else if (Integer.parseInt(baseDamage) > Integer.MAX_VALUE || Integer.parseInt(baseDamage) < Integer.MIN_VALUE) {
                                         throw new NumberFormatException();
                                     }
 
                                 } catch (NumberFormatException e) {
-                                    System.out.println("Error: Ogiltigt värde för Base Damage, Vänliga ange bara giltig Integer värde");
+                                    System.out.println("Error: Ogiltigt värde för Basskada, Vänliga ange bara giltig Integer värde");
                                 } catch (NumberNotInIntervalException e) {
-                                    System.out.println("Error: Ogiltigt värde för Base Damage, Ange mellan 1 och 100");
+                                    System.out.println("Error: Ogiltigt värde för Basskada, Ange mellan 1 och 100");
                                 }
                             }
 
-                            System.out.println("Ange Accuracy värde för " + attackName);
+                            System.out.println("Ange Träffsäkerhet värde för " + attackName);
                             while (!isValidAttackAccuracy) {
                                 try {
                                     String attackAccuracy = scan.nextLine().trim();
@@ -213,7 +213,7 @@ public class EditPokemon extends PokemonOperations {
                                         attack.setAccuracy(Integer.parseInt(attackAccuracy));
                                         isValidAttackAccuracy = true;
                                     } else if (Integer.parseInt(attackAccuracy) < 1 || Integer.parseInt(attackAccuracy) > 100) {
-                                        throw new NumberNotInIntervalException("Ogiltigt värde för Accuracy");
+                                        throw new NumberNotInIntervalException("Ogiltigt värde för Träffsäkerhet");
                                     } else if (Integer.parseInt(attackAccuracy) > Integer.MAX_VALUE || Integer.parseInt(attackAccuracy) < Integer.MIN_VALUE) {
                                         throw new NumberFormatException();
                                     }

@@ -1,6 +1,6 @@
 package com.service;
 
-import com.enums.Type;
+import com.models.Type;
 import com.exceptions.*;
 import com.models.Attack;
 import com.models.Pokemon;
@@ -8,7 +8,7 @@ import com.models.Pokemon;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-import static com.app.Main.consoleMenu;
+import static com.ui.Main.consoleMenu;
 import static com.utility.ValidationInputHelper.attackTypeValidation;
 
 public class EditPokemon extends PokemonOperations {

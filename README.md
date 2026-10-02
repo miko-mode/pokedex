@@ -39,6 +39,6 @@ mvn clean install
 ### 3. kör Applikationen
 kör Main klassen direkt för att börja Applikationen
 ```bash
-mvn exec:java -Dexec.mainClass="com.app.Main"
+mvn exec:java -Dexec.mainClass="com.ui.Main"
 ```
 

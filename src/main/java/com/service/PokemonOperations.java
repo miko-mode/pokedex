@@ -1,6 +1,6 @@
 package com.service;
 
-import com.enums.Type;
+import com.models.Type;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.models.Attack;
 import com.models.Pokemon;

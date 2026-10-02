@@ -2,7 +2,7 @@ package com.service;
 
 import com.models.Pokemon;
 
-import static com.app.Main.consoleMenu;
+import static com.ui.Main.consoleMenu;
 
 public class DeletePokemon extends PokemonOperations {
 

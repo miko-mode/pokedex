@@ -1,6 +1,6 @@
 package com.utility;
 
-import com.enums.Type;
+import com.models.Type;
 import com.models.Attack;
 import com.models.Pokemon;
 import com.service.PokemonOperations;

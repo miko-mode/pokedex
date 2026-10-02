@@ -79,68 +79,34 @@
     "accuracy" : 60
   } ]
 }, {
-  "name" : "poke_20",
-  "type" : "Grass",
-  "maxHp" : 22,
-  "currentHp" : 22,
-  "attacks" : [ {
-    "name" : "atk_1",
-    "type" : "Electric",
-    "baseDamage" : 23,
-    "accuracy" : 23
-  } ]
-}, {
-  "name" : "picachu",
+  "name" : "poke_6",
   "type" : "Electric",
-  "maxHp" : 332,
-  "currentHp" : 22,
+  "maxHp" : 790,
+  "currentHp" : 750,
   "attacks" : [ {
-    "name" : "attacky",
+    "name" : "atk_5",
     "type" : "Electric",
-    "baseDamage" : 33,
-    "accuracy" : 22
+    "baseDamage" : 45,
+    "accuracy" : 70
+  }, {
+    "name" : "atk_6",
+    "type" : "Fire",
+    "baseDamage" : 35,
+    "accuracy" : 80
   } ]
 }, {
-  "name" : "poer",
-  "type" : "Electric",
-  "maxHp" : 333,
-  "currentHp" : 222,
-  "attacks" : [ {
-    "name" : "werww",
-    "type" : "Grass",
-    "baseDamage" : 22,
-    "accuracy" : 11
-  } ]
-}, {
-  "name" : "koskdoe",
-  "type" : "Grass",
-  "maxHp" : 222,
-  "currentHp" : 222,
-  "attacks" : [ {
-    "name" : "dsmfkm",
-    "type" : "Grass",
-    "baseDamage" : 33,
-    "accuracy" : 22
-  } ]
-}, {
-  "name" : "pok",
+  "name" : "poik",
   "type" : "Electric",
   "maxHp" : 33,
   "currentHp" : 22,
   "attacks" : [ {
-    "name" : "we",
+    "name" : "awe",
     "type" : "Grass",
     "baseDamage" : 33,
     "accuracy" : 22
-  } ]
-}, {
-  "name" : "pojke",
-  "type" : "Grass",
-  "maxHp" : 44,
-  "currentHp" : 33,
-  "attacks" : [ {
-    "name" : "ter",
-    "type" : "Electric",
+  }, {
+    "name" : "at_21",
+    "type" : "Fire",
     "baseDamage" : 22,
     "accuracy" : 11
   } ]

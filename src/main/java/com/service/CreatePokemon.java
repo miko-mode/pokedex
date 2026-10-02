@@ -7,7 +7,7 @@ import com.utility.ValidationInputHelper;
 
 import java.util.ArrayList;
 
-import static com.app.Main.consoleMenu;
+import static com.ui.Main.consoleMenu;
 
 public class CreatePokemon extends PokemonOperations {
     String maxHp;

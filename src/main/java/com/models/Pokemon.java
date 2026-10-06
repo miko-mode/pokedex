@@ -1,9 +1,8 @@
 package com.models;
 
-import com.enums.Type;
-
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Pokemon {
 
@@ -11,7 +10,7 @@ public class Pokemon {
     private Type type;
     private int maxHp;
     private int currentHp;
-    private List<Attack> attacks=new ArrayList<>();
+    private List<Attack> attacks = new ArrayList<>();
 
     public Pokemon(String name, Type type, int maxHp, int currentHp, List<Attack> attacks) {
         if (name == null || name.trim().isEmpty()) {
@@ -73,13 +72,13 @@ public class Pokemon {
 
     @Override
     public String toString() {
-        return "\n---------------------------------------------------------------------"+
-                "\nPokemon{" +
-                "name='" + name + '\'' +
-                ", type=" + type +
+        return "==================================================================" +
+                "\n|Pokemon [" +
+                "Namn='" + name + '\'' +
+                ", Typ=" + type +
                 ", maxHp=" + maxHp +
-                ", currentHp=" + currentHp +"\n"+
-                " attacks=" + attacks +
-                '}'+"\n";
+                ", currentHp=" + currentHp + "]\n" +
+                " attacks " + attacks.stream().map(Attack::toString).collect(Collectors.joining(" ")) +"\n";
     }
 }
+

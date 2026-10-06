@@ -1,7 +1,5 @@
 package com.models;
 
-import com.enums.Type;
-
 public class Attack {
 
     private String name;
@@ -63,6 +61,6 @@ public class Attack {
 
     @Override
     public String toString() {
-        return name + ":" + type + ":" + baseDamage + ":" + accuracy;
+        return "[Namn:"+name + ", "+"Typ:" + type + ", "+"Basskada:" + baseDamage + ", "+"Träffsäkerhet:" + accuracy+ "]\n\t\t";
     }
 }

@@ -1,0 +1,176 @@
+[ {
+  "name" : "wild_poke_1",
+  "type" : "Electric",
+  "maxHp" : 500,
+  "currentHp" : 500,
+  "attacks" : [ {
+    "name" : "atak_1",
+    "type" : "Grass",
+    "baseDamage" : 20,
+    "accuracy" : 15
+  } ]
+}, {
+  "name" : "wild_poke_2",
+  "type" : "Electric",
+  "maxHp" : 400,
+  "currentHp" : 250,
+  "attacks" : [ {
+    "name" : "atk_1",
+    "type" : "Fire",
+    "baseDamage" : 35,
+    "accuracy" : 45
+  }, {
+    "name" : "atk_2",
+    "type" : "Normal",
+    "baseDamage" : 42,
+    "accuracy" : 67
+  } ]
+}, {
+  "name" : "wild_p_3",
+  "type" : "Grass",
+  "maxHp" : 520,
+  "currentHp" : 330,
+  "attacks" : [ {
+    "name" : "atk_1",
+    "type" : "Fire",
+    "baseDamage" : 77,
+    "accuracy" : 44
+  }, {
+    "name" : "atak_11",
+    "type" : "Normal",
+    "baseDamage" : 22,
+    "accuracy" : 68
+  }, {
+    "name" : "atak_30",
+    "type" : "Electric",
+    "baseDamage" : 56,
+    "accuracy" : 44
+  } ]
+}, {
+  "name" : "wilk_pk_22",
+  "type" : "Fire",
+  "maxHp" : 670,
+  "currentHp" : 577,
+  "attacks" : [ {
+    "name" : "atak_87",
+    "type" : "Grass",
+    "baseDamage" : 67,
+    "accuracy" : 44
+  }, {
+    "name" : "atak_554",
+    "type" : "Grass",
+    "baseDamage" : 88,
+    "accuracy" : 67
+  } ]
+}, {
+  "name" : "wild_pk_45",
+  "type" : "Normal",
+  "maxHp" : 890,
+  "currentHp" : 376,
+  "attacks" : [ {
+    "name" : "atak_56",
+    "type" : "Electric",
+    "baseDamage" : 46,
+    "accuracy" : 88
+  }, {
+    "name" : "atak-990",
+    "type" : "Fire",
+    "baseDamage" : 56,
+    "accuracy" : 10
+  } ]
+}, {
+  "name" : "wild_pok_247",
+  "type" : "Normal",
+  "maxHp" : 387,
+  "currentHp" : 287,
+  "attacks" : [ {
+    "name" : "TK_65",
+    "type" : "Fire",
+    "baseDamage" : 44,
+    "accuracy" : 66
+  }, {
+    "name" : "atak_55",
+    "type" : "Electric",
+    "baseDamage" : 67,
+    "accuracy" : 80
+  }, {
+    "name" : "atak_88",
+    "type" : "Fire",
+    "baseDamage" : 33,
+    "accuracy" : 55
+  }, {
+    "name" : "atak_0209",
+    "type" : "Normal",
+    "baseDamage" : 58,
+    "accuracy" : 88
+  } ]
+}, {
+  "name" : "wild_pk4",
+  "type" : "Electric",
+  "maxHp" : 903,
+  "currentHp" : 450,
+  "attacks" : [ {
+    "name" : "atak_309",
+    "type" : "Grass",
+    "baseDamage" : 49,
+    "accuracy" : 27
+  }, {
+    "name" : "atak_wr",
+    "type" : "Normal",
+    "baseDamage" : 39,
+    "accuracy" : 66
+  }, {
+    "name" : "atak_56",
+    "type" : "Grass",
+    "baseDamage" : 99,
+    "accuracy" : 38
+  } ]
+}, {
+  "name" : "wily_ppk:4",
+  "type" : "Electric",
+  "maxHp" : 457,
+  "currentHp" : 222,
+  "attacks" : [ {
+    "name" : "ataku3l",
+    "type" : "Grass",
+    "baseDamage" : 76,
+    "accuracy" : 88
+  }, {
+    "name" : "tak_44",
+    "type" : "Fire",
+    "baseDamage" : 90,
+    "accuracy" : 68
+  } ]
+}, {
+  "name" : "wild_pk_33",
+  "type" : "Normal",
+  "maxHp" : 985,
+  "currentHp" : 446,
+  "attacks" : [ {
+    "name" : "atk23",
+    "type" : "Grass",
+    "baseDamage" : 45,
+    "accuracy" : 67
+  }, {
+    "name" : "atk098",
+    "type" : "Normal",
+    "baseDamage" : 56,
+    "accuracy" : 36
+  }, {
+    "name" : "atakfoo",
+    "type" : "Electric",
+    "baseDamage" : 78,
+    "accuracy" : 47
+  } ]
+}, {
+  "name" : "wilkd_pok2",
+  "type" : "Electric",
+  "maxHp" : 789,
+  "currentHp" : 367,
+  "attacks" : [ {
+    "name" : "atak_56",
+    "type" : "Fire",
+    "baseDamage" : 44,
+    "accuracy" : 77
+  } ]
+} ]

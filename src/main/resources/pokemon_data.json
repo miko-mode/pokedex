@@ -79,19 +79,19 @@
     "accuracy" : 60
   } ]
 }, {
-  "name" : "poik",
+  "name" : "poke_6",
   "type" : "Electric",
-  "maxHp" : 33,
-  "currentHp" : 22,
+  "maxHp" : 790,
+  "currentHp" : 750,
   "attacks" : [ {
-    "name" : "awe",
-    "type" : "Grass",
-    "baseDamage" : 33,
-    "accuracy" : 22
+    "name" : "atk_5",
+    "type" : "Electric",
+    "baseDamage" : 45,
+    "accuracy" : 70
   }, {
-    "name" : "at_21",
+    "name" : "atk_6",
     "type" : "Fire",
-    "baseDamage" : 22,
-    "accuracy" : 11
+    "baseDamage" : 35,
+    "accuracy" : 80
   } ]
 } ]

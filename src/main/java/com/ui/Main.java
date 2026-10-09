@@ -27,6 +27,7 @@ public class Main {
         System.out.println("4. Spara pokemon listan till fil");
         System.out.println("5. Ladda och Visa Pokemoner från fil");
         System.out.println("6. Återställ till predifinierad/seed data");
+        System.out.println("7. Starta strid");
         System.out.println("9. Avsluta program");
         System.out.println("Ange din väl ...");
         Scanner scan = new Scanner(System.in);
@@ -58,6 +59,10 @@ public class Main {
             }
             case "6" -> {
                 new PokemonOperations().resetToSeededData();
+                consoleMenu();
+            }
+            case "7" -> {
+                new BattleEngine().battleEngine();
                 consoleMenu();
             }
             case "9" -> {

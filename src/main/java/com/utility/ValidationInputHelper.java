@@ -54,4 +54,21 @@ public class ValidationInputHelper extends PokemonOperations {
             break;
         }
     }
+
+    public static boolean isAttackPresentInPokemon(String attackName, Pokemon pokemon){
+        for(Attack attackInPokemon: pokemon.getAttacks()){
+            if (attackInPokemon.getName().equalsIgnoreCase(attackName)){
+                return true;
+            }
+        }
+        return false;
+    }
+    public static Attack getAttackObjectFromString(String attackName, Pokemon pokemon){
+        for(Attack attackInPokemon: pokemon.getAttacks()){
+            if (attackInPokemon.getName().equalsIgnoreCase(attackName)){
+                return attackInPokemon;
+            }
+        }
+        return null;
+    }
 }

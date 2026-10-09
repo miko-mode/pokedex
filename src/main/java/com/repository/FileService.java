@@ -9,11 +9,12 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.List;
 
 public class FileService  extends PokemonOperations {
     public void loadFromFile() {
         try {
-            ArrayList<Pokemon> pokemonJSON = objectMapper.readValue(jsonFile, new TypeReference<>() {
+            ArrayList<Pokemon> pokemonJSON = objectMapper.readValue(pokemonDataFile, new TypeReference<>() {
             });
             pokemonList = pokemonJSON;
             System.out.println("Pokemon data från fil har laddats...");
@@ -28,14 +29,28 @@ public class FileService  extends PokemonOperations {
     public void saveToFile() {
         try {
             String writeJsonToFile=objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(pokemonList);
-            Files.writeString(Paths.get(pathToFileJson),writeJsonToFile);
+            Files.writeString(Paths.get(pathToPokemon_Data_JSON),writeJsonToFile);
             System.out.println("Success: Lyckades att skriva till filen!");
         } catch (IOException e) {
             System.out.println("Error: Lyckades inte att spara till fil: " + e.getMessage());
         }
     }
+
     public void displayPokemonsFromFile(){
         loadFromFile();
         System.out.println(pokemonList.toString());
+    }
+
+    public List<Pokemon> loadWildPokemons() {
+        try {
+            ArrayList<Pokemon> wildPokemonJSON = objectMapper.readValue(wildPokemonDataFile, new TypeReference<>() {
+            });
+            wildPokemonList = wildPokemonJSON;
+        } catch (FileNotFoundException e) {
+            System.out.println("Error: Lyckades inte att hitta filen");
+        } catch (IOException e) {
+            System.out.println("Error: Lyckades inte att spara till fil");
+        }
+        return wildPokemonList;
     }
 }

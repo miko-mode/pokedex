@@ -13,10 +13,14 @@ import java.util.Scanner;
 public class PokemonOperations {
 
     public static List<Pokemon> pokemonList = new ArrayList<>();
-    protected final String pathToFileJson = "src/main/resources/pokemon_data.json";
+    public List<Pokemon> wildPokemonList = new ArrayList<>();
+    protected final String pathToPokemon_Data_JSON = "src/main/resources/pokemon_data.json";
+    protected final String pathToWild_Pokemon_JSON = "src/main/resources/wild_pokemon.json";
+    protected final String pathToBattle_Result_JSON = "src/main/resources/battle_result.json";
     public static ObjectMapper objectMapper = new ObjectMapper();
     public static Scanner scan = new Scanner(System.in);
-    protected File jsonFile = new File(pathToFileJson);
+    protected File pokemonDataFile = new File(pathToPokemon_Data_JSON);
+    protected File wildPokemonDataFile = new File(pathToWild_Pokemon_JSON);
 
     //predifinerad pokemoner
     public void predefinedPokemon() {

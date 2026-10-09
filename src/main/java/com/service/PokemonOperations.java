@@ -25,12 +25,12 @@ public class PokemonOperations {
     //predifinerad pokemoner
     public void predefinedPokemon() {
         Attack attack_one = new Attack("atk_1", Type.Electric, 85, 30);
-        Attack attack_two = new Attack("atk_2", Type.Fire, 75, 40);
+        Attack attack_two = new Attack("atk_2", Type.Water, 75, 40);
         List<Attack> list_one = new ArrayList<>(List.of(attack_one, attack_two));
 
 
         Attack attack_three = new Attack("atk_3", Type.Grass, 65, 50);
-        Attack attack_four = new Attack("atk_4", Type.Normal, 55, 60);
+        Attack attack_four = new Attack("atk_4", Type.Water, 55, 60);
         List<Attack> list_two = new ArrayList<>(List.of(attack_three, attack_four));
 
         Attack attack_five = new Attack("atk_5", Type.Electric, 45, 70);

@@ -21,7 +21,7 @@
     "accuracy" : 45
   }, {
     "name" : "atk_2",
-    "type" : "Normal",
+    "type" : "Water",
     "baseDamage" : 42,
     "accuracy" : 67
   } ]
@@ -95,7 +95,7 @@
     "accuracy" : 80
   }, {
     "name" : "atak_88",
-    "type" : "Fire",
+    "type" : "Water",
     "baseDamage" : 33,
     "accuracy" : 55
   }, {
@@ -158,7 +158,7 @@
     "accuracy" : 36
   }, {
     "name" : "atakfoo",
-    "type" : "Electric",
+    "type" : "Water",
     "baseDamage" : 78,
     "accuracy" : 47
   } ]

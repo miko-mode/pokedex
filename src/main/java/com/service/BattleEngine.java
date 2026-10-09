@@ -11,7 +11,7 @@ import java.util.List;
 import static com.ui.Main.consoleMenu;
 import static com.utility.ValidationInputHelper.getAttackObjectFromString;
 import static com.utility.ValidationInputHelper.isAttackPresentInPokemon;
-import static jdk.javadoc.internal.tool.Main.execute;
+
 
 public class BattleEngine extends PokemonOperations {
     public void battleEngine() {
@@ -39,7 +39,7 @@ public class BattleEngine extends PokemonOperations {
                 String attackChoice = scan.nextLine();
                 if (isAttackPresentInPokemon(attackChoice, userPokemon)) {
                     System.out.println("Du har valt:");
-                    Attack choosen_User_Attack = getAttackObjectFromString(attackChoice, userPokemon)
+                    Attack choosen_User_Attack = getAttackObjectFromString(attackChoice, userPokemon);
                     System.out.println(choosen_User_Attack);
                     System.out.println("CPU väljer: ");
                     Collections.shuffle(wildPokemon.getAttacks());
@@ -84,7 +84,7 @@ public class BattleEngine extends PokemonOperations {
         if (attack1.getType().equals(Type.Fire) && attack2.getType().equals(Type.Grass)) {
             return 2 * attack1.getBaseDamage();
         }
-
+    return 0;
     }
 
     //shuffles randomly and returns the top wild pokemon

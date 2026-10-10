@@ -1,6 +1,7 @@
 package com.repository;
 
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.mapping.PokemonStats;
 import com.models.Pokemon;
 import com.service.PokemonOperations;
 
@@ -30,6 +31,17 @@ public class FileService  extends PokemonOperations {
         try {
             String writeJsonToFile=objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(pokemonList);
             Files.writeString(Paths.get(pathToPokemon_Data_JSON),writeJsonToFile);
+            System.out.println("Success: Lyckades att skriva till filen!");
+        } catch (IOException e) {
+            System.out.println("Error: Lyckades inte att spara till fil: " + e.getMessage());
+        }
+    }
+
+    //spara till fil
+    public  void saveToBattleResultFile(ArrayList<PokemonStats> pokemonStat) {
+        try {
+            String writeJsonToFile=objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(pokemonStat);
+            Files.writeString(Paths.get(pathToBattle_Result_JSON),writeJsonToFile);
             System.out.println("Success: Lyckades att skriva till filen!");
         } catch (IOException e) {
             System.out.println("Error: Lyckades inte att spara till fil: " + e.getMessage());

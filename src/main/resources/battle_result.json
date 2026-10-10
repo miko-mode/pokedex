@@ -1,0 +1,44 @@
+[ {
+  "userPokemonName" : "poke_2",
+  "cpuPokemonName" : "wily_ppk:4",
+  "userAttackName" : "atk_3",
+  "cpuAttackName" : "ataku3l",
+  "turnStats" : [ {
+    "attackTurnNumber" : 5,
+    "userDamagePoints" : "76.0",
+    "cpuDamagePoints" : "76.0",
+    "userCurrentHp" : "150",
+    "wildCurrentPoints" : "-78"
+  }, {
+    "attackTurnNumber" : 5,
+    "userDamagePoints" : "76.0",
+    "cpuDamagePoints" : "76.0",
+    "userCurrentHp" : "150",
+    "wildCurrentPoints" : "-78"
+  }, {
+    "attackTurnNumber" : 5,
+    "userDamagePoints" : "76.0",
+    "cpuDamagePoints" : "76.0",
+    "userCurrentHp" : "150",
+    "wildCurrentPoints" : "-78"
+  }, {
+    "attackTurnNumber" : 5,
+    "userDamagePoints" : "76.0",
+    "cpuDamagePoints" : "76.0",
+    "userCurrentHp" : "150",
+    "wildCurrentPoints" : "-78"
+  }, {
+    "attackTurnNumber" : 5,
+    "userDamagePoints" : "76.0",
+    "cpuDamagePoints" : "76.0",
+    "userCurrentHp" : "150",
+    "wildCurrentPoints" : "-78"
+  }, {
+    "attackTurnNumber" : 5,
+    "userDamagePoints" : "76.0",
+    "cpuDamagePoints" : "76.0",
+    "userCurrentHp" : "150",
+    "wildCurrentPoints" : "-78"
+  } ],
+  "winner" : null
+} ]

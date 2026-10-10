@@ -1,10 +1,13 @@
 package com.service;
 
+import com.mapping.AttackTurnStats;
+import com.mapping.PokemonStats;
 import com.models.Attack;
 import com.models.Pokemon;
 import com.models.Type;
 import com.repository.FileService;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -14,8 +17,11 @@ import static com.utility.ValidationInputHelper.isAttackPresentInPokemon;
 
 
 public class BattleEngine extends PokemonOperations {
-    boolean isAttackTurnOver = false;
-    int turnCount = 0;
+
+    PokemonStats pokemonStats = new PokemonStats();
+    AttackTurnStats turnStats=new AttackTurnStats();
+    ArrayList<PokemonStats> pokemonStatsArrayList = new ArrayList<>();
+    ArrayList<AttackTurnStats> turnStatsArrayList=new ArrayList<>();
 
     public void battleEngine() {
         boolean isFound = false;
@@ -30,6 +36,7 @@ public class BattleEngine extends PokemonOperations {
             if (pokemon.getName().equalsIgnoreCase(userChoice)) {
                 isFound = true;
                 userPokemon = pokemon;
+                pokemonStats.setUserPokemonName(pokemon.getName());
                 break;
             }
         }
@@ -38,93 +45,113 @@ public class BattleEngine extends PokemonOperations {
             System.out.println(userPokemon);
             System.out.println("CPU väljer: ");
             wildPokemon = cpuChoice();
+            pokemonStats.setCpuPokemonName(wildPokemon.getName());
             System.out.println(wildPokemon);
 
             while (!isAttackTurnOver) {
                 if (!userPokemon.getAttacks().isEmpty()) {
-                    System.out.println("\n------  ---");
+                    System.out.println("\n------  -----");
                     System.out.println("Attack tur: " + (turnCount + 1));
-                    System.out.println("------ ---");
+                    System.out.println("------  -----");
+                    turnStats.setAttackTurnNumber(turnCount);
                     System.out.println("Välj en Attack utav " + userPokemon.getName() + " och ange attacknamnet:");
                     String attackChoice = scan.nextLine();
                     if (isAttackPresentInPokemon(attackChoice, userPokemon)) {
                         System.out.println("Du har valt:");
-                        Attack choosen_User_Attack = getAttackObjectFromString(attackChoice, userPokemon);
-                        System.out.println(choosen_User_Attack);
+                        Attack selected_User_Attack = getAttackObjectFromString(attackChoice, userPokemon);
+
+                        pokemonStats.setUserAttackName(attackChoice);
+                        System.out.println(selected_User_Attack);
                         System.out.println("CPU väljer: ");
                         Collections.shuffle(wildPokemon.getAttacks());
-                        Attack choosen_CPU_Attack = getAttackObjectFromString(wildPokemon.getAttacks().get(0).getName(), wildPokemon);
-                        System.out.println(choosen_CPU_Attack);
-                        execute(userPokemon, choosen_User_Attack, wildPokemon, choosen_CPU_Attack);
+                        Attack selected_CPU_Attack = getAttackObjectFromString(wildPokemon.getAttacks().get(0).getName(), wildPokemon);
+
+                        pokemonStats.setCpuAttackName(wildPokemon.getAttacks().get(0).getName());
+                        System.out.println(selected_CPU_Attack);
+                        execute(userPokemon, selected_User_Attack, wildPokemon, selected_CPU_Attack);
                         turnCount++;
 
                     }
 
                 }
+                if (wildPokemon.getCurrentHp() <= 0 && userPokemon.getCurrentHp() > 0) {
+                    System.out.println("\n****************  **************************");
+                    System.out.println("Pokemon " + userPokemon.getName() + " har vunnit i rund " + turnCount + "!");
+                    System.out.println("****************  **************************");
+                    pokemonStats.setWinner(userPokemon.getName());
+                    pokemonStatsArrayList.add(pokemonStats);
+                    pokemonStats.setTurnStats(turnStatsArrayList);
+                    new FileService().saveToBattleResultFile(pokemonStatsArrayList);
+                    isAttackTurnOver = true;
+                    consoleMenu();
+                }
+                if (userPokemon.getCurrentHp() <= 0 && wildPokemon.getCurrentHp() > 0) {
+                    System.out.println("\n****************  **************************");
+                    System.out.println("Pokemon " + wildPokemon.getName() + " har vunnit i rund " + turnCount + "!");
+                    System.out.println("****************  **************************");
+                    pokemonStats.setWinner(wildPokemon.getName());
+                    pokemonStatsArrayList.add(pokemonStats);
+                    pokemonStats.setTurnStats(turnStatsArrayList);
+                    new FileService().saveToBattleResultFile(pokemonStatsArrayList);
+                    isAttackTurnOver = true;
+                    consoleMenu();
+                }
             }
-            if (!isFound) {
-                System.out.println("Error: Pokemonen finns inte i samlingen");
-                consoleMenu();
-            }
+
+        }
+        if (!isFound) {
+            System.out.println("Error: Pokemonen finns inte i samlingen, Forsök igen");
+            consoleMenu();
         }
 
 
     }
 
-    private void execute(Pokemon userPokemon, Attack choosenUserAttack, Pokemon wildPokemon, Attack choosenCpuAttack) {
-        double userAttackDamage = calculateDamage(choosenUserAttack, choosenCpuAttack);
-        double cpuAttackDamage = calculateDamage(choosenCpuAttack, choosenUserAttack);
+    private void execute(Pokemon userPokemon, Attack userAttack, Pokemon wildPokemon, Attack cpuAttack) {
+        double userAttackDamage = calculateDamage(userAttack, cpuAttack);
+        double cpuAttackDamage = calculateDamage(cpuAttack, userAttack);
+        turnStats.setUserDamagePoints(String.valueOf(userAttackDamage));
+        turnStats.setCpuDamagePoints(String.valueOf(userAttackDamage));
 
         if (userAttackDamage > cpuAttackDamage) {
             if (wildPokemon.getCurrentHp() > 0) {
-                System.out.println("| Skaderesultat för användare: " + userAttackDamage + " | Skaderesultat för CPU: " + cpuAttackDamage+"     |");
-                System.out.println("| ---------------------------------------------------------------------");
+                System.out.println("| Skaderesultat för användare: " + userAttackDamage + " | Skaderesultat för CPU: " + cpuAttackDamage);
+                System.out.println("| ------------------------------------------------------------------------");
                 wildPokemon.setCurrentHp(wildPokemon.getCurrentHp() - 100);
-                System.out.println("| "+userPokemon.getName() + " current HP: " + userPokemon.getCurrentHp() + " | " + wildPokemon.getName() + " current HP: " + wildPokemon.getCurrentHp() + " (minskad med 100) |");
+                System.out.println("| " + userPokemon.getName() + " current HP: " + userPokemon.getCurrentHp() + " | " + wildPokemon.getName() + " current HP: " + wildPokemon.getCurrentHp() + " (minskad med 100)");
 
             }
         }
         if (cpuAttackDamage > userAttackDamage) {
             if (userPokemon.getCurrentHp() > 0) {
-                System.out.println("| Skaderesultat för användare: " + userAttackDamage + " | Skaderesultat för CPU: " + cpuAttackDamage+"     |");
-                System.out.println("| ---------------------------------------------------------------------");
+                System.out.println("| Skaderesultat för användare: " + userAttackDamage + " | Skaderesultat för CPU: " + cpuAttackDamage);
+                System.out.println("| ------------------------------------------------------------------------");
                 userPokemon.setCurrentHp(userPokemon.getCurrentHp() - 100);
-                System.out.println("| "+userPokemon.getName() + " current HP: " + userPokemon.getCurrentHp() + "(minskad med 100) | " + wildPokemon.getName() + " current HP: " + wildPokemon.getCurrentHp()+" |");
+                System.out.println("| " + userPokemon.getName() + " current HP: " + userPokemon.getCurrentHp() + "(minskad med 100) | " + wildPokemon.getName() + " current HP: " + wildPokemon.getCurrentHp());
 
             }
 
         }
         //träffsäkerhet avgörs
         if (cpuAttackDamage == userAttackDamage) {
-            if (choosenUserAttack.getAccuracy() > choosenCpuAttack.getAccuracy()) {
-                System.out.println("| Skaderesultat för användare: " + userAttackDamage + " | Skaderesultat för CPU: " + cpuAttackDamage+"     |");
-                System.out.println("| ---------------------------------------------------------------------");
+            if (userAttack.getAccuracy() > cpuAttack.getAccuracy()) {
+                System.out.println("| Skaderesultat för användare: " + userAttackDamage + " | Skaderesultat för CPU: " + cpuAttackDamage);
+                System.out.println("| ------------------------------------------------------------------------");
                 wildPokemon.setCurrentHp(wildPokemon.getCurrentHp() - 100);
-                System.out.println(userPokemon.getName() + " current HP: " + userPokemon.getCurrentHp() + " | " + wildPokemon.getName() + " current HP: " + wildPokemon.getCurrentHp() + " (minskad med 100)|");
+                System.out.println(userPokemon.getName() + " current HP: " + userPokemon.getCurrentHp() + " | " + wildPokemon.getName() + " current HP: " + wildPokemon.getCurrentHp() + " (minskad med 100)");
             }
-            if (choosenUserAttack.getAccuracy() < choosenCpuAttack.getAccuracy()) {
-                System.out.println("| Skaderesultat resultat för användare: " + userAttackDamage + "| Skaderesultat för CPU: " + cpuAttackDamage+"     |");
-                System.out.println("| ---------------------------------------------------------------------");
+            if (userAttack.getAccuracy() < cpuAttack.getAccuracy()) {
+                System.out.println("| Skaderesultat resultat för användare: " + userAttackDamage + "| Skaderesultat för CPU: " + cpuAttackDamage);
+                System.out.println("| ---------------------------------------------------------------------------");
                 userPokemon.setCurrentHp(userPokemon.getCurrentHp() - 100);
-                System.out.println(userPokemon.getName() + " current HP: " + userPokemon.getCurrentHp() + "(minskad med 100) | " + wildPokemon.getName() + " current HP: " + wildPokemon.getCurrentHp()+" |");
+                System.out.println(userPokemon.getName() + " current HP: " + userPokemon.getCurrentHp() + "(minskad med 100) | " + wildPokemon.getName() + " current HP: " + wildPokemon.getCurrentHp());
 
             }
         }
+        turnStats.setUserCurrentHp(String.valueOf(userPokemon.getCurrentHp()));
+        turnStats.setWildCurrentPoints(String.valueOf(wildPokemon.getCurrentHp()));
+        turnStatsArrayList.add(turnStats);
 
-        if (wildPokemon.getCurrentHp() <= 0 && userPokemon.getCurrentHp() > 0) {
-            System.out.println("\n****************  **************************");
-            System.out.println(userPokemon.getName() + " har vunnit efter " + turnCount + " rundor!");
-            System.out.println("****************  **************************");
-            isAttackTurnOver = true;
-            consoleMenu();
-        }
-        if (userPokemon.getCurrentHp() <= 0 && wildPokemon.getCurrentHp() > 0) {
-            System.out.println("\n****************  **************************");
-            System.out.println(wildPokemon.getName() + " har vunnit efter " + turnCount + " rundor!");
-            System.out.println("****************  **************************");
-            isAttackTurnOver = true;
-            consoleMenu();
-        }
 
     }
 

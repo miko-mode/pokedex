@@ -1,44 +1,60 @@
-[ {
+{
   "userPokemonName" : "poke_2",
-  "cpuPokemonName" : "wily_ppk:4",
-  "userAttackName" : "atk_3",
-  "cpuAttackName" : "ataku3l",
+  "cpuPokemonName" : "wilk_pk_22",
   "turnStats" : [ {
-    "attackTurnNumber" : 5,
-    "userDamagePoints" : "76.0",
-    "cpuDamagePoints" : "76.0",
-    "userCurrentHp" : "150",
-    "wildCurrentPoints" : "-78"
+    "attackTurnNumber" : 1,
+    "userAttackName" : "atk_3",
+    "cpuAttackName" : "atak_554",
+    "userDamagePoints" : "88.0",
+    "cpuDamagePoints" : "65.0",
+    "userCurrentHp" : "250",
+    "wildCurrentPoints" : "477",
+    "turnWinner" : "USER"
+  }, {
+    "attackTurnNumber" : 2,
+    "userAttackName" : "atk_3",
+    "cpuAttackName" : "atak_87",
+    "userDamagePoints" : "67.0",
+    "cpuDamagePoints" : "65.0",
+    "userCurrentHp" : "250",
+    "wildCurrentPoints" : "377",
+    "turnWinner" : "USER"
+  }, {
+    "attackTurnNumber" : 3,
+    "userAttackName" : "atk_3",
+    "cpuAttackName" : "atak_554",
+    "userDamagePoints" : "88.0",
+    "cpuDamagePoints" : "65.0",
+    "userCurrentHp" : "250",
+    "wildCurrentPoints" : "277",
+    "turnWinner" : "USER"
+  }, {
+    "attackTurnNumber" : 4,
+    "userAttackName" : "atk_3",
+    "cpuAttackName" : "atak_554",
+    "userDamagePoints" : "88.0",
+    "cpuDamagePoints" : "65.0",
+    "userCurrentHp" : "250",
+    "wildCurrentPoints" : "177",
+    "turnWinner" : "USER"
   }, {
     "attackTurnNumber" : 5,
-    "userDamagePoints" : "76.0",
-    "cpuDamagePoints" : "76.0",
-    "userCurrentHp" : "150",
-    "wildCurrentPoints" : "-78"
+    "userAttackName" : "atk_3",
+    "cpuAttackName" : "atak_554",
+    "userDamagePoints" : "88.0",
+    "cpuDamagePoints" : "65.0",
+    "userCurrentHp" : "250",
+    "wildCurrentPoints" : "77",
+    "turnWinner" : "USER"
   }, {
-    "attackTurnNumber" : 5,
-    "userDamagePoints" : "76.0",
-    "cpuDamagePoints" : "76.0",
-    "userCurrentHp" : "150",
-    "wildCurrentPoints" : "-78"
-  }, {
-    "attackTurnNumber" : 5,
-    "userDamagePoints" : "76.0",
-    "cpuDamagePoints" : "76.0",
-    "userCurrentHp" : "150",
-    "wildCurrentPoints" : "-78"
-  }, {
-    "attackTurnNumber" : 5,
-    "userDamagePoints" : "76.0",
-    "cpuDamagePoints" : "76.0",
-    "userCurrentHp" : "150",
-    "wildCurrentPoints" : "-78"
-  }, {
-    "attackTurnNumber" : 5,
-    "userDamagePoints" : "76.0",
-    "cpuDamagePoints" : "76.0",
-    "userCurrentHp" : "150",
-    "wildCurrentPoints" : "-78"
+    "attackTurnNumber" : 6,
+    "userAttackName" : "atk_3",
+    "cpuAttackName" : "atak_87",
+    "userDamagePoints" : "67.0",
+    "cpuDamagePoints" : "65.0",
+    "userCurrentHp" : "250",
+    "wildCurrentPoints" : "-23",
+    "turnWinner" : "USER"
   } ],
-  "winner" : null
-} ]
+  "winnerPokemon" : "wilk_pk_22"
+}

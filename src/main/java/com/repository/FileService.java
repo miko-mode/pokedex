@@ -38,7 +38,7 @@ public class FileService  extends PokemonOperations {
     }
 
     //spara till fil
-    public  void saveToBattleResultFile(ArrayList<PokemonStats> pokemonStat) {
+    public  void saveToBattleResultFile(PokemonStats pokemonStat) {
         try {
             String writeJsonToFile=objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(pokemonStat);
             Files.writeString(Paths.get(pathToBattle_Result_JSON),writeJsonToFile);

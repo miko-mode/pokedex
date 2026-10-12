@@ -10,7 +10,7 @@
     "accuracy" : 30
   }, {
     "name" : "atk_2",
-    "type" : "Fire",
+    "type" : "Water",
     "baseDamage" : 75,
     "accuracy" : 40
   } ]
@@ -26,7 +26,7 @@
     "accuracy" : 50
   }, {
     "name" : "atk_4",
-    "type" : "Normal",
+    "type" : "Water",
     "baseDamage" : 55,
     "accuracy" : 60
   } ]
@@ -58,7 +58,7 @@
     "accuracy" : 30
   }, {
     "name" : "atk_2",
-    "type" : "Fire",
+    "type" : "Water",
     "baseDamage" : 75,
     "accuracy" : 40
   } ]
@@ -74,7 +74,7 @@
     "accuracy" : 50
   }, {
     "name" : "atk_4",
-    "type" : "Normal",
+    "type" : "Water",
     "baseDamage" : 55,
     "accuracy" : 60
   } ]

@@ -1,9 +1,10 @@
 package com.mapping;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
-public class PokemonStats {
-
+public class GameStats {
+    private String gameId;
     private String userPokemonName;
     private String cpuPokemonName;
     private ArrayList<AttackTurnStats> turnStats=new ArrayList<>();
@@ -39,5 +40,13 @@ public class PokemonStats {
 
     public void setWinnerPokemon(String winnerPokemon) {
         this.winnerPokemon = winnerPokemon;
+    }
+
+    public String getGameId() {
+        return gameId;
+    }
+
+    public void setGameId(String gameId) {
+        this.gameId = gameId;
     }
 }

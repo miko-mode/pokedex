@@ -69,6 +69,7 @@ public class Main {
                 //spara till fil automatiskt med exit
                 System.out.println("sparar andringar till fil ...");
                 new FileService().saveToFile();
+                new FileService().saveToBattleResultFile( BattleEngine.gameStatsArrayList);
                 System.exit(0);
             }
             default -> {

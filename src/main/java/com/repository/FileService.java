@@ -1,7 +1,7 @@
 package com.repository;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.mapping.PokemonStats;
+import com.mapping.GameStats;
 import com.models.Pokemon;
 import com.service.PokemonOperations;
 
@@ -9,6 +9,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,18 +32,18 @@ public class FileService  extends PokemonOperations {
         try {
             String writeJsonToFile=objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(pokemonList);
             Files.writeString(Paths.get(pathToPokemon_Data_JSON),writeJsonToFile);
-            System.out.println("Success: Lyckades att skriva till filen!");
+            System.out.println("Success: Lyckades att skriva pokemon data!");
         } catch (IOException e) {
             System.out.println("Error: Lyckades inte att spara till fil: " + e.getMessage());
         }
     }
 
     //spara till fil
-    public  void saveToBattleResultFile(PokemonStats pokemonStat) {
+    public void saveToBattleResultFile(ArrayList<GameStats> pokemonStat) {
         try {
             String writeJsonToFile=objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(pokemonStat);
             Files.writeString(Paths.get(pathToBattle_Result_JSON),writeJsonToFile);
-            System.out.println("Success: Lyckades att skriva till filen!");
+            System.out.println("Success: Lyckades att skriva till spel stats fil!");
         } catch (IOException e) {
             System.out.println("Error: Lyckades inte att spara till fil: " + e.getMessage());
         }

@@ -4,11 +4,10 @@ import com.models.Type;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.models.Attack;
 import com.models.Pokemon;
+import com.repository.FileService;
+
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class PokemonOperations {
 

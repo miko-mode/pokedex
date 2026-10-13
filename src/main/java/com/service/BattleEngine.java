@@ -7,23 +7,19 @@ import com.models.Pokemon;
 import com.models.Type;
 import com.repository.FileService;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 import static com.ui.Main.consoleMenu;
 import static com.utility.ValidationInputHelper.getAttackObjectFromString;
 import static com.utility.ValidationInputHelper.isAttackPresentInPokemon;
 
 
-public class BattleEngine extends PokemonOperations {
+public class BattleEngine extends PokemonOperations implements IBattleEngine {
     GameStats gameStats;
     AttackTurnStats turnStats;
-    public ArrayList<AttackTurnStats> turnStatsArrayList = new ArrayList<>();
     public static ArrayList<GameStats> gameStatsArrayList = new ArrayList<>();
-    List<Pokemon> wildPokemonsPool = new FileService().loadWildPokemons();
-
+    public ArrayList<AttackTurnStats> turnStatsArrayList = new ArrayList<>();
+    public List<Pokemon> wildPokemonsPool = new FileService().loadWildPokemons();
     int turnCount = 0;
 
     public void battleEngine() {
@@ -45,7 +41,7 @@ public class BattleEngine extends PokemonOperations {
             System.out.println("Pokemon info: ");
             System.out.println(userPokemon);
             System.out.println("CPU väljer: ");
-            wildPokemon = cpuChoice();
+            wildPokemon = cpuPokemonChoice();
             System.out.println(wildPokemon);
 
 
@@ -79,28 +75,8 @@ public class BattleEngine extends PokemonOperations {
 
                 }
 
-                if (wildPokemon.getCurrentHp() <= 0 && userPokemon.getCurrentHp() > 0) {
-                    gameStats.setWinnerPokemon(userPokemon.getName());
-                    System.out.println("\n****************  **************************");
-                    System.out.println("Pokemon " + userPokemon.getName() + " har vunnit i rund " + turnCount + "!");
-                    System.out.println("****************  **************************");
-                    wildPokemonsPool.remove(wildPokemon);
-                    gameStatsArrayList.add(gameStats);
-                    isAttackTurnOver = true;
-                    consoleMenu();
-
-                }
-                if (userPokemon.getCurrentHp() <= 0 && wildPokemon.getCurrentHp() > 0) {
-                    gameStats.setWinnerPokemon(wildPokemon.getName());
-                    System.out.println("\n****************  **************************");
-                    System.out.println("Pokemon " + wildPokemon.getName() + " har vunnit i rund " + turnCount + "!");
-                    System.out.println("****************  **************************");
-                    pokemonList.remove(userPokemon);
-                    gameStatsArrayList.add(gameStats);
-                    isAttackTurnOver = true;
-                    consoleMenu();
-
-                }
+                isAttackTurnOver = isAttackTurnOver(userPokemon, wildPokemon, isAttackTurnOver, wildPokemonsPool);
+                isAttackTurnOver = isAttackTurnOver(wildPokemon, userPokemon, isAttackTurnOver, pokemonList);
 
             }
 
@@ -113,7 +89,23 @@ public class BattleEngine extends PokemonOperations {
 
     }
 
-    private void execute(Pokemon userPokemon, Attack userAttack, Pokemon wildPokemon, Attack cpuAttack) {
+    private boolean isAttackTurnOver(Pokemon userPokemon, Pokemon wildPokemon, boolean isAttackTurnOver, List<Pokemon> wildPokemonsPool) {
+        if (wildPokemon.getCurrentHp() <= 0 && userPokemon.getCurrentHp() > 0) {
+            gameStats.setWinnerPokemon(userPokemon.getName());
+            System.out.println("\n****************  **************************");
+            System.out.println("Pokemon " + userPokemon.getName() + " har vunnit i rund " + turnCount + "!");
+            System.out.println("****************  **************************");
+            wildPokemonsPool.remove(wildPokemon);
+            gameStatsArrayList.add(gameStats);
+            isAttackTurnOver = true;
+            consoleMenu();
+
+        }
+        return isAttackTurnOver;
+    }
+
+    //gör spelturen logik
+    public void execute(Pokemon userPokemon, Attack userAttack, Pokemon wildPokemon, Attack cpuAttack) {
         double userAttackDamage = calculateDamage(userAttack, cpuAttack);
         double cpuAttackDamage = calculateDamage(cpuAttack, userAttack);
 
@@ -157,43 +149,8 @@ public class BattleEngine extends PokemonOperations {
 
     }
 
-    private double calculateDamage(Attack attack1, Attack attack2) {
-        if (attack1.getType().equals(Type.Fire) && attack2.getType().equals(Type.Grass)) {
-            return 2 * attack2.getBaseDamage();
-        }
-        if (attack1.getType().equals(Type.Water) && attack2.getType().equals(Type.Fire)) {
-            return 2 * attack2.getBaseDamage();
-        }
-        if (attack1.getType().equals(Type.Grass) && attack2.getType().equals(Type.Water)) {
-            return 2 * attack2.getBaseDamage();
-        }
-        if (attack1.getType().equals(Type.Electric) && attack2.getType().equals(Type.Water)) {
-            return 2 * attack2.getBaseDamage();
-        }
-        if (attack1.getType().equals(Type.Fire) && attack2.getType().equals(Type.Water)) {
-            return 0.5 * attack2.getBaseDamage();
-        }
-        if (attack1.getType().equals(Type.Water) && attack2.getType().equals(Type.Grass)) {
-            return 0.5 * attack2.getBaseDamage();
-        }
-        if (attack1.getType().equals(Type.Grass) && attack2.getType().equals(Type.Fire)) {
-            return 0.5 * attack2.getBaseDamage();
-        }
-        if (attack1.getType().equals(Type.Normal)) {
-            return 2 * attack2.getBaseDamage();
-        }
-        return attack2.getBaseDamage();
-    }
-
-    //shuffles randomly and returns the top wild pokemon
-    private Pokemon cpuChoice() {
-        FileService fileService = new FileService();
-        wildPokemonsPool = fileService.loadWildPokemons();
-        Collections.shuffle(wildPokemonsPool);
-        return wildPokemonsPool.get(0);
-    }
-
-    private GameStats statGenerator(String userAttackName, String cpuAttackName, Pokemon userPokemon, Pokemon wildPokemon, double userAttackDamage, double cpuAttackDamage, int turnNumber) {
+    //generera stat för turen
+    public GameStats statGenerator(String userAttackName, String cpuAttackName, Pokemon userPokemon, Pokemon wildPokemon, double userAttackDamage, double cpuAttackDamage, int turnNumber) {
         turnStats.setAttackTurnNumber(turnNumber);
         turnStats.setUserAttackName(userAttackName);
         turnStats.setCpuAttackName(cpuAttackName);
@@ -213,6 +170,43 @@ public class BattleEngine extends PokemonOperations {
         gameStats.setTurnStats(turnStatsArrayList);
         return gameStats;
 
+    }
+
+    //beråknar skada
+    public double calculateDamage(Attack attack1, Attack attack2) {
+        if (attack1.getType().equals(Type.Fire) && attack2.getType().equals(Type.Grass)) {
+            return damagePoint_2 * attack2.getBaseDamage();
+        }
+        if (attack1.getType().equals(Type.Water) && attack2.getType().equals(Type.Fire)) {
+            return damagePoint_2 * attack2.getBaseDamage();
+        }
+        if (attack1.getType().equals(Type.Grass) && attack2.getType().equals(Type.Water)) {
+            return damagePoint_2 * attack2.getBaseDamage();
+        }
+        if (attack1.getType().equals(Type.Electric) && attack2.getType().equals(Type.Water)) {
+            return damagePoint_2 * attack2.getBaseDamage();
+        }
+        if (attack1.getType().equals(Type.Fire) && attack2.getType().equals(Type.Water)) {
+            return damagePoint_1 * attack2.getBaseDamage();
+        }
+        if (attack1.getType().equals(Type.Water) && attack2.getType().equals(Type.Grass)) {
+            return damagePoint_1 * attack2.getBaseDamage();
+        }
+        if (attack1.getType().equals(Type.Grass) && attack2.getType().equals(Type.Fire)) {
+            return damagePoint_1 * attack2.getBaseDamage();
+        }
+        if (attack1.getType().equals(Type.Normal)) {
+            return damagePoint_2 * attack2.getBaseDamage();
+        }
+        return attack2.getBaseDamage();
+    }
+
+    //blandar ihop alla wild pokemoner och plockar pokemonen som finns i toppen
+    private Pokemon cpuPokemonChoice() {
+        FileService fileService = new FileService();
+        wildPokemonsPool = fileService.loadWildPokemons();
+        Collections.shuffle(wildPokemonsPool);
+        return wildPokemonsPool.get(0);
     }
 
 }

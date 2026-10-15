@@ -15,6 +15,22 @@
     "accuracy" : 40
   } ]
 }, {
+  "name" : "poke_2",
+  "type" : "Fire",
+  "maxHp" : 900,
+  "currentHp" : -50,
+  "attacks" : [ {
+    "name" : "atk_3",
+    "type" : "Grass",
+    "baseDamage" : 65,
+    "accuracy" : 50
+  }, {
+    "name" : "atk_4",
+    "type" : "Water",
+    "baseDamage" : 55,
+    "accuracy" : 60
+  } ]
+}, {
   "name" : "poke_3",
   "type" : "Grass",
   "maxHp" : 600,

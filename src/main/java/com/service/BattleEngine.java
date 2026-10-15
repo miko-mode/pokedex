@@ -6,18 +6,17 @@ import com.models.Attack;
 import com.models.Pokemon;
 import com.models.Type;
 import com.repository.FileService;
+import com.utility.ValidationInputHelper;
 
 import java.util.*;
 
 import static com.ui.Main.consoleMenu;
-import static com.utility.ValidationInputHelper.getAttackObjectFromString;
 import static com.utility.ValidationInputHelper.isAttackPresentInPokemon;
 
 
 public class BattleEngine extends PokemonOperations implements IBattleEngine {
     GameStats gameStats;
     AttackTurnStats turnStats;
-    public static ArrayList<GameStats> gameStatsArrayList = new ArrayList<>();
     public ArrayList<AttackTurnStats> turnStatsArrayList = new ArrayList<>();
     public List<Pokemon> wildPokemonsPool = new FileService().loadWildPokemons();
     int turnCount = 0;
@@ -26,7 +25,6 @@ public class BattleEngine extends PokemonOperations implements IBattleEngine {
         boolean isFound = false;
         Pokemon userPokemon = null;
         Pokemon wildPokemon;
-        boolean isAttackTurnOver = false;
 
         System.out.println("Välj en Pokemon namn från samling");
         String userChoice = scan.nextLine();
@@ -44,66 +42,67 @@ public class BattleEngine extends PokemonOperations implements IBattleEngine {
             wildPokemon = cpuPokemonChoice();
             System.out.println(wildPokemon);
 
+            if(isValidToStartTurn(userPokemon,wildPokemon)){
+                boolean isAttackTurnOver = false;
+                while (!isAttackTurnOver) {
+                    if (!userPokemon.getAttacks().isEmpty() && userPokemon.getAttacks() != null) {
+                        gameStats = new GameStats();
+                        turnStats = new AttackTurnStats();
+                        System.out.println("\n------  -----");
+                        System.out.println("Attack tur: " + (turnCount + 1));
+                        System.out.println("------  -----");
+                        System.out.println("Välj en Attack från " + userPokemon.getName() + " och ange attacknamnet:");
+                        String attackChoice = scan.nextLine();
+                        if (isAttackPresentInPokemon(attackChoice, userPokemon)) {
+                            System.out.println("Du har valt:");
+                            Attack selected_User_Attack = ValidationInputHelper.getAttackObjectFromString(attackChoice, userPokemon);
+                            System.out.println(selected_User_Attack);
+                            System.out.println("CPU väljer: ");
+                            Collections.shuffle(wildPokemon.getAttacks());
+                            Attack selected_CPU_Attack = ValidationInputHelper.getAttackObjectFromString(wildPokemon.getAttacks().get(0).getName(), wildPokemon);
+                            System.out.println(selected_CPU_Attack);
 
-            while (!isAttackTurnOver) {
-                if (!userPokemon.getAttacks().isEmpty() && userPokemon.getAttacks() != null) {
-                    gameStats = new GameStats();
-                    turnStats = new AttackTurnStats();
-                    System.out.println("\n------  -----");
-                    System.out.println("Attack tur: " + (turnCount + 1));
-                    System.out.println("------  -----");
+                            gameStats.setGameId(String.valueOf(UUID.randomUUID()));
+                            gameStats.setUserPokemonName(userPokemon.getName());
+                            gameStats.setCpuPokemonName(wildPokemon.getName());
+                            execute(userPokemon, selected_User_Attack, wildPokemon, selected_CPU_Attack);
 
-                    System.out.println("Välj en Attack från " + userPokemon.getName() + " och ange attacknamnet:");
-                    String attackChoice = scan.nextLine();
-
-                    if (isAttackPresentInPokemon(attackChoice, userPokemon)) {
-                        System.out.println("Du har valt:");
-                        Attack selected_User_Attack = getAttackObjectFromString(attackChoice, userPokemon);
-                        System.out.println(selected_User_Attack);
-                        System.out.println("CPU väljer: ");
-                        Collections.shuffle(wildPokemon.getAttacks());
-                        Attack selected_CPU_Attack = getAttackObjectFromString(wildPokemon.getAttacks().get(0).getName(), wildPokemon);
-                        System.out.println(selected_CPU_Attack);
-
-                        gameStats.setGameId(String.valueOf(UUID.randomUUID()));
-                        gameStats.setUserPokemonName(userPokemon.getName());
-                        gameStats.setCpuPokemonName(wildPokemon.getName());
-                        execute(userPokemon, selected_User_Attack, wildPokemon, selected_CPU_Attack);
-
-
+                        }
                     }
 
+                    isAttackTurnOver = isAttackTurnOver(userPokemon, wildPokemon, isAttackTurnOver, wildPokemonsPool);
+                    isAttackTurnOver = isAttackTurnOver(wildPokemon, userPokemon, isAttackTurnOver, pokemonList);
                 }
-
-                isAttackTurnOver = isAttackTurnOver(userPokemon, wildPokemon, isAttackTurnOver, wildPokemonsPool);
-                isAttackTurnOver = isAttackTurnOver(wildPokemon, userPokemon, isAttackTurnOver, pokemonList);
-
             }
-
+            if(!isValidToStartTurn(userPokemon,wildPokemon)){
+                System.out.println("Error: Det går inte att starta strid eftersom det finns ogiltig Current HP!");
+                consoleMenu();
+            }
         }
         if (!isFound) {
-            System.out.println("Error: Pokemonen finns inte i samlingen. Detta kan beror på att den är besegrad i tidigare tur, Forsök igen");
+            System.out.println("Error: Pokemonen finns inte i samlingen. Detta kan också beror på att den är besegrad i tidigare tur, Forsök igen");
             consoleMenu();
         }
-
-
     }
 
-    private boolean isAttackTurnOver(Pokemon userPokemon, Pokemon wildPokemon, boolean isAttackTurnOver, List<Pokemon> wildPokemonsPool) {
-        if (wildPokemon.getCurrentHp() <= 0 && userPokemon.getCurrentHp() > 0) {
-            gameStats.setWinnerPokemon(userPokemon.getName());
+    private boolean isValidToStartTurn(Pokemon userPokemon, Pokemon wildPokemon) {
+        return userPokemon.getCurrentHp() > 0 && wildPokemon.getCurrentHp() > 0;
+    }
+
+    private boolean isAttackTurnOver(Pokemon pokemon1, Pokemon pokemon2, boolean isAttackTurnOver, List<Pokemon> pokemonPool) {
+        if (pokemon2.getCurrentHp() <= 0 && pokemon1.getCurrentHp() > 0) {
+            gameStats.setWinnerPokemon(pokemon1.getName());
             System.out.println("\n****************  **************************");
-            System.out.println("Pokemon " + userPokemon.getName() + " har vunnit i rund " + turnCount + "!");
+            System.out.println("Pokemon " + pokemon1.getName() + " har vunnit i rund " + turnCount + "!");
             System.out.println("****************  **************************");
-            wildPokemonsPool.remove(wildPokemon);
-            gameStatsArrayList.add(gameStats);
+            pokemonPool.remove(pokemon1);
+            gameStatsList.add(gameStats);
             isAttackTurnOver = true;
             consoleMenu();
 
         }
         return isAttackTurnOver;
     }
-
     //gör spelturen logik
     public void execute(Pokemon userPokemon, Attack userAttack, Pokemon wildPokemon, Attack cpuAttack) {
         double userAttackDamage = calculateDamage(userAttack, cpuAttack);
@@ -128,7 +127,7 @@ public class BattleEngine extends PokemonOperations implements IBattleEngine {
             }
 
         }
-        //träffsäkerhet avgörs
+        //träffsäkerhet avgörs om cpuAttackDamage är lika med userAttackDamage
         if (cpuAttackDamage == userAttackDamage) {
             if (userAttack.getAccuracy() > cpuAttack.getAccuracy()) {
                 System.out.println("| Skaderesultat för användare: " + userAttackDamage + " | Skaderesultat för CPU: " + cpuAttackDamage);
@@ -208,5 +207,4 @@ public class BattleEngine extends PokemonOperations implements IBattleEngine {
         Collections.shuffle(wildPokemonsPool);
         return wildPokemonsPool.get(0);
     }
-
 }

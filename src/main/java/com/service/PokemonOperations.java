@@ -1,5 +1,6 @@
 package com.service;
 
+import com.mapping.GameStats;
 import com.models.Type;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.models.Attack;
@@ -12,6 +13,7 @@ import java.util.*;
 public class PokemonOperations {
 
     public static List<Pokemon> pokemonList = new ArrayList<>();
+    public static List<GameStats> gameStatsList=new ArrayList<>();
     public List<Pokemon> wildPokemonList = new ArrayList<>();
     protected static final String pathToPokemon_Data_JSON = "src/main/resources/pokemon_data.json";
     protected static final String pathToWild_Pokemon_JSON = "src/main/resources/wild_pokemon.json";
@@ -20,6 +22,7 @@ public class PokemonOperations {
     public static Scanner scan = new Scanner(System.in);
     protected File pokemonDataFile = new File(pathToPokemon_Data_JSON);
     protected File wildPokemonDataFile = new File(pathToWild_Pokemon_JSON);
+    protected File statsDataFile = new File(pathToBattle_Result_JSON);
 
     //predifinerad pokemoner
     public void predefinedPokemon() {
@@ -53,5 +56,4 @@ public class PokemonOperations {
         predefinedPokemon();
         System.out.println("Info!: Pokemon data har återställt till seed data");
     }
-
 }

@@ -1,6 +1,7 @@
 package com.repository;
 
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.exc.MismatchedInputException;
 import com.mapping.GameStats;
 import com.models.Pokemon;
 import com.service.PokemonOperations;
@@ -9,11 +10,10 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FileService  extends PokemonOperations {
+public class FileService extends PokemonOperations {
     public void loadFromFile() {
         try {
             ArrayList<Pokemon> pokemonJSON = objectMapper.readValue(pokemonDataFile, new TypeReference<>() {
@@ -30,26 +30,42 @@ public class FileService  extends PokemonOperations {
     //spara till fil
     public void saveToFile() {
         try {
-            String writeJsonToFile=objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(pokemonList);
-            Files.writeString(Paths.get(pathToPokemon_Data_JSON),writeJsonToFile);
+            String writeJsonToFile = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(pokemonList);
+            Files.writeString(Paths.get(pathToPokemon_Data_JSON), writeJsonToFile);
             System.out.println("Success: Lyckades att skriva pokemon data!");
         } catch (IOException e) {
             System.out.println("Error: Lyckades inte att spara till fil: " + e.getMessage());
         }
     }
 
-    //spara till fil
-    public void saveToBattleResultFile(ArrayList<GameStats> pokemonStat) {
+    public void loadFromGameStatsticsFile() {
         try {
-            String writeJsonToFile=objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(pokemonStat);
-            Files.writeString(Paths.get(pathToBattle_Result_JSON),writeJsonToFile);
-            System.out.println("Success: Lyckades att skriva till spel stats fil!");
+            ArrayList<GameStats> statJSON = objectMapper.readValue(statsDataFile, new TypeReference<>() {
+            });
+                gameStatsList = statJSON;
+                System.out.println("Spel data från statsfil har laddats...");
+
+        } catch (FileNotFoundException e) {
+            System.out.println("Error: Lyckades inte att hitta filen");
+        } catch (MismatchedInputException e) {
+            System.out.println("Spel stats fil är tom ...");
         } catch (IOException e) {
-            System.out.println("Error: Lyckades inte att spara till fil: " + e.getMessage());
+            System.out.println("Error: Lyckades inte att ladda från statsfil.");
         }
     }
 
-    public void displayPokemonsFromFile(){
+    //spara till fil
+    public void saveToBattleResultFile() {
+        try {
+            String writeJsonToFile = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(gameStatsList);
+            Files.writeString(Paths.get(pathToBattle_Result_JSON), writeJsonToFile);
+            System.out.println("Success: Lyckades att skriva till spel stats fil!");
+        } catch (IOException e) {
+            System.out.println("Error: Lyckades inte att spara till statsfil: " + e.getMessage());
+        }
+    }
+
+    public void displayPokemonsFromFile() {
         loadFromFile();
         System.out.println(pokemonList.toString());
     }

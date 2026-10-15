@@ -13,7 +13,9 @@ public class Main {
         FileService fileService = new FileService();
         //load från fil automatiskt med start
         pokemonOperations.predefinedPokemon();
+        //load från file pokemoner och stat
         fileService.loadFromFile();
+        fileService.loadFromGameStatsticsFile();
         consoleMenu();
     }
 
@@ -69,7 +71,7 @@ public class Main {
                 //spara till fil automatiskt med exit
                 System.out.println("sparar andringar till fil ...");
                 new FileService().saveToFile();
-                new FileService().saveToBattleResultFile( BattleEngine.gameStatsArrayList);
+                new FileService().saveToBattleResultFile();
                 System.exit(0);
             }
             default -> {

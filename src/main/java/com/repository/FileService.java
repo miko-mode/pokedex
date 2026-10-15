@@ -3,6 +3,7 @@ package com.repository;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.exc.MismatchedInputException;
 import com.mapping.GameStats;
+import com.mapping.PokeStat;
 import com.models.Pokemon;
 import com.service.PokemonOperations;
 
@@ -14,6 +15,31 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FileService extends PokemonOperations {
+
+
+    public static void saveToStatsFile() {
+        try {
+            String writeJsonToStatFile = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(pokemonStatsList);
+            Files.writeString(Paths.get(pathToStats_File_JSON), writeJsonToStatFile);
+            System.out.println("Success: Lyckades att skriva till statsfil!");
+        } catch (IOException e) {
+            System.out.println("Error: Lyckades inte att spara till fil: " + e.getMessage());
+        }
+    }
+
+    public void loadFromStatsticsFile() {
+        try {
+            ArrayList<PokeStat> pokemonStatJSON = objectMapper.readValue(statsFile, new TypeReference<>() {
+            });
+            pokemonStatsList = pokemonStatJSON;
+            System.out.println("Pokemon data från fil har laddats ...");
+        } catch (FileNotFoundException e) {
+            System.out.println("Error: Lyckades inte att hitta filen");
+        } catch (IOException e) {
+            System.out.println("Error: Lyckades inte att spara till fil");
+        }
+    }
+
     public void loadFromFile() {
         try {
             ArrayList<Pokemon> pokemonJSON = objectMapper.readValue(pokemonDataFile, new TypeReference<>() {
@@ -40,11 +66,10 @@ public class FileService extends PokemonOperations {
 
     public void loadFromGameStatsticsFile() {
         try {
-            ArrayList<GameStats> statJSON = objectMapper.readValue(statsDataFile, new TypeReference<>() {
+            ArrayList<GameStats> statJSON = objectMapper.readValue(matchDataFile, new TypeReference<>() {
             });
                 gameStatsList = statJSON;
                 System.out.println("Spel data från statsfil har laddats ...");
-
         } catch (FileNotFoundException e) {
             System.out.println("Error: Lyckades inte att hitta filen");
         } catch (MismatchedInputException e) {

@@ -13,6 +13,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
+import static com.service.StatsticsService.createStats;
 import static com.ui.Main.consoleMenu;
 import static com.utility.ValidationInputHelper.isAttackPresentInPokemon;
 
@@ -92,28 +93,25 @@ public class BattleEngine extends PokemonOperations implements IBattleEngine {
         return userPokemon.getCurrentHp() > 0 && wildPokemon.getCurrentHp() > 0;
     }
 
-    private boolean isAttackTurnOver(Pokemon pokemon1, Pokemon pokemon2, boolean isAttackTurnOver, List<Pokemon> pokemonPool) {
-        if (pokemon2.getCurrentHp() <= 0 && pokemon1.getCurrentHp() > 0) {
-            gameStats.setWinnerPokemon(pokemon1.getName());
+    private boolean isAttackTurnOver(Pokemon attacker, Pokemon defender, boolean isAttackTurnOver, List<Pokemon> pokemonPool) {
+        if (defender.getCurrentHp() <= 0 && attacker.getCurrentHp() > 0) {
+            gameStats.setWinnerPokemon(attacker.getName());
             System.out.println("\n****************  **************************");
-            System.out.println("Pokemon " + pokemon1.getName() + " har vunnit i rund " + turnCount + "!");
+            System.out.println("Pokemon " + attacker.getName() + " har vunnit i rund " + turnCount + "!");
             System.out.println("****************  **************************");
-            pokemonPool.remove(pokemon1);
+            createStats(attacker,"win");
+            createStats(defender,"loss");
+            pokemonPool.remove(defender);
             gameStatsList.add(gameStats);
+
             isAttackTurnOver = true;
             consoleMenu();
-
         }
         return isAttackTurnOver;
     }
 
     //gör spelturen logik
     public void execute(Pokemon userPokemon, Attack userAttack, Pokemon wildPokemon, Attack cpuAttack) {
-        Attack tempCpuAttack = null;
-        Attack tempUserAttack = null;
-        tempCpuAttack = cpuAttack;
-        tempUserAttack = userAttack;
-
         double userAttackDamage = calculateDamage(userAttack, cpuAttack);
         double cpuAttackDamage = calculateDamage(cpuAttack, userAttack);
 
@@ -123,17 +121,17 @@ public class BattleEngine extends PokemonOperations implements IBattleEngine {
                 System.out.println("| Skaderesultat för användare: " + userAttackDamage + attackEffectTwice + " | Skaderesultat för CPU: " + cpuAttackDamage);
                 System.out.println("| ---------------------------------------------------------------------------");
                 wildPokemon.setCurrentHp(wildPokemon.getCurrentHp() - 100);
-                System.out.println("| " + userPokemon.getName() + " current HP: " + userPokemon.getCurrentHp() + " | " + wildPokemon.getName() + " current HP: " + wildPokemon.getCurrentHp() + " (minskad med 100)");
+                System.out.println("| " + userPokemon.getName() + " current HP: " + userPokemon.getCurrentHp() + " | " + wildPokemon.getName() + " current HP: " + wildPokemon.getCurrentHp() + " [minskad med 100]");
 
             }
         }
         if (cpuAttackDamage > userAttackDamage) {
             if (userPokemon.getCurrentHp() > 0) {
                 String attackEffectTwice = ((cpuAttackDamage == 2 * (userAttack.getBaseDamage())) && (cpuAttackDamage > userAttack.getBaseDamage())) ? " [2X]" : "";
-                System.out.println("| Skaderesultat för användare: " + userAttackDamage + " | Skaderesultat för CPU: " + cpuAttackDamage+ attackEffectTwice);
+                System.out.println("| Skaderesultat för användare: " + userAttackDamage + " | Skaderesultat för CPU: " + cpuAttackDamage + attackEffectTwice);
                 System.out.println("| ---------------------------------------------------------------------------");
                 userPokemon.setCurrentHp(userPokemon.getCurrentHp() - 100);
-                System.out.println("| " + userPokemon.getName() + " current HP: " + userPokemon.getCurrentHp() + " (minskad med 100) | " + wildPokemon.getName() + " current HP: " + wildPokemon.getCurrentHp());
+                System.out.println("| " + userPokemon.getName() + " current HP: " + userPokemon.getCurrentHp() + " [minskad med 100] | " + wildPokemon.getName() + " current HP: " + wildPokemon.getCurrentHp());
 
             }
 
@@ -144,13 +142,13 @@ public class BattleEngine extends PokemonOperations implements IBattleEngine {
                 System.out.println("| Skaderesultat för användare: " + userAttackDamage + " | Skaderesultat för CPU: " + cpuAttackDamage);
                 System.out.println("| ------------------------------------------------------------------------");
                 wildPokemon.setCurrentHp(wildPokemon.getCurrentHp() - 100);
-                System.out.println(userPokemon.getName() + " current HP: " + userPokemon.getCurrentHp() + " | " + wildPokemon.getName() + " current HP: " + wildPokemon.getCurrentHp() + " (minskad med 100)");
+                System.out.println(userPokemon.getName() + " current HP: " + userPokemon.getCurrentHp() + " | " + wildPokemon.getName() + " current HP: " + wildPokemon.getCurrentHp() + " [minskad med 100]");
             }
             if (userAttack.getAccuracy() < cpuAttack.getAccuracy()) {
                 System.out.println("| Skaderesultat resultat för användare: " + userAttackDamage + "| Skaderesultat för CPU: " + cpuAttackDamage);
                 System.out.println("| ---------------------------------------------------------------------------");
                 userPokemon.setCurrentHp(userPokemon.getCurrentHp() - 100);
-                System.out.println(userPokemon.getName() + " current HP: " + userPokemon.getCurrentHp() + "(minskad med 100) | " + wildPokemon.getName() + " current HP: " + wildPokemon.getCurrentHp());
+                System.out.println(userPokemon.getName() + " current HP: " + userPokemon.getCurrentHp() + "[minskad med 100] | " + wildPokemon.getName() + " current HP: " + wildPokemon.getCurrentHp());
 
             }
         }

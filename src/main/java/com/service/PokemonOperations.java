@@ -1,28 +1,34 @@
 package com.service;
 
-import com.mapping.GameStats;
-import com.models.Type;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.mapping.GameStats;
+import com.mapping.PokeStat;
 import com.models.Attack;
 import com.models.Pokemon;
-import com.repository.FileService;
+import com.models.Type;
 
 import java.io.File;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Scanner;
 
 public class PokemonOperations {
 
     public static List<Pokemon> pokemonList = new ArrayList<>();
-    public static List<GameStats> gameStatsList=new ArrayList<>();
+    public static List<GameStats> gameStatsList = new ArrayList<>();
     public List<Pokemon> wildPokemonList = new ArrayList<>();
+    public static List<PokeStat> pokemonStatsList = new ArrayList<>();
     protected static final String pathToPokemon_Data_JSON = "src/main/resources/pokemon_data.json";
     protected static final String pathToWild_Pokemon_JSON = "src/main/resources/wild_pokemon.json";
     protected static final String pathToBattle_Result_JSON = "src/main/resources/battle_result.json";
+    protected static final String pathToStats_File_JSON = "src/main/resources/stats.json";
     public static ObjectMapper objectMapper = new ObjectMapper();
     public static Scanner scan = new Scanner(System.in);
     protected File pokemonDataFile = new File(pathToPokemon_Data_JSON);
     protected File wildPokemonDataFile = new File(pathToWild_Pokemon_JSON);
-    protected File statsDataFile = new File(pathToBattle_Result_JSON);
+    protected File matchDataFile = new File(pathToBattle_Result_JSON);
+    protected File statsFile = new File(pathToStats_File_JSON);
 
     //predifinerad pokemoner
     public void predefinedPokemon() {
@@ -52,7 +58,7 @@ public class PokemonOperations {
 
     //återställ till seed data
     public void resetToSeededData() {
-        pokemonList=new ArrayList<>();
+        pokemonList = new ArrayList<>();
         predefinedPokemon();
         System.out.println("Info!: Pokemon data har återställt till seed data");
     }

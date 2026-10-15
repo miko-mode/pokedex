@@ -78,7 +78,7 @@ public class Pokemon {
                 ", Typ=" + type +
                 ", maxHp=" + maxHp +
                 ", currentHp=" + currentHp + "]\n" +
-                " attacks " + attacks.stream().map(Attack::toString).collect(Collectors.joining(" ")) +"\n";
+                " attacks " + attacks.stream().map(Attack::toString).collect(Collectors.joining(" ")) + "\n";
     }
 }
 

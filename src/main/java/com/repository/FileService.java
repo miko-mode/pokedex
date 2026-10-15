@@ -19,7 +19,7 @@ public class FileService extends PokemonOperations {
             ArrayList<Pokemon> pokemonJSON = objectMapper.readValue(pokemonDataFile, new TypeReference<>() {
             });
             pokemonList = pokemonJSON;
-            System.out.println("Pokemon data från fil har laddats...");
+            System.out.println("Pokemon data från fil har laddats ...");
         } catch (FileNotFoundException e) {
             System.out.println("Error: Lyckades inte att hitta filen");
         } catch (IOException e) {
@@ -43,7 +43,7 @@ public class FileService extends PokemonOperations {
             ArrayList<GameStats> statJSON = objectMapper.readValue(statsDataFile, new TypeReference<>() {
             });
                 gameStatsList = statJSON;
-                System.out.println("Spel data från statsfil har laddats...");
+                System.out.println("Spel data från statsfil har laddats ...");
 
         } catch (FileNotFoundException e) {
             System.out.println("Error: Lyckades inte att hitta filen");

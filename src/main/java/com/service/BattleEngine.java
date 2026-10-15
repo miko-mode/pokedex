@@ -8,7 +8,10 @@ import com.models.Type;
 import com.repository.FileService;
 import com.utility.ValidationInputHelper;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.UUID;
 
 import static com.ui.Main.consoleMenu;
 import static com.utility.ValidationInputHelper.isAttackPresentInPokemon;
@@ -42,7 +45,7 @@ public class BattleEngine extends PokemonOperations implements IBattleEngine {
             wildPokemon = cpuPokemonChoice();
             System.out.println(wildPokemon);
 
-            if(isValidToStartTurn(userPokemon,wildPokemon)){
+            if (isValidToStartTurn(userPokemon, wildPokemon)) {
                 boolean isAttackTurnOver = false;
                 while (!isAttackTurnOver) {
                     if (!userPokemon.getAttacks().isEmpty() && userPokemon.getAttacks() != null) {
@@ -74,7 +77,7 @@ public class BattleEngine extends PokemonOperations implements IBattleEngine {
                     isAttackTurnOver = isAttackTurnOver(wildPokemon, userPokemon, isAttackTurnOver, pokemonList);
                 }
             }
-            if(!isValidToStartTurn(userPokemon,wildPokemon)){
+            if (!isValidToStartTurn(userPokemon, wildPokemon)) {
                 System.out.println("Error: Det går inte att starta strid eftersom det finns ogiltig Current HP!");
                 consoleMenu();
             }
@@ -103,15 +106,22 @@ public class BattleEngine extends PokemonOperations implements IBattleEngine {
         }
         return isAttackTurnOver;
     }
+
     //gör spelturen logik
     public void execute(Pokemon userPokemon, Attack userAttack, Pokemon wildPokemon, Attack cpuAttack) {
+        Attack tempCpuAttack = null;
+        Attack tempUserAttack = null;
+        tempCpuAttack = cpuAttack;
+        tempUserAttack = userAttack;
+
         double userAttackDamage = calculateDamage(userAttack, cpuAttack);
         double cpuAttackDamage = calculateDamage(cpuAttack, userAttack);
 
         if (userAttackDamage > cpuAttackDamage) {
             if (wildPokemon.getCurrentHp() > 0) {
-                System.out.println("| Skaderesultat för användare: " + userAttackDamage + " | Skaderesultat för CPU: " + cpuAttackDamage);
-                System.out.println("| ------------------------------------------------------------------------");
+                String attackEffectTwice = ((userAttackDamage == (2 * cpuAttack.getBaseDamage())) && (userAttackDamage > cpuAttack.getBaseDamage())) ? " [2X]" : "";
+                System.out.println("| Skaderesultat för användare: " + userAttackDamage + attackEffectTwice + " | Skaderesultat för CPU: " + cpuAttackDamage);
+                System.out.println("| ---------------------------------------------------------------------------");
                 wildPokemon.setCurrentHp(wildPokemon.getCurrentHp() - 100);
                 System.out.println("| " + userPokemon.getName() + " current HP: " + userPokemon.getCurrentHp() + " | " + wildPokemon.getName() + " current HP: " + wildPokemon.getCurrentHp() + " (minskad med 100)");
 
@@ -119,8 +129,9 @@ public class BattleEngine extends PokemonOperations implements IBattleEngine {
         }
         if (cpuAttackDamage > userAttackDamage) {
             if (userPokemon.getCurrentHp() > 0) {
-                System.out.println("| Skaderesultat för användare: " + userAttackDamage + " | Skaderesultat för CPU: " + cpuAttackDamage);
-                System.out.println("| ------------------------------------------------------------------------");
+                String attackEffectTwice = ((cpuAttackDamage == 2 * (userAttack.getBaseDamage())) && (cpuAttackDamage > userAttack.getBaseDamage())) ? " [2X]" : "";
+                System.out.println("| Skaderesultat för användare: " + userAttackDamage + " | Skaderesultat för CPU: " + cpuAttackDamage+ attackEffectTwice);
+                System.out.println("| ---------------------------------------------------------------------------");
                 userPokemon.setCurrentHp(userPokemon.getCurrentHp() - 100);
                 System.out.println("| " + userPokemon.getName() + " current HP: " + userPokemon.getCurrentHp() + " (minskad med 100) | " + wildPokemon.getName() + " current HP: " + wildPokemon.getCurrentHp());
 
@@ -185,6 +196,7 @@ public class BattleEngine extends PokemonOperations implements IBattleEngine {
         if (attack1.getType().equals(Type.Electric) && attack2.getType().equals(Type.Water)) {
             return damagePoint_2 * attack2.getBaseDamage();
         }
+        //0,5
         if (attack1.getType().equals(Type.Fire) && attack2.getType().equals(Type.Water)) {
             return damagePoint_1 * attack2.getBaseDamage();
         }
@@ -194,8 +206,9 @@ public class BattleEngine extends PokemonOperations implements IBattleEngine {
         if (attack1.getType().equals(Type.Grass) && attack2.getType().equals(Type.Fire)) {
             return damagePoint_1 * attack2.getBaseDamage();
         }
+        //normal(1x)
         if (attack1.getType().equals(Type.Normal)) {
-            return damagePoint_2 * attack2.getBaseDamage();
+            return attack2.getBaseDamage();
         }
         return attack2.getBaseDamage();
     }

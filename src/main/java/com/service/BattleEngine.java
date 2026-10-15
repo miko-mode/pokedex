@@ -77,6 +77,7 @@ public class BattleEngine extends PokemonOperations implements IBattleEngine {
                     isAttackTurnOver = isAttackTurnOver(userPokemon, wildPokemon, isAttackTurnOver, wildPokemonsPool);
                     isAttackTurnOver = isAttackTurnOver(wildPokemon, userPokemon, isAttackTurnOver, pokemonList);
                 }
+
             }
             if (!isValidToStartTurn(userPokemon, wildPokemon)) {
                 System.out.println("Error: Det går inte att starta strid eftersom det finns ogiltig Current HP!");
@@ -103,7 +104,6 @@ public class BattleEngine extends PokemonOperations implements IBattleEngine {
             createStats(defender,"loss");
             pokemonPool.remove(defender);
             gameStatsList.add(gameStats);
-
             isAttackTurnOver = true;
             consoleMenu();
         }

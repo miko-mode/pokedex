@@ -15,7 +15,8 @@ public class Main {
         pokemonOperations.predefinedPokemon();
         //load från file pokemoner och stat
         fileService.loadFromFile();
-        fileService.loadFromGameStatsticsFile();
+        fileService.loadFromMatchStatsticsFile();
+        fileService.loadFromStatsticsFile();
         consoleMenu();
     }
 

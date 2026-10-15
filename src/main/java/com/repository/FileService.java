@@ -35,8 +35,10 @@ public class FileService extends PokemonOperations {
             System.out.println("Pokemon data från fil har laddats ...");
         } catch (FileNotFoundException e) {
             System.out.println("Error: Lyckades inte att hitta filen");
+        } catch (MismatchedInputException e) {
+            System.out.println("General stats fil är tom ...");
         } catch (IOException e) {
-            System.out.println("Error: Lyckades inte att spara till fil");
+            System.out.println("Error: Lyckades inte att ladda från statsfil.");
         }
     }
 
@@ -64,7 +66,7 @@ public class FileService extends PokemonOperations {
         }
     }
 
-    public void loadFromGameStatsticsFile() {
+    public void loadFromMatchStatsticsFile() {
         try {
             ArrayList<GameStats> statJSON = objectMapper.readValue(matchDataFile, new TypeReference<>() {
             });
@@ -84,7 +86,7 @@ public class FileService extends PokemonOperations {
         try {
             String writeJsonToFile = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(gameStatsList);
             Files.writeString(Paths.get(pathToBattle_Result_JSON), writeJsonToFile);
-            System.out.println("Success: Lyckades att skriva till spel stats fil!");
+            System.out.println("Success: Lyckades att skriva match data till spelsresultat fil!");
         } catch (IOException e) {
             System.out.println("Error: Lyckades inte att spara till statsfil: " + e.getMessage());
         }

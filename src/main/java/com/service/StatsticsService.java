@@ -8,19 +8,19 @@ public class StatsticsService extends PokemonOperations {
 
 
     public static void createStats(Pokemon pokemon, String label) {
-
-        PokeStat pokeStats = new PokeStat();
+        PokeStat pokeStat = new PokeStat();
         if (label.equalsIgnoreCase("win")) {
-            pokeStats.setPokemonName(pokemon.getName());
-            pokeStats.incrementTotalNumberOfWins();
+            pokeStat.setPokemonName(pokemon.getName());
+            pokeStat.incrementTotalNumberOfWins();
 
+        } else if (label.equalsIgnoreCase("loss")) {
+            pokeStat.setPokemonName(pokemon.getName());
+            pokeStat.incrementTotalNumberOfDefeats();
         }
-        if (label.equalsIgnoreCase("loss")) {
-            pokeStats.setDefenderPokemonName(pokemon.getName());
-            pokeStats.decrementTotalNumberOfDefeats();
-        }
-        pokemonStatsList.add(pokeStats);
+        pokemonStatsList.add(pokeStat);
         FileService.saveToStatsFile();
+        pokeStat.setTotalNumberOfWins(0);
+        pokeStat.setTotalNumberOfDefeats(0);
     }
 
     public void showStatstics() {
@@ -28,7 +28,7 @@ public class StatsticsService extends PokemonOperations {
         System.out.println("Spel Statstik");
         System.out.println("---------------");
         for (PokeStat pokeStat : pokemonStatsList) {
-
+            System.out.println("namn: " + pokeStat.getPokemonName() + "| Antalet vinst: " + pokeStat.getTotalNumberOfWins() + "| Antalet förlust: " + pokeStat.getTotalNumberOfDefeats() + " | Vinst ratio: " + pokeStat.getWinRatio() + " | Förlust ratio: " + pokeStat.getLossRatio());
         }
     }
 }

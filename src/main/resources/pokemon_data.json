@@ -50,7 +50,7 @@
   "name" : "poke_4",
   "type" : "Normal",
   "maxHp" : 850,
-  "currentHp" : 750,
+  "currentHp" : 150,
   "attacks" : [ {
     "name" : "atk_1",
     "type" : "Electric",

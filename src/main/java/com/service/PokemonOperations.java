@@ -28,7 +28,7 @@ public class PokemonOperations {
     protected File pokemonDataFile = new File(pathToPokemon_Data_JSON);
     protected File wildPokemonDataFile = new File(pathToWild_Pokemon_JSON);
     protected File matchDataFile = new File(pathToBattle_Result_JSON);
-    protected File statsFile = new File(pathToStats_File_JSON);
+    protected static File statsFile = new File(pathToStats_File_JSON);
 
     //predifinerad pokemoner
     public void predefinedPokemon() {

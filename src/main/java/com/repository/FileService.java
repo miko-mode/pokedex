@@ -21,24 +21,21 @@ public class FileService extends PokemonOperations {
         try {
             String writeJsonToStatFile = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(pokemonStatsList);
             Files.writeString(Paths.get(pathToStats_File_JSON), writeJsonToStatFile);
-            System.out.println("Success: Lyckades att skriva till statsfil!");
+            //System.out.println("Success: Lyckades att skriva till statsfil!");
         } catch (IOException e) {
             System.out.println("Error: Lyckades inte att spara till fil: " + e.getMessage());
         }
     }
 
-    public void loadFromStatsticsFile() {
+    public static void loadFromStatsticsFile() {
         try {
             ArrayList<PokeStat> pokemonStatJSON = objectMapper.readValue(statsFile, new TypeReference<>() {
             });
             pokemonStatsList = pokemonStatJSON;
-            System.out.println("Pokemon data från fil har laddats ...");
         } catch (FileNotFoundException e) {
             System.out.println("Error: Lyckades inte att hitta filen");
-        } catch (MismatchedInputException e) {
-            System.out.println("General stats fil är tom ...");
         } catch (IOException e) {
-            System.out.println("Error: Lyckades inte att ladda från statsfil.");
+            System.out.println("Error: Lyckades inte att ladda från statsfil. Det kan vara töm ...");
         }
     }
 
@@ -70,8 +67,8 @@ public class FileService extends PokemonOperations {
         try {
             ArrayList<GameStats> statJSON = objectMapper.readValue(matchDataFile, new TypeReference<>() {
             });
-                gameStatsList = statJSON;
-                System.out.println("Spel data från statsfil har laddats ...");
+            gameStatsList = statJSON;
+            System.out.println("Spel info från battle_result har laddats ...");
         } catch (FileNotFoundException e) {
             System.out.println("Error: Lyckades inte att hitta filen");
         } catch (MismatchedInputException e) {

@@ -4,17 +4,11 @@ public class PokeStat {
     private String pokemonName;
     int totalNumberOfWins;
     int totalNumberOfDefeats;
+    double winRatio;
+    double lossRatio;
 
     public void setPokemonName(String name) {
         this.pokemonName = name;
-    }
-
-    public void incrementTotalNumberOfWins() {
-        totalNumberOfWins = totalNumberOfWins + 1;
-    }
-
-    public void incrementTotalNumberOfDefeats() {
-        totalNumberOfDefeats = totalNumberOfDefeats + 1;
     }
 
     public int getTotalNumberOfWins() {
@@ -26,7 +20,6 @@ public class PokeStat {
     }
 
     public double getWinRatio() {
-
         totalNumberOfWins = totalNumberOfDefeats >= 0 ? Math.floorDiv(totalNumberOfWins, totalNumberOfWins + totalNumberOfDefeats) : 0;
         return totalNumberOfWins;
     }
@@ -46,5 +39,13 @@ public class PokeStat {
 
     public void setTotalNumberOfDefeats(int totalNumberOfDefeats) {
         this.totalNumberOfDefeats = totalNumberOfDefeats;
+    }
+
+    public void setWinRatio(double winRatio) {
+        this.winRatio = winRatio;
+    }
+
+    public void setLossRatio(double lossRatio) {
+        this.lossRatio = lossRatio;
     }
 }

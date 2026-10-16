@@ -22,7 +22,7 @@ public class BattleEngine extends PokemonOperations implements IBattleEngine {
     AttackTurnStats turnStats;
     public ArrayList<AttackTurnStats> turnStatsArrayList = new ArrayList<>();
     public List<Pokemon> wildPokemonsPool = new FileService().loadWildPokemons();
-    StatsticsService statsticsService=new StatsticsService();
+    StatsticsService statsticsService = new StatsticsService();
     int turnCount = 0;
 
     public void battleEngine() {
@@ -100,8 +100,8 @@ public class BattleEngine extends PokemonOperations implements IBattleEngine {
             System.out.println("\n****************  **************************");
             System.out.println("Pokemon " + attacker.getName() + " har vunnit i rund " + turnCount + "!");
             System.out.println("****************  **************************");
-            statsticsService.createAndSavePokemonStats(attacker,"win");
-            statsticsService.createAndSavePokemonStats(defender,"loss");
+            statsticsService.createAndSavePokemonStats(attacker, "win");
+            statsticsService.createAndSavePokemonStats(defender, "loss");
             pokemonPool.remove(defender);
             gameStatsList.add(gameStats);
             isAttackTurnOver = true;

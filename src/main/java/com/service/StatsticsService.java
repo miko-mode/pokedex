@@ -10,6 +10,7 @@ public class StatsticsService extends PokemonOperations {
 
     public void createAndSavePokemonStats(Pokemon pokemon, String label) throws PokemonStatNotFoundInFileException {
         try {
+            FileService.loadFromStatsticsFile();
             PokeStat pokemonDataInStatFile = pokemonStatsList.stream().filter(pokeStat -> pokeStat.getPokemonName().equalsIgnoreCase(pokemon.getName()))
                     .findFirst()
                     .orElseThrow(() -> new PokemonStatNotFoundInFileException("Pokemonstat hittas ej"));
@@ -20,8 +21,9 @@ public class StatsticsService extends PokemonOperations {
 
             } else if (label.equalsIgnoreCase("loss")) {
                 int currentTotalNumberOfDefeats = pokemonDataInStatFile.getTotalNumberOfDefeats();
-                pokemonDataInStatFile.setTotalNumberOfWins(currentTotalNumberOfDefeats + 1);
+                pokemonDataInStatFile.setTotalNumberOfDefeats(currentTotalNumberOfDefeats + 1);
             }
+
         } catch (PokemonStatNotFoundInFileException e) {
             PokeStat pokeStat = null;
             if (label.equalsIgnoreCase("win")) {
@@ -49,6 +51,7 @@ public class StatsticsService extends PokemonOperations {
     }
 
     public void displayStatstics() {
+        FileService.loadFromStatsticsFile();
         System.out.println("---------------");
         System.out.println("Spel Statstik");
         System.out.println("---------------");

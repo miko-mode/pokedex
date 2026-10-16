@@ -2,19 +2,19 @@ package com.mapping;
 
 public class PokeStat {
     private String pokemonName;
-    int totalNumberOfWins = 0;
-    int totalNumberOfDefeats = 0;
+    int totalNumberOfWins;
+    int totalNumberOfDefeats;
 
     public void setPokemonName(String name) {
         this.pokemonName = name;
     }
 
     public void incrementTotalNumberOfWins() {
-        totalNumberOfWins=totalNumberOfWins + 1;
+        totalNumberOfWins = totalNumberOfWins + 1;
     }
 
     public void incrementTotalNumberOfDefeats() {
-        totalNumberOfDefeats=totalNumberOfDefeats + 1;
+        totalNumberOfDefeats = totalNumberOfDefeats + 1;
     }
 
     public int getTotalNumberOfWins() {
@@ -26,11 +26,14 @@ public class PokeStat {
     }
 
     public double getWinRatio() {
-        return (double) totalNumberOfWins / totalNumberOfDefeats;
+
+        totalNumberOfWins = totalNumberOfDefeats >= 0 ? Math.floorDiv(totalNumberOfWins, totalNumberOfWins + totalNumberOfDefeats) : 0;
+        return totalNumberOfWins;
     }
 
     public double getLossRatio() {
-        return (double) totalNumberOfDefeats / totalNumberOfWins;
+        totalNumberOfDefeats = totalNumberOfWins >= 0 ? Math.floorDiv(totalNumberOfDefeats, totalNumberOfDefeats + totalNumberOfWins) : 0;
+        return totalNumberOfDefeats;
     }
 
     public String getPokemonName() {

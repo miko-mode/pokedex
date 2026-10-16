@@ -1,5 +1,6 @@
 package com.service;
 
+import com.exceptions.PokemonStatNotFoundInFileException;
 import com.mapping.PokeStat;
 import com.models.Pokemon;
 import com.repository.FileService;
@@ -7,23 +8,47 @@ import com.repository.FileService;
 public class StatsticsService extends PokemonOperations {
 
 
-    public static void createStats(Pokemon pokemon, String label) {
-        PokeStat pokeStat = new PokeStat();
-        if (label.equalsIgnoreCase("win")) {
-            pokeStat.setPokemonName(pokemon.getName());
-            pokeStat.incrementTotalNumberOfWins();
+    public void createAndSavePokemonStats(Pokemon pokemon, String label) throws PokemonStatNotFoundInFileException {
+        try {
+            PokeStat pokemonDataInStatFile = pokemonStatsList.stream().filter(pokeStat -> pokeStat.getPokemonName().equalsIgnoreCase(pokemon.getName()))
+                    .findFirst()
+                    .orElseThrow(() -> new PokemonStatNotFoundInFileException("Pokemonstat hittas ej"));
 
-        } else if (label.equalsIgnoreCase("loss")) {
-            pokeStat.setPokemonName(pokemon.getName());
-            pokeStat.incrementTotalNumberOfDefeats();
+            if (label.equalsIgnoreCase("win")) {
+                int currentTotalNumberOfWins = pokemonDataInStatFile.getTotalNumberOfWins();
+                pokemonDataInStatFile.setTotalNumberOfWins(currentTotalNumberOfWins + 1);
+
+            } else if (label.equalsIgnoreCase("loss")) {
+                int currentTotalNumberOfDefeats = pokemonDataInStatFile.getTotalNumberOfDefeats();
+                pokemonDataInStatFile.setTotalNumberOfWins(currentTotalNumberOfDefeats + 1);
+            }
+        } catch (PokemonStatNotFoundInFileException e) {
+            PokeStat pokeStat = null;
+            if (label.equalsIgnoreCase("win")) {
+                pokeStat = new PokeStat();
+                pokeStat.setPokemonName(pokemon.getName());
+                pokeStat.setTotalNumberOfWins(1);
+                pokeStat.setTotalNumberOfDefeats(0);
+                pokeStat.getWinRatio();
+                pokeStat.getLossRatio();
+            } else if (label.equalsIgnoreCase("loss")) {
+                pokeStat = new PokeStat();
+                pokeStat.setPokemonName(pokemon.getName());
+                pokeStat.setTotalNumberOfDefeats(1);
+                pokeStat.setTotalNumberOfWins(0);
+                pokeStat.getWinRatio();
+                pokeStat.getLossRatio();
+            }
+            pokemonStatsList.add(pokeStat);
+
+        } finally {
+            FileService.saveToStatsFile();
         }
-        pokemonStatsList.add(pokeStat);
-        FileService.saveToStatsFile();
-        pokeStat.setTotalNumberOfWins(0);
-        pokeStat.setTotalNumberOfDefeats(0);
+
+
     }
 
-    public void showStatstics() {
+    public void displayStatstics() {
         System.out.println("---------------");
         System.out.println("Spel Statstik");
         System.out.println("---------------");

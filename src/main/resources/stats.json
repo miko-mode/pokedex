@@ -1,25 +1,13 @@
 [ {
-  "pokemonName" : "wild_pok_247",
+  "pokemonName" : "wild_poke_1",
   "totalNumberOfWins" : 1,
   "totalNumberOfDefeats" : 0,
-  "winRatio" : "Infinity",
-  "lossRatio" : 0.0
+  "lossRatio" : 0.0,
+  "winRatio" : 1.0
 }, {
-  "pokemonName" : "poke_4",
-  "totalNumberOfWins" : 0,
-  "totalNumberOfDefeats" : 0,
-  "winRatio" : "NaN",
-  "lossRatio" : "NaN"
-}, {
-  "pokemonName" : "poke_5",
-  "totalNumberOfWins" : 1,
-  "totalNumberOfDefeats" : 0,
-  "winRatio" : "Infinity",
-  "lossRatio" : 0.0
-}, {
-  "pokemonName" : "wilkd_pok2",
+  "pokemonName" : null,
   "totalNumberOfWins" : 0,
   "totalNumberOfDefeats" : 1,
-  "winRatio" : 0.0,
-  "lossRatio" : "Infinity"
+  "lossRatio" : 1.0,
+  "winRatio" : 0.0
 } ]

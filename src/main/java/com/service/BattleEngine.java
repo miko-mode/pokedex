@@ -13,7 +13,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
-import static com.service.StatsticsService.createStats;
 import static com.ui.Main.consoleMenu;
 import static com.utility.ValidationInputHelper.isAttackPresentInPokemon;
 
@@ -23,6 +22,7 @@ public class BattleEngine extends PokemonOperations implements IBattleEngine {
     AttackTurnStats turnStats;
     public ArrayList<AttackTurnStats> turnStatsArrayList = new ArrayList<>();
     public List<Pokemon> wildPokemonsPool = new FileService().loadWildPokemons();
+    StatsticsService statsticsService=new StatsticsService();
     int turnCount = 0;
 
     public void battleEngine() {
@@ -85,7 +85,7 @@ public class BattleEngine extends PokemonOperations implements IBattleEngine {
             }
         }
         if (!isFound) {
-            System.out.println("Error: Pokemonen finns inte i samlingen. Detta kan också beror på att den är besegrad i tidigare tur, Forsök igen");
+            System.out.println("Error: Pokemonen finns inte i samlingen. Detta kan beror på att den är besegrad i tidigare tur, Forsök igen");
             consoleMenu();
         }
     }
@@ -100,8 +100,8 @@ public class BattleEngine extends PokemonOperations implements IBattleEngine {
             System.out.println("\n****************  **************************");
             System.out.println("Pokemon " + attacker.getName() + " har vunnit i rund " + turnCount + "!");
             System.out.println("****************  **************************");
-            createStats(attacker,"win");
-            createStats(defender,"loss");
+            statsticsService.createAndSavePokemonStats(attacker,"win");
+            statsticsService.createAndSavePokemonStats(defender,"loss");
             pokemonPool.remove(defender);
             gameStatsList.add(gameStats);
             isAttackTurnOver = true;

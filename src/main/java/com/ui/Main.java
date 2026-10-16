@@ -70,7 +70,7 @@ public class Main {
                 consoleMenu();
             }
             case "8" -> {
-                new StatsticsService().showStatstics();
+                new StatsticsService().displayStatstics();
                 consoleMenu();
             }
             case "9" -> {

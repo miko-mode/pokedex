@@ -159,7 +159,7 @@ public class BattleEngine extends PokemonOperations implements IBattleEngine {
     }
 
     //generera stat för turen
-    public GameStats statGenerator(String userAttackName, String cpuAttackName, Pokemon userPokemon, Pokemon wildPokemon, double userAttackDamage, double cpuAttackDamage, int turnNumber) {
+    public void statGenerator(String userAttackName, String cpuAttackName, Pokemon userPokemon, Pokemon wildPokemon, double userAttackDamage, double cpuAttackDamage, int turnNumber) {
         turnStats.setAttackTurnNumber(turnNumber);
         turnStats.setUserAttackName(userAttackName);
         turnStats.setCpuAttackName(cpuAttackName);
@@ -177,8 +177,6 @@ public class BattleEngine extends PokemonOperations implements IBattleEngine {
             turnStats.setTurnWinner("X");
         }
         gameStats.setTurnStats(turnStatsArrayList);
-        return gameStats;
-
     }
 
     //beråknar skada

@@ -14,6 +14,6 @@ public interface IBattleEngine {
 
     double calculateDamage(Attack attack1, Attack attack2);
 
-    GameStats statGenerator(String userAttackName, String cpuAttackName, Pokemon userPokemon, Pokemon wildPokemon, double userAttackDamage, double cpuAttackDamage, int turnNumber);
+    void statGenerator(String userAttackName, String cpuAttackName, Pokemon userPokemon, Pokemon wildPokemon, double userAttackDamage, double cpuAttackDamage, int turnNumber);
 
 }

@@ -1,6 +1,7 @@
 package com.service;
 
 import com.exceptions.PokemonStatNotFoundInFileException;
+import com.mapping.GameStats;
 import com.mapping.PokeStat;
 import com.models.Pokemon;
 import com.repository.FileService;
@@ -19,13 +20,14 @@ public class StatsticsService extends PokemonOperations {
 
             if (label.equalsIgnoreCase("win")) {
                 int currentTotalNumberOfWins = pokemonDataInStatFile.getTotalNumberOfWins();
-                pokemonDataInStatFile.setTotalNumberOfWins(currentTotalNumberOfWins + 1);
+                pokemonStatsList.stream().filter(pokeStat -> pokeStat.getPokemonName().equalsIgnoreCase(pokemon.getName()))
+                        .findFirst().get().setTotalNumberOfWins(currentTotalNumberOfWins + 1);
 
             } else if (label.equalsIgnoreCase("loss")) {
                 int currentTotalNumberOfDefeats = pokemonDataInStatFile.getTotalNumberOfDefeats();
-                pokemonDataInStatFile.setTotalNumberOfDefeats(currentTotalNumberOfDefeats + 1);
+                pokemonStatsList.stream().filter(pokeStat -> pokeStat.getPokemonName().equalsIgnoreCase(pokemon.getName()))
+                        .findFirst().get().setTotalNumberOfWins(currentTotalNumberOfDefeats + 1);
             }
-
         } catch (PokemonStatNotFoundInFileException e) {
             PokeStat pokeStat = null;
             if (label.equalsIgnoreCase("win")) {
@@ -50,7 +52,7 @@ public class StatsticsService extends PokemonOperations {
     }
 
     public String mostUsedPokemon() {
-        return pokemonStatsList.stream().collect(Collectors.groupingBy(PokeStat::getPokemonName, Collectors.counting()))
+        return gameStatsList.stream().collect(Collectors.groupingBy(GameStats::getUserPokemonName, Collectors.counting()))
                 .entrySet()
                 .stream()
                 .max(Map.Entry.comparingByValue())
@@ -67,7 +69,7 @@ public class StatsticsService extends PokemonOperations {
             System.out.println(".................. .................. ............. ........ ......... ........... ........... .........");
         }
         System.out.println("---------- ---------------  ----- ------- ---------- ---------- ---------------- -------- -- ----------");
-        System.out.println("Mest använt Pokemon från samlingen: * " + mostUsedPokemon() + " *");
+        System.out.println("Mest använt Pokemon från samlingen i battle: * " + mostUsedPokemon() + " *");
 
     }
 }

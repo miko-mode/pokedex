@@ -1,7 +1,7 @@
 [ {
   "pokemonName" : "poke_4",
   "totalNumberOfWins" : 1,
-  "totalNumberOfDefeats" : 1,
+  "totalNumberOfDefeats" : 4,
   "winRatio" : 0.0,
   "lossRatio" : 1.0
 }, {
@@ -12,8 +12,32 @@
   "lossRatio" : 1.0
 }, {
   "pokemonName" : "wild_pk_45",
+  "totalNumberOfWins" : 2,
+  "totalNumberOfDefeats" : 0,
+  "winRatio" : 1.0,
+  "lossRatio" : 0.0
+}, {
+  "pokemonName" : "wily_ppk:4",
   "totalNumberOfWins" : 1,
   "totalNumberOfDefeats" : 0,
   "winRatio" : 1.0,
   "lossRatio" : 0.0
+}, {
+  "pokemonName" : "wild_pok_247",
+  "totalNumberOfWins" : 1,
+  "totalNumberOfDefeats" : 0,
+  "winRatio" : 1.0,
+  "lossRatio" : 0.0
+}, {
+  "pokemonName" : "poke_5",
+  "totalNumberOfWins" : 1,
+  "totalNumberOfDefeats" : 0,
+  "winRatio" : 1.0,
+  "lossRatio" : 0.0
+}, {
+  "pokemonName" : "wild_poke_2",
+  "totalNumberOfWins" : 0,
+  "totalNumberOfDefeats" : 1,
+  "winRatio" : 0.0,
+  "lossRatio" : 1.0
 } ]

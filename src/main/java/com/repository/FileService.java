@@ -39,7 +39,7 @@ public class FileService extends PokemonOperations {
         }
     }
 
-    public void loadFromFile() {
+    public static void loadFromFile() {
         try {
             ArrayList<Pokemon> pokemonJSON = objectMapper.readValue(pokemonDataFile, new TypeReference<>() {
             });
@@ -63,7 +63,7 @@ public class FileService extends PokemonOperations {
         }
     }
 
-    public void loadFromMatchStatsticsFile() {
+    public static void loadFromMatchStatsticsFile() {
         try {
             ArrayList<GameStats> statJSON = objectMapper.readValue(matchDataFile, new TypeReference<>() {
             });
@@ -79,7 +79,7 @@ public class FileService extends PokemonOperations {
     }
 
     //spara till fil
-    public void saveToBattleResultFile() {
+    public static void saveToBattleResultFile() {
         try {
             String writeJsonToFile = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(gameStatsList);
             Files.writeString(Paths.get(pathToBattle_Result_JSON), writeJsonToFile);

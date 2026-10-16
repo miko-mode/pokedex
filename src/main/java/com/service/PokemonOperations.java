@@ -25,9 +25,9 @@ public class PokemonOperations {
     protected static final String pathToStats_File_JSON = "src/main/resources/stats.json";
     public static ObjectMapper objectMapper = new ObjectMapper();
     public static Scanner scan = new Scanner(System.in);
-    protected File pokemonDataFile = new File(pathToPokemon_Data_JSON);
-    protected File wildPokemonDataFile = new File(pathToWild_Pokemon_JSON);
-    protected File matchDataFile = new File(pathToBattle_Result_JSON);
+    protected static File pokemonDataFile = new File(pathToPokemon_Data_JSON);
+    protected static File wildPokemonDataFile = new File(pathToWild_Pokemon_JSON);
+    protected static File matchDataFile = new File(pathToBattle_Result_JSON);
     protected static File statsFile = new File(pathToStats_File_JSON);
 
     //predifinerad pokemoner

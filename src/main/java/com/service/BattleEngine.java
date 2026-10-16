@@ -104,6 +104,7 @@ public class BattleEngine extends PokemonOperations implements IBattleEngine {
             statsticsService.createAndSavePokemonStats(defender, "loss");
             pokemonPool.remove(defender);
             gameStatsList.add(gameStats);
+            FileService.saveToBattleResultFile();
             isAttackTurnOver = true;
             consoleMenu();
         }

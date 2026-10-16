@@ -10,13 +10,12 @@ public class Main {
     public static void main(String[] args) {
 
         PokemonOperations pokemonOperations = new PokemonOperations();
-        FileService fileService = new FileService();
         //load från fil automatiskt med start
         pokemonOperations.predefinedPokemon();
-        //load från file pokemoner och stat
-        fileService.loadFromFile();
-        fileService.loadFromMatchStatsticsFile();
-        fileService.loadFromStatsticsFile();
+        //load från fil
+        FileService.loadFromFile();
+        FileService.loadFromMatchStatsticsFile();
+        FileService.loadFromStatsticsFile();
         consoleMenu();
     }
 

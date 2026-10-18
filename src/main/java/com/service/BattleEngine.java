@@ -97,6 +97,7 @@ public class BattleEngine extends PokemonOperations implements IBattleEngine {
     private boolean isAttackTurnOver(Pokemon attacker, Pokemon defender, boolean isAttackTurnOver, List<Pokemon> pokemonPool) {
         if (defender.getCurrentHp() <= 0 && attacker.getCurrentHp() > 0) {
             gameStats.setWinnerPokemon(attacker.getName());
+            gameStats.setDefeatedPokemon(defender.getName());
             System.out.println("\n****************  **************************");
             System.out.println("Pokemon " + attacker.getName() + " har vunnit i rund " + turnCount + "!");
             System.out.println("****************  **************************");

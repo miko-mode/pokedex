@@ -6,7 +6,7 @@ import com.mapping.PokeStat;
 import com.models.Pokemon;
 import com.repository.FileService;
 
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class StatsticsService extends PokemonOperations {
@@ -52,11 +52,45 @@ public class StatsticsService extends PokemonOperations {
     }
 
     public String mostUsedPokemon() {
-        return gameStatsList.stream().collect(Collectors.groupingBy(GameStats::getUserPokemonName, Collectors.counting()))
+        List<Map.Entry<String, Long>> gameList = gameStatsList.stream().collect(Collectors.groupingBy(GameStats::getUserPokemonName, Collectors.counting()))
                 .entrySet()
-                .stream()
-                .max(Map.Entry.comparingByValue())
-                .map(Map.Entry::getKey).orElse("-- Ingen --");
+                .stream().toList();
+
+        return maxValue(gameList);
+    }
+
+    public String mostUsedCpuPokemon() {
+        List<Map.Entry<String, Long>> gameList = gameStatsList.stream().collect(Collectors.groupingBy(GameStats::getCpuPokemonName, Collectors.counting()))
+                .entrySet()
+                .stream().toList();
+
+        return maxValue(gameList);
+    }
+
+    private String maxValue(List<Map.Entry<String, Long>> entryList) {
+        String maxValueKey = null;
+        long maxValue = 0;
+        int count = 0;
+        ArrayList<Long> maxList = new ArrayList<>();
+        for (Map.Entry<String, Long> entry : entryList) {
+            long currentValue = entry.getValue();
+            if (currentValue > maxValue) {
+                maxValue = currentValue;
+                maxValueKey = entry.getKey();
+            }
+            if (currentValue == maxValue) {
+                maxList.add(currentValue);
+            }
+        }
+        long maxInt = Collections.max(maxList);
+        for (Long num : maxList) {
+            if (num == maxInt)
+                count = count + 1;
+        }
+        if (maxList.size() > 1 && count > 1)
+            return "Ingen";
+        return maxValueKey != null ? maxValueKey : "Ingen";
+
     }
 
     public void displayStatstics() {
@@ -69,7 +103,9 @@ public class StatsticsService extends PokemonOperations {
             System.out.println(".................. .................. ............. ........ ......... ........... ........... .........");
         }
         System.out.println("---------- ---------------  ----- ------- ---------- ---------- ---------------- -------- -- ----------");
-        System.out.println("Mest använt Pokemon från samlingen i battle: * " + mostUsedPokemon() + " *");
+        System.out.println("Mest använt Pokemon från samlingen i battle: " + mostUsedPokemon().toUpperCase());
+        System.out.println("................ .................... ..................... .............................. ............");
+        System.out.println("Mest använt Pokemon från CPU i battle: " + mostUsedCpuPokemon().toUpperCase());
 
     }
 }

@@ -8,7 +8,7 @@ public class GameStats {
     private String cpuPokemonName;
     private ArrayList<AttackTurnStats> turnStats = new ArrayList<>();
     private String winnerPokemon;
-
+    private String defeatedPokemon;
 
     public String getUserPokemonName() {
         return userPokemonName;
@@ -51,5 +51,11 @@ public class GameStats {
         this.gameId = gameId;
     }
 
+    public String getDefeatedPokemon() {
+        return defeatedPokemon;
+    }
 
+    public void setDefeatedPokemon(String defeatedPokemon) {
+        this.defeatedPokemon = defeatedPokemon;
+    }
 }

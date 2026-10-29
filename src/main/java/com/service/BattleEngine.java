@@ -9,6 +9,7 @@ import com.utility.ValidationInputHelper;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 import java.util.UUID;
 
 import static com.ui.Main.consoleMenu;
@@ -19,6 +20,7 @@ public class BattleEngine extends PokemonOperations implements IBattleEngine {
     GameStats gameStats;
     public List<Pokemon> wildPokemonsPool = new FileService().loadWildPokemons();
     StatsticsService statsticsService = new StatsticsService();
+    Random random=new Random();
     static int turnCount = 0;
     static int criticalHitCount = 0;
 
@@ -201,6 +203,7 @@ public class BattleEngine extends PokemonOperations implements IBattleEngine {
         double typeEfficiency = calculateTypeEfficiency(attackerAttack.getType(), defender.getType());
         double randomFactor = 0.85 + (Math.random() * 0.30); // Slump mellan 0.85 och 1.15
         double damage = attackerAttack.getBaseDamage() * typeEfficiency * randomFactor;
+
         if (criticalHitCount == 10) {
             return damage * 2;
         }

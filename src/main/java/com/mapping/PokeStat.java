@@ -20,13 +20,19 @@ public class PokeStat {
     }
 
     public double getWinRatio() {
-        totalNumberOfWins = totalNumberOfDefeats >= 0 ? Math.floorDiv(totalNumberOfWins, totalNumberOfWins + totalNumberOfDefeats) : 0;
-        return totalNumberOfWins;
+        int totalMatches = totalNumberOfWins + totalNumberOfDefeats;
+        if (totalMatches == 0) {
+            return 0.0;
+        }
+        return (double) totalNumberOfWins / totalMatches;
     }
 
     public double getLossRatio() {
-        totalNumberOfDefeats = totalNumberOfWins >= 0 ? Math.floorDiv(totalNumberOfDefeats, totalNumberOfDefeats + totalNumberOfWins) : 0;
-        return totalNumberOfDefeats;
+        int totalMatches = totalNumberOfWins + totalNumberOfDefeats;
+        if (totalMatches == 0) {
+            return 0.0;
+        }
+        return (double) totalNumberOfDefeats / totalMatches;
     }
 
     public String getPokemonName() {

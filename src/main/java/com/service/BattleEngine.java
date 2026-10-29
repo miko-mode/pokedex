@@ -1,6 +1,5 @@
 package com.service;
 
-import com.mapping.AttackTurnStats;
 import com.mapping.GameStats;
 import com.models.Attack;
 import com.models.Pokemon;
@@ -8,7 +7,6 @@ import com.models.Type;
 import com.repository.FileService;
 import com.utility.ValidationInputHelper;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
@@ -19,11 +17,10 @@ import static com.utility.ValidationInputHelper.isAttackPresentInPokemon;
 
 public class BattleEngine extends PokemonOperations implements IBattleEngine {
     GameStats gameStats;
-    AttackTurnStats turnStats;
-    public ArrayList<AttackTurnStats> turnStatsArrayList = new ArrayList<>();
     public List<Pokemon> wildPokemonsPool = new FileService().loadWildPokemons();
     StatsticsService statsticsService = new StatsticsService();
-    int turnCount = 0;
+    static int turnCount = 0;
+    static int criticalHitCount = 0;
 
     public void battleEngine() {
         boolean isFound = false;
@@ -48,13 +45,10 @@ public class BattleEngine extends PokemonOperations implements IBattleEngine {
 
             if (isValidToStartTurn(userPokemon, wildPokemon)) {
                 boolean isAttackTurnOver = false;
+                boolean currentHPZeroAndBelow = false;
                 while (!isAttackTurnOver) {
                     if (!userPokemon.getAttacks().isEmpty() && userPokemon.getAttacks() != null) {
                         gameStats = new GameStats();
-                        turnStats = new AttackTurnStats();
-                        System.out.println("\n------  -----");
-                        System.out.println("Attack tur: " + (turnCount + 1));
-                        System.out.println("------  -----");
                         System.out.println("Välj en Attack från " + userPokemon.getName() + " och ange attacknamnet:");
                         String attackChoice = scan.nextLine();
                         if (isAttackPresentInPokemon(attackChoice, userPokemon)) {
@@ -69,13 +63,21 @@ public class BattleEngine extends PokemonOperations implements IBattleEngine {
                             gameStats.setGameId(String.valueOf(UUID.randomUUID()));
                             gameStats.setUserPokemonName(userPokemon.getName());
                             gameStats.setCpuPokemonName(wildPokemon.getName());
-                            execute(userPokemon, selected_User_Attack, wildPokemon, selected_CPU_Attack);
 
+                            while (!currentHPZeroAndBelow) {
+                                if (userPokemon.getCurrentHp() > 0) {
+                                    executeUserAttack(selected_User_Attack, wildPokemon);
+                                    isAttackTurnOver = isAttackTurnOver(userPokemon, wildPokemon, isAttackTurnOver, wildPokemonsPool);
+                                }
+                                if (wildPokemon.getCurrentHp() > 0) {
+                                    executeCpuAttack(selected_CPU_Attack, userPokemon);
+                                    isAttackTurnOver = isAttackTurnOver(wildPokemon, userPokemon, isAttackTurnOver, pokemonList);
+                                }
+                                currentHPZeroAndBelow = isAttackTurnOver;
+                            }
                         }
                     }
 
-                    isAttackTurnOver = isAttackTurnOver(userPokemon, wildPokemon, isAttackTurnOver, wildPokemonsPool);
-                    isAttackTurnOver = isAttackTurnOver(wildPokemon, userPokemon, isAttackTurnOver, pokemonList);
                 }
 
             }
@@ -103,6 +105,7 @@ public class BattleEngine extends PokemonOperations implements IBattleEngine {
             System.out.println("****************  **************************");
             statsticsService.createAndSavePokemonStats(attacker, "win");
             statsticsService.createAndSavePokemonStats(defender, "loss");
+            statGenerator(attacker, defender,turnCount);
             pokemonPool.remove(defender);
             gameStatsList.add(gameStats);
             FileService.saveToBattleResultFile();
@@ -111,111 +114,96 @@ public class BattleEngine extends PokemonOperations implements IBattleEngine {
         }
         return isAttackTurnOver;
     }
-
     //gör spelturen logik
-    public void execute(Pokemon userPokemon, Attack userAttack, Pokemon wildPokemon, Attack cpuAttack) {
-        double userAttackDamage = calculateDamage(userAttack, cpuAttack);
-        double cpuAttackDamage = calculateDamage(cpuAttack, userAttack);
-
-        if (userAttackDamage > cpuAttackDamage) {
-            if (wildPokemon.getCurrentHp() > 0) {
-                String attackEffectTwice = ((userAttackDamage == (2 * cpuAttack.getBaseDamage())) && (userAttackDamage > cpuAttack.getBaseDamage())) ? " [2X]" : "";
-                System.out.println("| Skaderesultat för användare: " + userAttackDamage + attackEffectTwice + " | Skaderesultat för CPU: " + cpuAttackDamage);
-                System.out.println("| ---------------------------------------------------------------------------");
-                wildPokemon.setCurrentHp(wildPokemon.getCurrentHp() - 100);
-                System.out.println("| " + userPokemon.getName() + " current HP: " + userPokemon.getCurrentHp() + " | " + wildPokemon.getName() + " current HP: " + wildPokemon.getCurrentHp() + " [minskad med 100]");
-
-            }
+    public void executeUserAttack(Attack userAttack, Pokemon wildPokemon) {
+        double userAttackDamage = Math.round((calculateDamage(userAttack, wildPokemon) * 100.0) / 100.0);
+        System.out.println("\nAnvändare tur:");
+        System.out.println("--------------");
+        if (wildPokemon.getCurrentHp() > 0) {
+            String attackEffectTwice = (criticalHitCount == 10) ? " [2X]" : "";
+            System.out.println("| Skaderesultat: " + userAttackDamage + attackEffectTwice);
+            System.out.println("| --------------------------------------------");
+            int currentHpTurnDeduction = (int) (wildPokemon.getCurrentHp() - userAttackDamage);
+            wildPokemon.setCurrentHp(currentHpTurnDeduction);
+            System.out.println("|" + wildPokemon.getName() + " current HP: " + wildPokemon.getCurrentHp() + " [minskad med " + userAttackDamage + "]\n");
+            criticalHitCount++;
         }
-        if (cpuAttackDamage > userAttackDamage) {
-            if (userPokemon.getCurrentHp() > 0) {
-                String attackEffectTwice = ((cpuAttackDamage == 2 * (userAttack.getBaseDamage())) && (cpuAttackDamage > userAttack.getBaseDamage())) ? " [2X]" : "";
-                System.out.println("| Skaderesultat för användare: " + userAttackDamage + " | Skaderesultat för CPU: " + cpuAttackDamage + attackEffectTwice);
-                System.out.println("| ---------------------------------------------------------------------------");
-                userPokemon.setCurrentHp(userPokemon.getCurrentHp() - 100);
-                System.out.println("| " + userPokemon.getName() + " current HP: " + userPokemon.getCurrentHp() + " [minskad med 100] | " + wildPokemon.getName() + " current HP: " + wildPokemon.getCurrentHp());
-
-            }
-
-        }
-        //träffsäkerhet avgörs om cpuAttackDamage är lika med userAttackDamage
-        if (cpuAttackDamage == userAttackDamage) {
-            if (userAttack.getAccuracy() > cpuAttack.getAccuracy()) {
-                System.out.println("| Skaderesultat för användare: " + userAttackDamage + " | Skaderesultat för CPU: " + cpuAttackDamage);
-                System.out.println("| ------------------------------------------------------------------------");
-                wildPokemon.setCurrentHp(wildPokemon.getCurrentHp() - 100);
-                System.out.println(userPokemon.getName() + " current HP: " + userPokemon.getCurrentHp() + " | " + wildPokemon.getName() + " current HP: " + wildPokemon.getCurrentHp() + " [minskad med 100]");
-            }
-            if (userAttack.getAccuracy() < cpuAttack.getAccuracy()) {
-                System.out.println("| Skaderesultat resultat för användare: " + userAttackDamage + "| Skaderesultat för CPU: " + cpuAttackDamage);
-                System.out.println("| ---------------------------------------------------------------------------");
-                userPokemon.setCurrentHp(userPokemon.getCurrentHp() - 100);
-                System.out.println(userPokemon.getName() + " current HP: " + userPokemon.getCurrentHp() + "[minskad med 100] | " + wildPokemon.getName() + " current HP: " + wildPokemon.getCurrentHp());
-
-            }
-        }
-        statGenerator(userAttack.getName(), cpuAttack.getName(), userPokemon, wildPokemon, userAttackDamage, cpuAttackDamage, turnCount + 1);
         turnCount++;
-
     }
 
+    public void executeCpuAttack(Attack cpuAttack, Pokemon userPokemon) {
+        double cpuAttackDamage = Math.round((calculateDamage(cpuAttack, userPokemon) * 100.0) / 100.0);
+        System.out.println("\nCPU tur:");
+        System.out.println("--------------");
+        if (userPokemon.getCurrentHp() > 0) {
+            String attackEffectTwice = (criticalHitCount == 10) ? " [2X]" : "";
+            System.out.println("| Skaderesultat: " + cpuAttackDamage + attackEffectTwice);
+            System.out.println("| --------------------------------------------");
+            int currentHpTurnDeduction = (int) (userPokemon.getCurrentHp() - cpuAttackDamage);
+            userPokemon.setCurrentHp(currentHpTurnDeduction);
+            System.out.println("|" + userPokemon.getName() + " current HP: " + userPokemon.getCurrentHp() + " [minskad med " + cpuAttackDamage + "]");
+            criticalHitCount++;
+        }
+        turnCount++;
+    }
     //generera stat för turen
-    public void statGenerator(String userAttackName, String cpuAttackName, Pokemon userPokemon, Pokemon wildPokemon, double userAttackDamage, double cpuAttackDamage, int turnNumber) {
-        turnStats.setAttackTurnNumber(turnNumber);
-        turnStats.setUserAttackName(userAttackName);
-        turnStats.setCpuAttackName(cpuAttackName);
-        turnStats.setUserDamagePoints(String.valueOf(userAttackDamage));
-        turnStats.setCpuDamagePoints(String.valueOf(cpuAttackDamage));
-        turnStats.setUserCurrentHp(String.valueOf(userPokemon.getCurrentHp()));
-        turnStats.setWildCurrentPoints(String.valueOf(wildPokemon.getCurrentHp()));
-        turnStatsArrayList.add(turnStats);
+    public void statGenerator(Pokemon attacker, Pokemon defender, int totalNumberOfTurns) {
+        gameStats.setNumberOfTurns(turnCount);
         //sätta tur vinnare
-        if (userAttackDamage > cpuAttackDamage) {
-            turnStats.setTurnWinner("USER");
-        } else if (userAttackDamage < cpuAttackDamage) {
-            turnStats.setTurnWinner("CPU");
+        if (attacker.getCurrentHp() > defender.getCurrentHp()) {
+            gameStats.setWinnerPokemon("USER");
+            gameStats.setDefeatedPokemon("CPU");
+        } else if (attacker.getCurrentHp() < defender.getCurrentHp()) {
+            gameStats.setWinnerPokemon("CPU");
+            gameStats.setDefeatedPokemon("USER");
         } else {
-            turnStats.setTurnWinner("X");
+            gameStats.setWinnerPokemon("X");
+            gameStats.setDefeatedPokemon("X");
         }
-        gameStats.setTurnStats(turnStatsArrayList);
     }
-
-    //beråknar skada
-    public double calculateDamage(Attack attack1, Attack attack2) {
-        if (attack1.getType().equals(Type.Fire) && attack2.getType().equals(Type.Grass)) {
-            return damagePoint_2 * attack2.getBaseDamage();
-        }
-        if (attack1.getType().equals(Type.Water) && attack2.getType().equals(Type.Fire)) {
-            return damagePoint_2 * attack2.getBaseDamage();
-        }
-        if (attack1.getType().equals(Type.Grass) && attack2.getType().equals(Type.Water)) {
-            return damagePoint_2 * attack2.getBaseDamage();
-        }
-        if (attack1.getType().equals(Type.Electric) && attack2.getType().equals(Type.Water)) {
-            return damagePoint_2 * attack2.getBaseDamage();
-        }
-        //0,5
-        if (attack1.getType().equals(Type.Fire) && attack2.getType().equals(Type.Water)) {
-            return damagePoint_1 * attack2.getBaseDamage();
-        }
-        if (attack1.getType().equals(Type.Water) && attack2.getType().equals(Type.Grass)) {
-            return damagePoint_1 * attack2.getBaseDamage();
-        }
-        if (attack1.getType().equals(Type.Grass) && attack2.getType().equals(Type.Fire)) {
-            return damagePoint_1 * attack2.getBaseDamage();
-        }
-        //normal(1x)
-        if (attack1.getType().equals(Type.Normal)) {
-            return attack2.getBaseDamage();
-        }
-        return attack2.getBaseDamage();
-    }
-
     //blandar ihop alla wild pokemoner och plockar pokemonen som finns i toppen
     private Pokemon cpuPokemonChoice() {
         FileService fileService = new FileService();
         wildPokemonsPool = fileService.loadWildPokemons();
         Collections.shuffle(wildPokemonsPool);
         return wildPokemonsPool.get(0);
+    }
+
+    public double calculateTypeEfficiency(Type attackerType, Type defenderType) {
+        if (attackerType == Type.Fire && defenderType == Type.Grass) {
+            return 2.0;
+        }
+        if (attackerType == Type.Water && defenderType == Type.Fire) {
+            return 2.0;
+        }
+        if (attackerType == Type.Grass && defenderType == Type.Water) {
+            return 2.0;
+        }
+        if (attackerType == Type.Electric && defenderType == Type.Water) {
+            return 2.0;
+        }
+        if (attackerType == Type.Fire && defenderType == Type.Water) {
+            return 0.5;
+        }
+        if (attackerType == Type.Water && defenderType == Type.Grass) {
+            return 0.5;
+        }
+        if (attackerType == Type.Grass && defenderType == Type.Fire) {
+            return 0.5;
+        }
+
+        return 1.0; // Standard om ingen särskild effekt finns
+    }
+
+    //skadeberäkning metod
+    public double calculateDamage(Attack attackerAttack, Pokemon defender) {
+        // 1. Hämta typeffektiviteten
+        double typeEfficiency = calculateTypeEfficiency(attackerAttack.getType(), defender.getType());
+        double randomFactor = 0.85 + (Math.random() * 0.30); // Slump mellan 0.85 och 1.15
+        double damage = attackerAttack.getBaseDamage() * typeEfficiency * randomFactor;
+        if (criticalHitCount == 10) {
+            return damage * 2;
+        }
+        return damage;
     }
 }

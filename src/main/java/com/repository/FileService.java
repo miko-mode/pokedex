@@ -16,7 +16,6 @@ import java.util.List;
 
 public class FileService extends PokemonOperations {
 
-
     public static void saveToStatsFile() {
         try {
             String writeJsonToStatFile = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(pokemonStatsList);
@@ -53,7 +52,7 @@ public class FileService extends PokemonOperations {
     }
 
     //spara till fil
-    public void saveToFile() {
+    public static void saveToFile() {
         try {
             String writeJsonToFile = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(pokemonList);
             Files.writeString(Paths.get(pathToPokemon_Data_JSON), writeJsonToFile);

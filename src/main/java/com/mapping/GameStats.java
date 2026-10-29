@@ -1,12 +1,11 @@
 package com.mapping;
 
-import java.util.ArrayList;
 
 public class GameStats {
     private String gameId;
     private String userPokemonName;
     private String cpuPokemonName;
-    private ArrayList<AttackTurnStats> turnStats = new ArrayList<>();
+    private int numberOfTurns;
     private String winnerPokemon;
     private String defeatedPokemon;
 
@@ -26,15 +25,6 @@ public class GameStats {
         this.cpuPokemonName = cpuPokemonName;
     }
 
-
-    public ArrayList<AttackTurnStats> getTurnStats() {
-        return turnStats;
-    }
-
-    public void setTurnStats(ArrayList<AttackTurnStats> turnStats) {
-        this.turnStats = turnStats;
-    }
-
     public String getWinnerPokemon() {
         return winnerPokemon;
     }
@@ -49,6 +39,14 @@ public class GameStats {
 
     public void setGameId(String gameId) {
         this.gameId = gameId;
+    }
+
+    public int getNumberOfTurns() {
+        return numberOfTurns;
+    }
+
+    public void setNumberOfTurns(int numberOfTurns) {
+        this.numberOfTurns = numberOfTurns;
     }
 
     public String getDefeatedPokemon() {

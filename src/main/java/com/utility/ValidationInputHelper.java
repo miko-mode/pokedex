@@ -1,12 +1,13 @@
 package com.utility;
 
-import com.exceptions.AttackNotFoundException;
-import com.models.Type;
 import com.models.Attack;
 import com.models.Pokemon;
-import com.service.PokemonOperations;
+import com.models.Type;
 
-public class ValidationInputHelper extends PokemonOperations {
+import java.util.Scanner;
+
+public class ValidationInputHelper {
+    public static Scanner scan = new Scanner(System.in);
 
     public static void attackTypeValidation(String attackType, Attack attack) {
         while (attackType != null) {
@@ -56,20 +57,21 @@ public class ValidationInputHelper extends PokemonOperations {
         }
     }
 
-    public static boolean isAttackPresentInPokemon(String attackName, Pokemon pokemon){
-        for(Attack attackInPokemon: pokemon.getAttacks()){
-            if (attackInPokemon.getName().equalsIgnoreCase(attackName)){
+    public static boolean isAttackPresentInPokemon(String attackName, Pokemon pokemon) {
+        for (Attack attackInPokemon : pokemon.getAttacks()) {
+            if (attackInPokemon.getName().equalsIgnoreCase(attackName)) {
                 return true;
             }
         }
         return false;
     }
-    public static Attack getAttackObjectFromString(String attackName, Pokemon pokemon){
-        for(Attack attackInPokemon: pokemon.getAttacks()){
-            if (attackInPokemon.getName().equalsIgnoreCase(attackName)){
+
+    public static Attack getAttackObjectFromString(String attackName, Pokemon pokemon) {
+        for (Attack attackInPokemon : pokemon.getAttacks()) {
+            if (attackInPokemon.getName().equalsIgnoreCase(attackName)) {
                 return attackInPokemon;
             }
         }
-       return null;
+        return null;
     }
 }

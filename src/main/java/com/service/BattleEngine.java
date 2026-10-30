@@ -20,9 +20,11 @@ public class BattleEngine extends PokemonOperations implements IBattleEngine {
     GameStats gameStats;
     public List<Pokemon> wildPokemonsPool = new FileService().loadWildPokemons();
     StatsticsService statsticsService = new StatsticsService();
-    Random random=new Random();
+    Random random = new Random();
+    int randomNumber = random.nextInt(16);
     static int turnCount = 0;
-    static int criticalHitCount = 0;
+    boolean isCriticalHit = false;
+    boolean isForOneTurnOnly = true;
 
     public void battleEngine() {
         boolean isFound = false;
@@ -49,37 +51,39 @@ public class BattleEngine extends PokemonOperations implements IBattleEngine {
                 boolean isAttackTurnOver = false;
                 boolean currentHPZeroAndBelow = false;
                 while (!isAttackTurnOver) {
+                    Attack selected_User_Attack = null;
+                    Attack selected_CPU_Attack = null;
                     if (!userPokemon.getAttacks().isEmpty() && userPokemon.getAttacks() != null) {
                         gameStats = new GameStats();
                         System.out.println("Välj en Attack från " + userPokemon.getName() + " och ange attacknamnet:");
                         String attackChoice = scan.nextLine();
                         if (isAttackPresentInPokemon(attackChoice, userPokemon)) {
                             System.out.println("Du har valt:");
-                            Attack selected_User_Attack = ValidationInputHelper.getAttackObjectFromString(attackChoice, userPokemon);
+                            selected_User_Attack = ValidationInputHelper.getAttackObjectFromString(attackChoice, userPokemon);
                             System.out.println(selected_User_Attack);
                             System.out.println("CPU väljer: ");
                             Collections.shuffle(wildPokemon.getAttacks());
-                            Attack selected_CPU_Attack = ValidationInputHelper.getAttackObjectFromString(wildPokemon.getAttacks().get(0).getName(), wildPokemon);
+                            selected_CPU_Attack = ValidationInputHelper.getAttackObjectFromString(wildPokemon.getAttacks().get(0).getName(), wildPokemon);
                             System.out.println(selected_CPU_Attack);
 
                             gameStats.setGameId(String.valueOf(UUID.randomUUID()));
                             gameStats.setUserPokemonName(userPokemon.getName());
                             gameStats.setCpuPokemonName(wildPokemon.getName());
 
-                            while (!currentHPZeroAndBelow) {
-                                if (userPokemon.getCurrentHp() > 0) {
-                                    executeUserAttack(selected_User_Attack, wildPokemon);
-                                    isAttackTurnOver = isAttackTurnOver(userPokemon, wildPokemon, isAttackTurnOver, wildPokemonsPool);
-                                }
-                                if (wildPokemon.getCurrentHp() > 0) {
-                                    executeCpuAttack(selected_CPU_Attack, userPokemon);
-                                    isAttackTurnOver = isAttackTurnOver(wildPokemon, userPokemon, isAttackTurnOver, pokemonList);
-                                }
-                                currentHPZeroAndBelow = isAttackTurnOver;
-                            }
+
                         }
                     }
-
+                    while (!currentHPZeroAndBelow) {
+                        if (userPokemon.getCurrentHp() > 0) {
+                            executeUserAttack(selected_User_Attack, wildPokemon);
+                            isAttackTurnOver = isAttackTurnOver(userPokemon, wildPokemon, isAttackTurnOver, wildPokemonsPool);
+                        }
+                        if (wildPokemon.getCurrentHp() > 0) {
+                            executeCpuAttack(selected_CPU_Attack, userPokemon);
+                            isAttackTurnOver = isAttackTurnOver(wildPokemon, userPokemon, isAttackTurnOver, pokemonList);
+                        }
+                        currentHPZeroAndBelow = isAttackTurnOver;
+                    }
                 }
 
             }
@@ -107,28 +111,30 @@ public class BattleEngine extends PokemonOperations implements IBattleEngine {
             System.out.println("****************  **************************");
             statsticsService.createAndSavePokemonStats(attacker, "win");
             statsticsService.createAndSavePokemonStats(defender, "loss");
-            statGenerator(attacker, defender,turnCount);
+            statGenerator(attacker, defender, turnCount);
             pokemonPool.remove(defender);
             gameStatsList.add(gameStats);
             FileService.saveToBattleResultFile();
             isAttackTurnOver = true;
+            turnCount = 0;
             consoleMenu();
         }
         return isAttackTurnOver;
     }
+
     //gör spelturen logik
     public void executeUserAttack(Attack userAttack, Pokemon wildPokemon) {
         double userAttackDamage = Math.round((calculateDamage(userAttack, wildPokemon) * 100.0) / 100.0);
         System.out.println("\nAnvändare tur:");
         System.out.println("--------------");
         if (wildPokemon.getCurrentHp() > 0) {
-            String attackEffectTwice = (criticalHitCount == 10) ? " [2X]" : "";
-            System.out.println("| Skaderesultat: " + userAttackDamage + attackEffectTwice);
+            String criticalHit = isCriticalHit ? " [2X]" : "";
+            System.out.println("| Skaderesultat: " + userAttackDamage + criticalHit);
             System.out.println("| --------------------------------------------");
             int currentHpTurnDeduction = (int) (wildPokemon.getCurrentHp() - userAttackDamage);
             wildPokemon.setCurrentHp(currentHpTurnDeduction);
             System.out.println("|" + wildPokemon.getName() + " current HP: " + wildPokemon.getCurrentHp() + " [minskad med " + userAttackDamage + "]\n");
-            criticalHitCount++;
+            isCriticalHit=false; //reset
         }
         turnCount++;
     }
@@ -138,16 +144,17 @@ public class BattleEngine extends PokemonOperations implements IBattleEngine {
         System.out.println("\nCPU tur:");
         System.out.println("--------------");
         if (userPokemon.getCurrentHp() > 0) {
-            String attackEffectTwice = (criticalHitCount == 10) ? " [2X]" : "";
-            System.out.println("| Skaderesultat: " + cpuAttackDamage + attackEffectTwice);
+            String criticalHit = isCriticalHit ? " [2X]" : "";
+            System.out.println("| Skaderesultat: " + cpuAttackDamage + criticalHit);
             System.out.println("| --------------------------------------------");
             int currentHpTurnDeduction = (int) (userPokemon.getCurrentHp() - cpuAttackDamage);
             userPokemon.setCurrentHp(currentHpTurnDeduction);
             System.out.println("|" + userPokemon.getName() + " current HP: " + userPokemon.getCurrentHp() + " [minskad med " + cpuAttackDamage + "]");
-            criticalHitCount++;
+            isCriticalHit=false; //reset
         }
         turnCount++;
     }
+
     //generera stat för turen
     public void statGenerator(Pokemon attacker, Pokemon defender, int totalNumberOfTurns) {
         gameStats.setNumberOfTurns(turnCount);
@@ -163,6 +170,7 @@ public class BattleEngine extends PokemonOperations implements IBattleEngine {
             gameStats.setDefeatedPokemon("X");
         }
     }
+
     //blandar ihop alla wild pokemoner och plockar pokemonen som finns i toppen
     private Pokemon cpuPokemonChoice() {
         FileService fileService = new FileService();
@@ -203,10 +211,13 @@ public class BattleEngine extends PokemonOperations implements IBattleEngine {
         double typeEfficiency = calculateTypeEfficiency(attackerAttack.getType(), defender.getType());
         double randomFactor = 0.85 + (Math.random() * 0.30); // Slump mellan 0.85 och 1.15
         double damage = attackerAttack.getBaseDamage() * typeEfficiency * randomFactor;
-
-        if (criticalHitCount == 10) {
+        System.out.println("random" + randomNumber);
+        if ((randomNumber <= turnCount) && isForOneTurnOnly) {
+            isCriticalHit = true;
+            isForOneTurnOnly = false;
             return damage * 2;
         }
+
         return damage;
     }
 }

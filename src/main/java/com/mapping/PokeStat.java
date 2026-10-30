@@ -24,7 +24,7 @@ public class PokeStat {
         if (totalMatches == 0) {
             return 0.0;
         }
-        return (double) totalNumberOfWins / totalMatches;
+        return Math.round(((double) totalNumberOfWins / totalMatches) * 100.0) / 100.0;
     }
 
     public double getLossRatio() {
@@ -32,7 +32,7 @@ public class PokeStat {
         if (totalMatches == 0) {
             return 0.0;
         }
-        return (double) totalNumberOfDefeats / totalMatches;
+        return Math.round(((double) totalNumberOfDefeats / totalMatches) * 100.0) / 100.0;
     }
 
     public String getPokemonName() {

@@ -1,0 +1,99 @@
+[ {
+  "gameId" : "4aa40673-2a8b-4491-af5a-95a80456c447",
+  "userPokemonName" : "poke_3",
+  "cpuPokemonName" : "wild_pok_247",
+  "numberOfTurns" : 6,
+  "winnerPokemon" : "USER",
+  "defeatedPokemon" : "CPU"
+}, {
+  "gameId" : "138fa0af-103a-4bf6-8c1f-30f6ca0d32e2",
+  "userPokemonName" : "poke_2",
+  "cpuPokemonName" : "wild_pk_45",
+  "numberOfTurns" : 9,
+  "winnerPokemon" : "USER",
+  "defeatedPokemon" : "CPU"
+}, {
+  "gameId" : "caa8a725-5d9f-426e-b4da-9717c11d2ad2",
+  "userPokemonName" : "poke_2",
+  "cpuPokemonName" : "wily_ppk:4",
+  "numberOfTurns" : 7,
+  "winnerPokemon" : "USER",
+  "defeatedPokemon" : "CPU"
+}, {
+  "gameId" : "2bc3cfbd-1015-46d3-8df2-3f2bfe49fda3",
+  "userPokemonName" : "poke_2",
+  "cpuPokemonName" : "wild_pok_247",
+  "numberOfTurns" : 11,
+  "winnerPokemon" : "USER",
+  "defeatedPokemon" : "CPU"
+}, {
+  "gameId" : "52eb308d-ea15-4e9a-a147-a226817ff2f6",
+  "userPokemonName" : "poke_4",
+  "cpuPokemonName" : "wilk_pk_22",
+  "numberOfTurns" : 16,
+  "winnerPokemon" : "USER",
+  "defeatedPokemon" : "CPU"
+}, {
+  "gameId" : "d6a9c538-ee04-405f-8df2-164e8b7af7f4",
+  "userPokemonName" : "poke_3",
+  "cpuPokemonName" : "wild_pk_45",
+  "numberOfTurns" : 26,
+  "winnerPokemon" : "USER",
+  "defeatedPokemon" : "CPU"
+}, {
+  "gameId" : "557ab8d3-17ed-4dd0-a63c-8313c2821281",
+  "userPokemonName" : "poke_2",
+  "cpuPokemonName" : "wild_pk_33",
+  "numberOfTurns" : 6,
+  "winnerPokemon" : "USER",
+  "defeatedPokemon" : "CPU"
+}, {
+  "gameId" : "2da5b8bb-6d6e-4798-b95b-cfa4bcf97062",
+  "userPokemonName" : "poke_4",
+  "cpuPokemonName" : "wilkd_pok2",
+  "numberOfTurns" : 13,
+  "winnerPokemon" : "USER",
+  "defeatedPokemon" : "CPU"
+}, {
+  "gameId" : "01342b9c-6d4f-4360-a827-bad6b3cf5455",
+  "userPokemonName" : "poke_2",
+  "cpuPokemonName" : "wild_pk4",
+  "numberOfTurns" : 17,
+  "winnerPokemon" : "USER",
+  "defeatedPokemon" : "CPU"
+}, {
+  "gameId" : "c02829bb-c31a-4fdb-b28d-2284e7f722ec",
+  "userPokemonName" : "poke_4",
+  "cpuPokemonName" : "wild_pk_33",
+  "numberOfTurns" : 11,
+  "winnerPokemon" : "USER",
+  "defeatedPokemon" : "CPU"
+}, {
+  "gameId" : "e7f90614-9200-435b-a4dc-8323ab6543b5",
+  "userPokemonName" : "poke_2",
+  "cpuPokemonName" : "wild_poke_1",
+  "numberOfTurns" : 15,
+  "winnerPokemon" : "USER",
+  "defeatedPokemon" : "CPU"
+}, {
+  "gameId" : "709f4cdd-d213-40dd-b1bd-3c9ac91b93ee",
+  "userPokemonName" : "poke_2",
+  "cpuPokemonName" : "wilk_pk_22",
+  "numberOfTurns" : 9,
+  "winnerPokemon" : "USER",
+  "defeatedPokemon" : "CPU"
+}, {
+  "gameId" : "b937aedc-964f-403f-8670-1a96b190570e",
+  "userPokemonName" : "poke_3",
+  "cpuPokemonName" : "wilkd_pok2",
+  "numberOfTurns" : 6,
+  "winnerPokemon" : "USER",
+  "defeatedPokemon" : "CPU"
+}, {
+  "gameId" : "c60d1f7b-5b72-4da1-a7da-eb98835bdf89",
+  "userPokemonName" : "poke_2",
+  "cpuPokemonName" : "wild_p_3",
+  "numberOfTurns" : 14,
+  "winnerPokemon" : "USER",
+  "defeatedPokemon" : "CPU"
+} ]

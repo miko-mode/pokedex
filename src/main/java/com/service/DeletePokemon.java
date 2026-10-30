@@ -2,9 +2,16 @@ package com.service;
 
 import com.models.Pokemon;
 
+import java.util.List;
+import java.util.Scanner;
+
 import static com.ui.Main.consoleMenu;
 
-public class DeletePokemon extends PokemonOperations {
+public class DeletePokemon extends PokemonOperations  {
+
+    public DeletePokemon(Scanner scan, List<Pokemon> pokemonList) {
+        super(scan, pokemonList);
+    }
 
     public void removePokemon() {
         System.out.println("Ange pokemon namn att ta bort");

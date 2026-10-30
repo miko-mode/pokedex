@@ -8,11 +8,9 @@ import java.util.Scanner;
 
 public class Main {
     static boolean showMenu=true;
-
     public static void main(String[] args) {
-        PokemonOperations pokemonOperations = new PokemonOperations();
         //load från fil automatiskt med start
-        pokemonOperations.predefinedPokemon();
+        PokemonOperations.predefinedPokemon();
         //load från fil
         FileService.loadFromFile();
         FileService.loadFromMatchStatsticsFile();

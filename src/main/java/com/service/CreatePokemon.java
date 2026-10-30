@@ -6,6 +6,8 @@ import com.models.Pokemon;
 import com.utility.ValidationInputHelper;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
 
 import static com.ui.Main.consoleMenu;
 
@@ -23,6 +25,10 @@ public class CreatePokemon extends PokemonOperations {
     boolean isValidNumberOfAttacks = false;
     boolean isValidBaseDamage = false;
     boolean isValidAttackAccuracy = false;
+
+    public CreatePokemon(Scanner scan, List<Pokemon> pokemonList) {
+        super(scan, pokemonList);
+    }
 
     public void createPokemon() throws DuplicatePokemonException {
         ArrayList<Attack> attackList = new ArrayList<>();
@@ -119,13 +125,13 @@ public class CreatePokemon extends PokemonOperations {
                 System.out.println("Error: Ogiltigt värde för  Antalet Attacker, Ange mellan 1 och 4");
             }
         }
-        validateAndCreateAttack(pokemon,Integer.parseInt(numberOfAttacks),attackList);
+        validateAndCreateAttack(pokemon, Integer.parseInt(numberOfAttacks), attackList);
         pokemonList.add(pokemon);
         System.out.println("Success! Pokemon " + pokemon.getName() + " skapades och lagt till Predifinierad pokemoner!");
         consoleMenu();
     }
 
-    public void validateAndCreateAttack(Pokemon pokemon, int numberOfAttacks,ArrayList<Attack> attackList){
+    public void validateAndCreateAttack(Pokemon pokemon, int numberOfAttacks, ArrayList<Attack> attackList) {
         for (int i = 1; i <= numberOfAttacks; i++) {
             System.out.println("Skapa attack nummer: " + i);
             boolean isValidAttackEntry = false;

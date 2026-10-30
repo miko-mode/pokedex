@@ -9,7 +9,10 @@ import com.repository.FileService;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class StatsticsService extends PokemonOperations {
+import static com.service.PokemonOperations.gameStatsList;
+import static com.service.PokemonOperations.pokemonStatsList;
+
+public class StatsticsService  {
 
     public void createAndSavePokemonStats(Pokemon pokemon, String label) throws PokemonStatNotFoundInFileException {
         try {

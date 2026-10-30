@@ -7,11 +7,16 @@ import com.models.Pokemon;
 
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Scanner;
 
 import static com.ui.Main.consoleMenu;
 import static com.utility.ValidationInputHelper.attackTypeValidation;
 
 public class EditPokemon extends PokemonOperations {
+
+    public EditPokemon(Scanner scan, List<Pokemon> pokemonList) {
+        super(scan, pokemonList);
+    }
 
     public void editPokemon() {
         String maxHp = null;

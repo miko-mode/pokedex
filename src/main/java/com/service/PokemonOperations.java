@@ -24,14 +24,19 @@ public class PokemonOperations {
     protected static final String pathToBattle_Result_JSON = "src/main/resources/battle_result.json";
     protected static final String pathToStats_File_JSON = "src/main/resources/stats.json";
     public static ObjectMapper objectMapper = new ObjectMapper();
-    public static Scanner scan = new Scanner(System.in);
+    public  Scanner scan = new Scanner(System.in);
     protected static File pokemonDataFile = new File(pathToPokemon_Data_JSON);
     protected static File wildPokemonDataFile = new File(pathToWild_Pokemon_JSON);
     protected static File matchDataFile = new File(pathToBattle_Result_JSON);
     protected static File statsFile = new File(pathToStats_File_JSON);
 
+    public PokemonOperations(Scanner scan, List<Pokemon> pokemonList) {
+        this.scan=scan;
+        PokemonOperations.pokemonList =pokemonList;
+    }
+
     //predifinerad pokemoner
-    public void predefinedPokemon() {
+    public static void predefinedPokemon() {
         Attack attack_one = new Attack("atk_1", Type.Electric, 85, 30);
         Attack attack_two = new Attack("atk_2", Type.Water, 75, 40);
         List<Attack> list_one = new ArrayList<>(List.of(attack_one, attack_two));

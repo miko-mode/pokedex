@@ -96,4 +96,32 @@
   "numberOfTurns" : 14,
   "winnerPokemon" : "USER",
   "defeatedPokemon" : "CPU"
+}, {
+  "gameId" : "f4041cea-4fae-4432-8658-6fbef5384747",
+  "userPokemonName" : "poke_3",
+  "cpuPokemonName" : "wild_poke_2",
+  "numberOfTurns" : 13,
+  "winnerPokemon" : "USER",
+  "defeatedPokemon" : "CPU"
+}, {
+  "gameId" : "44a19660-1080-4008-a506-697e001bc2c3",
+  "userPokemonName" : "poke_1",
+  "cpuPokemonName" : "wild_pk_33",
+  "numberOfTurns" : 11,
+  "winnerPokemon" : "USER",
+  "defeatedPokemon" : "CPU"
+}, {
+  "gameId" : "868bae9c-0699-4c12-8da9-0cfb9e06cc45",
+  "userPokemonName" : "poke_5",
+  "cpuPokemonName" : "wily_ppk:4",
+  "numberOfTurns" : 9,
+  "winnerPokemon" : "USER",
+  "defeatedPokemon" : "CPU"
+}, {
+  "gameId" : "327ebdee-1fe2-4e2e-a39e-d6eb00957526",
+  "userPokemonName" : "poke_3",
+  "cpuPokemonName" : "wild_pk_33",
+  "numberOfTurns" : 4,
+  "winnerPokemon" : "USER",
+  "defeatedPokemon" : "CPU"
 } ]

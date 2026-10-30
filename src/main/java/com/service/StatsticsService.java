@@ -92,7 +92,8 @@ public class StatsticsService  {
         }
         if (maxList.size() > 1 && count > 1)
             return "Ingen";
-        return maxValueKey != null ? maxValueKey : "Ingen";
+        else
+             return maxValueKey != null ? maxValueKey : "Ingen";
 
     }
 

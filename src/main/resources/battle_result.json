@@ -124,4 +124,18 @@
   "numberOfTurns" : 4,
   "winnerPokemon" : "USER",
   "defeatedPokemon" : "CPU"
+}, {
+  "gameId" : "04d097be-133d-4676-81eb-e75134aaf356",
+  "userPokemonName" : "poke_2",
+  "cpuPokemonName" : "wild_pk_33",
+  "numberOfTurns" : 17,
+  "winnerPokemon" : "USER",
+  "defeatedPokemon" : "CPU"
+}, {
+  "gameId" : "34c0bc45-2ce9-4acb-b2b1-b9737e6a339d",
+  "userPokemonName" : "poke_2",
+  "cpuPokemonName" : "wild_p_3",
+  "numberOfTurns" : 23,
+  "winnerPokemon" : "USER",
+  "defeatedPokemon" : "CPU"
 } ]

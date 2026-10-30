@@ -12,7 +12,7 @@ public class ReadPokemon extends PokemonOperations {
         super(scan, pokemonList);
     }
 
-    public void showPredifinedPokemones() {
+    public static void showPredifinedPokemones() {
         if (pokemonList != null && !pokemonList.isEmpty()) {
             System.out.println("Predefinierad Pokemon Data:\n\n" + pokemonList.stream().map(Pokemon::toString).collect(Collectors.joining(" ")));
         } else {

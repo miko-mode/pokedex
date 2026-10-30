@@ -6,10 +6,10 @@
   "lossRatio" : 0.0
 }, {
   "pokemonName" : "poke_2",
-  "totalNumberOfWins" : 0,
+  "totalNumberOfWins" : 2,
   "totalNumberOfDefeats" : 1,
-  "winRatio" : 0.0,
-  "lossRatio" : 1.0
+  "winRatio" : 0.67,
+  "lossRatio" : 0.33
 }, {
   "pokemonName" : "poke_3",
   "totalNumberOfWins" : 1,
@@ -30,10 +30,10 @@
   "lossRatio" : 0.0
 }, {
   "pokemonName" : "wild_pk_33",
-  "totalNumberOfWins" : 1,
+  "totalNumberOfWins" : 2,
   "totalNumberOfDefeats" : 1,
-  "winRatio" : 0.5,
-  "lossRatio" : 0.5
+  "winRatio" : 0.67,
+  "lossRatio" : 0.33
 }, {
   "pokemonName" : "poke_5",
   "totalNumberOfWins" : 1,

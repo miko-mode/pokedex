@@ -18,7 +18,7 @@
   "name" : "poke_2",
   "type" : "Fire",
   "maxHp" : 900,
-  "currentHp" : -50,
+  "currentHp" : 190,
   "attacks" : [ {
     "name" : "atk_3",
     "type" : "Grass",
@@ -50,7 +50,7 @@
   "name" : "poke_4",
   "type" : "Normal",
   "maxHp" : 850,
-  "currentHp" : 150,
+  "currentHp" : 750,
   "attacks" : [ {
     "name" : "atk_1",
     "type" : "Electric",
@@ -93,5 +93,16 @@
     "type" : "Fire",
     "baseDamage" : 35,
     "accuracy" : 80
+  } ]
+}, {
+  "name" : "poke_23",
+  "type" : "Grass",
+  "maxHp" : 34,
+  "currentHp" : 22,
+  "attacks" : [ {
+    "name" : "atk_88",
+    "type" : "Electric",
+    "baseDamage" : 43,
+    "accuracy" : 66
   } ]
 } ]

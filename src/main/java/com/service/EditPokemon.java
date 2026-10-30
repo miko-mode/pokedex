@@ -18,6 +18,10 @@ public class EditPokemon extends PokemonOperations {
         super(scan, pokemonList);
     }
 
+    public EditPokemon() {
+
+    }
+
     public void editPokemon() {
         String maxHp = null;
         String currentHp;

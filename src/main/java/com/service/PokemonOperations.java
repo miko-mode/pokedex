@@ -35,6 +35,10 @@ public class PokemonOperations {
         PokemonOperations.pokemonList =pokemonList;
     }
 
+    public PokemonOperations() {
+
+    }
+
     //predifinerad pokemoner
     public static void predefinedPokemon() {
         Attack attack_one = new Attack("atk_1", Type.Electric, 85, 30);

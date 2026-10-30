@@ -38,7 +38,7 @@ public class Main {
             String choice = scan.nextLine();
             switch (choice) {
                 case "0" -> {
-                    new ReadPokemon().showPredifinedPokemones();
+                    ReadPokemon.showPredifinedPokemones();
                     showMenu=true;
                 }
                 case "1" -> {

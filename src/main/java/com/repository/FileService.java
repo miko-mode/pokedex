@@ -20,7 +20,6 @@ public class FileService extends PokemonOperations {
         try {
             String writeJsonToStatFile = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(pokemonStatsList);
             Files.writeString(Paths.get(pathToStats_File_JSON), writeJsonToStatFile);
-            //System.out.println("Success: Lyckades att skriva till statsfil!");
         } catch (IOException e) {
             System.out.println("Error: Lyckades inte att spara till fil: " + e.getMessage());
         }

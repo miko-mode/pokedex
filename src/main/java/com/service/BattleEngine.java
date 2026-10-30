@@ -211,13 +211,11 @@ public class BattleEngine extends PokemonOperations implements IBattleEngine {
         double typeEfficiency = calculateTypeEfficiency(attackerAttack.getType(), defender.getType());
         double randomFactor = 0.85 + (Math.random() * 0.30); // Slump mellan 0.85 och 1.15
         double damage = attackerAttack.getBaseDamage() * typeEfficiency * randomFactor;
-        System.out.println("random" + randomNumber);
         if ((randomNumber <= turnCount) && isForOneTurnOnly) {
             isCriticalHit = true;
             isForOneTurnOnly = false;
             return damage * 2;
         }
-
         return damage;
     }
 }

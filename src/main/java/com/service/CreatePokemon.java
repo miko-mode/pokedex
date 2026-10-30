@@ -30,6 +30,10 @@ public class CreatePokemon extends PokemonOperations {
         super(scan, pokemonList);
     }
 
+    public CreatePokemon() {
+
+    }
+
     public void createPokemon() throws DuplicatePokemonException {
         ArrayList<Attack> attackList = new ArrayList<>();
         Pokemon pokemon = new Pokemon();

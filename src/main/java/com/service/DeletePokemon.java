@@ -7,10 +7,14 @@ import java.util.Scanner;
 
 import static com.ui.Main.consoleMenu;
 
-public class DeletePokemon extends PokemonOperations  {
+public class DeletePokemon extends PokemonOperations {
 
     public DeletePokemon(Scanner scan, List<Pokemon> pokemonList) {
         super(scan, pokemonList);
+    }
+
+    public DeletePokemon() {
+
     }
 
     public void removePokemon() {

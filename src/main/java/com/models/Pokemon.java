@@ -1,14 +1,23 @@
 package com.models;
 
+import jakarta.persistence.*;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-
+@Entity
+@Table(name = "pokemon")
 public class Pokemon {
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+    @Column(name = "namn", nullable = false, unique = true)
     private String name;
+    @Column(name = "type", nullable = false)
     private Type type;
+    @Column(name = "maxHp", nullable = false)
     private int maxHp;
+    @Column(name = "currentHp", nullable = false)
     private int currentHp;
     private List<Attack> attacks = new ArrayList<>();
 
@@ -29,7 +38,9 @@ public class Pokemon {
     public Pokemon() {
 
     }
-
+    public Integer getId() {
+        return id;
+    }
     public String getName() {
         return name;
     }

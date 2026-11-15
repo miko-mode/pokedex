@@ -1,7 +1,6 @@
 package com.repository;
 
 import com.models.Attack;
-import com.models.Pokemon;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 

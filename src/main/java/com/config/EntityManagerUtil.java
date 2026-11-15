@@ -30,7 +30,7 @@ public class EntityManagerUtil {
                 "org.postgresql.Driver");
 
         emf = Persistence.createEntityManagerFactory(
-                "gamestorePU",
+                "pokedexPU",
                 properties
         );
     }

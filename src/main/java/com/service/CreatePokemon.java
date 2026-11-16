@@ -3,8 +3,10 @@ package com.service;
 import com.exceptions.*;
 import com.models.Attack;
 import com.models.Pokemon;
+import com.models.Type;
 import com.utility.ValidationInputHelper;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -37,7 +39,6 @@ public class CreatePokemon extends PokemonOperations {
     public void createPokemon() throws DuplicatePokemonException {
         ArrayList<Attack> attackList = new ArrayList<>();
         Pokemon pokemon = new Pokemon();
-        System.out.println("Ange Pokemon namn");
         while (!isValidPokemonName) {
             try {
                 pokemonName = scan.nextLine();

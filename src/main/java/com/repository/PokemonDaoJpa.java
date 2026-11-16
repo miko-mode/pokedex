@@ -1,5 +1,6 @@
 package com.repository;
 
+import com.config.EntityManagerUtil;
 import com.models.Pokemon;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
@@ -7,11 +8,8 @@ import jakarta.persistence.EntityTransaction;
 import java.util.List;
 
 public class PokemonDaoJpa implements PokemonDao {
-    private EntityManager em;
 
-    public PokemonDaoJpa(EntityManager em) {
-        this.em = em;
-    }
+    private final EntityManager em = EntityManagerUtil.getEntityManager();
 
     @Override
     public void sparaPokemon(Pokemon pokemon) {

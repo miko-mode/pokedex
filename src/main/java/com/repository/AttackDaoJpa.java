@@ -1,5 +1,6 @@
 package com.repository;
 
+import com.config.EntityManagerUtil;
 import com.models.Attack;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
@@ -7,11 +8,9 @@ import jakarta.persistence.EntityTransaction;
 import java.util.List;
 
 public class AttackDaoJpa implements AttackDao {
-    private EntityManager em;
 
-    public AttackDaoJpa(EntityManager em) {
-        this.em = em;
-    }
+    private final EntityManager em = EntityManagerUtil.getEntityManager();
+
     @Override
     public void sparaAttack(Attack attack) {
         EntityTransaction tx = em.getTransaction();

@@ -10,15 +10,15 @@
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 
         <!-- Här listar vi våra entiteter -->
-        <class>model.Pokemon</class>
-        <class>model.Attack</class>
+        <class>com.models.Pokemon</class>
+        <class>com.models.Attack</class>
 
         <properties>
-            <property name="hibernate.show_sql" value="false"/>
+            <property name="hibernate.show_sql" value="true"/>
             <property name="hibernate.format_sql" value="false"/>
-
+            <property name="jakarta.persistence.schema-generation.database.action" value="drop-and-create"/>
             <!-- Kontrollera mappningen, ändra inte schemat -->
-            <property name="hibernate.hbm2ddl.auto" value="validate"/>
+            <!--<property name="hibernate.hbm2ddl.auto" value="validate"/>-->
 
             <property name="hibernate.connection.isolation" value="2"/>
             <!--
@@ -27,6 +27,11 @@
               4 = REPEATABLE READ
               8 = SERIALIZABLE
             -->
+            <property name="hibernate.connection.url" value="jdbc:postgresql://localhost:5432/pokedex"/>
+            <property name="hibernate.connection.username" value="postgres"/>
+            <property name="hibernate.connection.password" value="admin"/>
+            <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/>
+            <property name="hibernate.hbm2ddl.auto" value="update"/>
 
         </properties>
 

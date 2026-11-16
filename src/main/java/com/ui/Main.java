@@ -1,9 +1,16 @@
 package com.ui;
 
 
+import com.models.Attack;
+import com.models.Pokemon;
+import com.models.Type;
+import com.repository.AttackDaoJpa;
 import com.repository.FileService;
+import com.repository.PokemonDaoJpa;
 import com.service.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Main {
@@ -15,6 +22,18 @@ public class Main {
         FileService.loadFromFile();
         FileService.loadFromMatchStatsticsFile();
         FileService.loadFromStatsticsFile();
+
+
+        PokemonDaoJpa pokemonDao = new PokemonDaoJpa();
+        AttackDaoJpa attackDaoJpa=new AttackDaoJpa();
+        List<Attack> attackList=new ArrayList<>();
+        Attack attack=new Attack("atk_1", Type.Grass, 23,44);
+        attackDaoJpa.sparaAttack(attack);
+        attackList.add(attack);
+
+        Pokemon pokemon=new Pokemon("poke_1",Type.Water,33,22, attackList);
+        pokemonDao.sparaPokemon(pokemon);
+
         consoleMenu();
     }
 

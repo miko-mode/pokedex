@@ -2,6 +2,7 @@ package com.models;
 
 import jakarta.persistence.*;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -19,7 +20,9 @@ public class Pokemon {
     private int maxHp;
     @Column(name = "currentHp", nullable = false)
     private int currentHp;
-    private List<Attack> attacks = new ArrayList<>();
+    @OneToMany
+    @JoinColumn(name = "attack_id", nullable = false)
+    private List<Attack> attacks=new ArrayList<>();
 
     public Pokemon(String name, Type type, int maxHp, int currentHp, List<Attack> attacks) {
         if (name == null || name.trim().isEmpty()) {

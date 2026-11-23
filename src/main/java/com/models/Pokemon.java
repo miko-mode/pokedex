@@ -20,11 +20,10 @@ public class Pokemon {
     private int maxHp;
     @Column(name = "currentHp", nullable = false)
     private int currentHp;
-    @OneToMany
-    @JoinColumn(name = "attack_id", nullable = false)
+    @OneToMany(mappedBy = "pokemon", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Attack> attacks=new ArrayList<>();
 
-    public Pokemon(String name, Type type, int maxHp, int currentHp, List<Attack> attacks) {
+    public Pokemon(String name, Type type, int maxHp, int currentHp) {
         if (name == null || name.trim().isEmpty()) {
             throw new IllegalArgumentException("namn får inte vara tomt");
         }
@@ -35,7 +34,6 @@ public class Pokemon {
         this.type = type;
         this.maxHp = maxHp;
         this.currentHp = currentHp;
-        this.attacks = attacks;
     }
 
     public Pokemon() {

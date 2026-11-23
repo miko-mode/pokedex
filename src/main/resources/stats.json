@@ -42,8 +42,8 @@
   "lossRatio" : 0.0
 }, {
   "pokemonName" : "wily_ppk:4",
-  "totalNumberOfWins" : 0,
+  "totalNumberOfWins" : 1,
   "totalNumberOfDefeats" : 1,
-  "winRatio" : 0.0,
-  "lossRatio" : 1.0
+  "winRatio" : 0.5,
+  "lossRatio" : 0.5
 } ]

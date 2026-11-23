@@ -4,8 +4,10 @@ package com.ui;
 import com.models.Attack;
 import com.models.Pokemon;
 import com.models.Type;
+import com.mongodb.client.MongoDatabase;
 import com.repository.AttackDaoJpa;
 import com.repository.FileService;
+import com.repository.MongoBattleLogRepository;
 import com.repository.PokemonDaoJpa;
 import com.service.*;
 
@@ -22,17 +24,19 @@ public class Main {
         FileService.loadFromFile();
         FileService.loadFromMatchStatsticsFile();
         FileService.loadFromStatsticsFile();
-
+        MongoBattleLogRepository mongoBattleLogRepository = new MongoBattleLogRepository();
 
         PokemonDaoJpa pokemonDao = new PokemonDaoJpa();
-        AttackDaoJpa attackDaoJpa=new AttackDaoJpa();
-        List<Attack> attackList=new ArrayList<>();
-        Attack attack=new Attack("atk_1", Type.Grass, 23,44);
-        attackDaoJpa.sparaAttack(attack);
-        attackList.add(attack);
-
-        Pokemon pokemon=new Pokemon("poke_1",Type.Water,33,22, attackList);
+        Pokemon pokemon=new Pokemon("poke_1",Type.Water,33,22);
         pokemonDao.sparaPokemon(pokemon);
+
+        AttackDaoJpa attackDaoJpa=new AttackDaoJpa();
+
+        Attack attack=new Attack("atk_1", Type.Grass, 23,44,pokemon);
+        attackDaoJpa.sparaAttack(attack);
+
+        System.out.println(mongoBattleLogRepository.findByGameId("f3e1498e-f09b-4e53-807f-bfb23a0d9e2a"));
+
 
         consoleMenu();
     }

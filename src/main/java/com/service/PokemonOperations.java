@@ -41,7 +41,7 @@ public class PokemonOperations {
 
     //predifinerad pokemoner
     public static void predefinedPokemon() {
-        Attack attack_one = new Attack("atk_1", Type.Electric, 85, 30);
+      /*  Attack attack_one = new Attack("atk_1", Type.Electric, 85, 30);
         Attack attack_two = new Attack("atk_2", Type.Water, 75, 40);
         List<Attack> list_one = new ArrayList<>(List.of(attack_one, attack_two));
 
@@ -59,9 +59,9 @@ public class PokemonOperations {
         Pokemon pokemon_three = new Pokemon("poke_3", Type.Grass, 600, 200, list_three);
         Pokemon pokemon_four = new Pokemon("poke_4", Type.Normal, 850, 750, list_one);
         Pokemon pokemon_five = new Pokemon("poke_5", Type.Grass, 500, 550, list_two);
-        Pokemon pokemon_six = new Pokemon("poke_6", Type.Electric, 790, 750, list_three);
+        Pokemon pokemon_six = new Pokemon("poke_6", Type.Electric, 790, 750, list_three);*/
 
-        pokemonList.addAll(Arrays.asList(pokemon_one, pokemon_two, pokemon_three, pokemon_four, pokemon_five, pokemon_six));
+      //  pokemonList.addAll(Arrays.asList(pokemon_one, pokemon_two, pokemon_three, pokemon_four, pokemon_five, pokemon_six));
 
     }
 

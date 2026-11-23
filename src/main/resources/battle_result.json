@@ -138,4 +138,11 @@
   "numberOfTurns" : 23,
   "winnerPokemon" : "USER",
   "defeatedPokemon" : "CPU"
+}, {
+  "gameId" : "f3e1498e-f09b-4e53-807f-bfb23a0d9e2a",
+  "userPokemonName" : "poke_2",
+  "cpuPokemonName" : "wily_ppk:4",
+  "numberOfTurns" : 4,
+  "winnerPokemon" : "USER",
+  "defeatedPokemon" : "CPU"
 } ]

@@ -5,6 +5,7 @@ import com.models.Attack;
 import com.models.Pokemon;
 import com.models.Type;
 import com.repository.FileService;
+import com.repository.MongoBattleLogRepository;
 import com.utility.ValidationInputHelper;
 
 import java.util.Collections;
@@ -25,6 +26,7 @@ public class BattleEngine extends PokemonOperations implements IBattleEngine {
     static int turnCount = 0;
     boolean isCriticalHit = false;
     boolean isForOneTurnOnly = true;
+    MongoBattleLogRepository mongoBattleLogRepository=new MongoBattleLogRepository();
 
     public void battleEngine() {
         boolean isFound = false;
@@ -114,6 +116,7 @@ public class BattleEngine extends PokemonOperations implements IBattleEngine {
             statGenerator(attacker, defender, turnCount);
             pokemonPool.remove(defender);
             gameStatsList.add(gameStats);
+            mongoBattleLogRepository.save(gameStats);
             FileService.saveToBattleResultFile();
             isAttackTurnOver = true;
             turnCount = 0;

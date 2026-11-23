@@ -16,9 +16,12 @@ public class Attack {
     private int baseDamage;
     @Column(name = "accuracy", nullable = false)
     private int accuracy;
+    @ManyToOne
+    @JoinColumn(name = "pokemon_id", nullable = false)
+    private Pokemon pokemon;
 
-    public Attack(String name, Type type, int baseDamage, int accuracy) {
-       if (name == null || name.trim().isEmpty()) {
+    public Attack(String name, Type type, int baseDamage, int accuracy, Pokemon pokemon) {
+        if (name == null || name.trim().isEmpty()) {
             throw new IllegalArgumentException("namn får inte vara tomt");
         }
         if (baseDamage <= 0) {
@@ -31,11 +34,17 @@ public class Attack {
         this.type = type;
         this.baseDamage = baseDamage;
         this.accuracy = accuracy;
+        this.pokemon = pokemon;
     }
 
     public Attack() {
 
     }
+
+    public Pokemon getPokemon() {
+        return pokemon;
+    }
+
     public Integer getId() {
         return id;
     }
@@ -74,6 +83,6 @@ public class Attack {
 
     @Override
     public String toString() {
-        return "[Namn:"+name + ", "+"Typ:" + type + ", "+"Basskada:" + baseDamage + ", "+"Träffsäkerhet:" + accuracy+ "]\n\t\t";
+        return "[Namn:" + name + ", " + "Typ:" + type + ", " + "Basskada:" + baseDamage + ", " + "Träffsäkerhet:" + accuracy + "]\n\t\t";
     }
 }
